@@ -1,0 +1,42 @@
+﻿<Window x:Class="finalExam_diplom_.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:finalExam_diplom_"
+        xmlns:controls="clr-namespace:finalExam_diplom_.controls"
+        mc:Ignorable="d" Height="900" Width="1200" WindowStartupLocation="CenterScreen">
+    <Grid x:Name="mainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="180"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="#c7b198">
+            <TextBlock x:Name="headerTextBox" Text="Заявки клиентов" FontFamily="Century Gothic" FontSize="20" Foreground="Black" VerticalAlignment="Center" Margin="20"/>
+        </Border>
+
+        <Border Grid.Row="1" Grid.Column="0">
+            <StackPanel Background="#f0ece2">
+                <Button x:Name="mainButton"  Content="Заявки клиентов" 
+                        FontFamily="Century Gothic" FontSize="16" Background="#dfd3c3" BorderBrush="Gray" 
+                        Height="40" Margin="1" Click="mainButton_Click"/>
+                <Button x:Name="employeeButton" Content="Сотрудники" 
+                        FontFamily="Century Gothic" FontSize="16" Background="#dfd3c3" BorderBrush="Gray" 
+                        Margin="1" Height="40" Click="employeeButton_Click"/>
+                <Button x:Name="reportButton"  Content="Отчеты" 
+                        FontFamily="Century Gothic" FontSize="16" Background="#dfd3c3" BorderBrush="Gray" 
+                        Margin="1" Height="40" Click="reportButton_Click"/>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="1" Grid.Column="1" Margin="5">
+            <ContentControl x:Name="useControl"/>
+        </Border>
+    </Grid>
+</Window>
