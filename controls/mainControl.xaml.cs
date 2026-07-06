@@ -37,6 +37,9 @@ namespace finalExam_diplom_.controls
                 mainTextBox.Text = "Поиск"; 
         }
 
-
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

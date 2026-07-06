@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace finalExam_diplom_.classes
+namespace finalExam_diplom_.classes.databaseTables
 {
-    internal class getSetParameters
+    class clientsRequestTable
     {
+        public int id {  get; set; }
     }
 }

@@ -25,7 +25,13 @@
         </Border>
 
         <Border Grid.Row="1" Grid.ColumnSpan="2">
-            <DataGrid x:Name="employeeDataGrid" Background="white"/>
+            <DataGrid x:Name="employeeDataGrid" AutoGenerateColumns="False" Background="white">
+                <DataGridTextColumn Header="#" Binding="{Binding [# заявки]}" FontFamily="Century Gothic" FontSize="14" IsReadOnly="True"/>
+                <DataGridTextColumn/>
+                <DataGridTextColumn/>
+                <DataGridTextColumn/>
+                <DataGridTextColumn/>
+            </DataGrid>
         </Border>
     </Grid>
 </UserControl>
