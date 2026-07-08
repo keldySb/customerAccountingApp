@@ -1,4 +1,6 @@
-﻿using System;
+﻿using finalExam_diplom_.classes;
+using Npgsql;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,17 +27,22 @@ namespace finalExam_diplom_.controls
             InitializeComponent();
         }
 
-        private void employeeTextBox_GotFocus(object sender, RoutedEventArgs e)
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            if (employeeTextBox.Text == "Поиск")
-                employeeTextBox.Text = "";
+            showInformationForDataGrid.information("SELECT " +
+                                                    "e.id, e.employee_number, e.first_name || ' ' || e.last_name || ' ' || e.middle_name as fio, " +
+                                                    "e.age, e.position, e.experience, e.phone_number, s.name as status " +
+                                                    "FROM employees e LEFT JOIN employees_status s ON e.status_id = s.id", employeeDataGrid);
         }
 
-        private void employeeTextBox_LostFocus(object sender, RoutedEventArgs e)
+        private void employeeTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(employeeTextBox.Text))
-                employeeTextBox.Text = "Поиск";
+            showInformationForDataGrid.information("SELECT " +
+                                        "e.id, e.employee_number, e.first_name || ' ' || e.last_name || ' ' || e.middle_name as fio, " +
+                                        "e.age, e.position, e.experience, e.phone_number, s.name as status " + "\n" +
+                                        "FROM employees e " + "\n" +
+                                        "LEFT JOIN employees_status s ON e.status_id = s.id" + "\n" +
+                                        "WHERE e.employee_number || e.first_name || e.last_name || e.middle_name || e.position || s.name ILIKE '%" + employeeTextBox.Text + "%'", employeeDataGrid);
         }
-
     }
 }

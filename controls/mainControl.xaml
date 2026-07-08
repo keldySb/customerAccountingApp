@@ -6,6 +6,28 @@
              xmlns:local="clr-namespace:finalExam_diplom_.controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="1000" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <Style TargetType="Button">
+            <Style.Setters>
+                <Setter Property="Button.Background" Value="#dfd3c3"/>
+                <Setter Property="Button.Width" Value="120"/>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Button.Background" Value="Red"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="DataGrid">
+            <Style.Setters>
+                <Setter Property="DataGrid.Background" Value="White"/>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="DataGrid.Background" Value="Gray"/>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
     <Grid x:Name="mainUCGrid" Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -13,42 +35,55 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60"/>
             <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Row="0">
-            <TextBox x:Name="mainTextBox" Text="Поиск" 
+        <Border Grid.Row="0" Grid.Column="0">
+            <Label x:Name="mainSearchLabel" Content="Поиск" FontFamily="Century Gothic" FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+        </Border>
+
+        <Border Grid.Row="0" Grid.Column="1">
+            <TextBox x:Name="mainTextBox" 
                      FontFamily="Century Gothic" FontSize="16" BorderBrush="Gray" 
-                     Height="25" Margin="10" 
-                     GotFocus="mainTextBox_GotFocus" LostFocus="mainTextBox_LostFocus"/>
+                     Height="25" Margin="10" TextChanged="mainTextBox_TextChanged"/>
         </Border>
 
-
-        <Border Grid.Column="1" Grid.ColumnSpan="2">
-            <ComboBox x:Name="mainComboBox" Text="Выберите статус заявки" FontFamily="Century Gothic" FontSize="16" BorderBrush="white" Height="25" Margin="10"/>
+        <Border Grid.Column="2" Grid.ColumnSpan="1">
+            <Label x:Name="mainComboBoxLabel" 
+                   Content="Выбор статуса" FontFamily="Century Gothic" FontSize="16" 
+                   HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+                   Width="150"/>
         </Border>
 
-        <Border Grid.Row="1" Grid.ColumnSpan="2">
+        <Border Grid.Column="3" Grid.ColumnSpan="1">
+            <ComboBox x:Name="mainComboBox" 
+                      FontFamily="Century Gothic" FontSize="16" 
+                      BorderBrush="white" Height="25" 
+                      DisplayMemberPath="name" SelectedValuePath="id" SelectedIndex="0"/>
+        </Border>
+
+        <Border Grid.Row="1" Grid.ColumnSpan="4">
             <DataGrid x:Name="mainDataGrid" 
                       Background="white" FontFamily="Century Gothic" 
                       FontSize="14" SelectionMode="Single" 
                       RowBackground="White" IsTabStop="True" IsHitTestVisible="True"
-                      SelectionUnit="FullRow">
+                      SelectionUnit="FullRow" AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="#" Binding="{Binding [# заявки]}" Width="50" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="ФИО" Binding="{Binding [ФИО клиента]}" Width="100" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Адрес" Binding="{Binding Адрес}" Width="100" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Описание" Binding="{Binding Описание}" Width="*" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Статус" Binding="{Binding Статус}" Width="80" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Приоритет" Binding="{Binding Приоритет}" Width="80" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Источник" Binding="{Binding Источник}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Ответственный менеджер" Binding="{Binding Менеджер}" Width="80" IsReadOnly="True" Visibility="Hidden"/>
-                    <DataGridTextColumn Header="Ответственный мастер" Binding="{Binding Мастер}" Width="150" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Дата создания" Binding="{Binding [Дата создания]}" Width="120" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Дата визита" Binding="{Binding [Дата визита]}" Width="100" IsReadOnly="True" Visibility="Hidden"/>
-                    <DataGridTextColumn Header="Дата закрытия заявки" Binding="{Binding [Дата закрытия заявки]}" Width="100" IsReadOnly="True" Visibility="Hidden"/>
-                    <DataGridTextColumn Header="Комментарий" Binding="{Binding [Комментарий мастера]}" Width="150" IsReadOnly="True" Visibility="Hidden"/>
+                    <DataGridTextColumn Header="#" Binding="{Binding id}" Width="50" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="ФИО" Binding="{Binding fio}" Width="100" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Адрес" Binding="{Binding address}" Width="100" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Описание" Binding="{Binding description}" Width="*" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Статус" Binding="{Binding status}" Width="80" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Приоритет" Binding="{Binding priority}" Width="80" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Ответственный менеджер" Binding="{Binding manager}" Width="80" IsReadOnly="True" Visibility="Hidden"/>
+                    <DataGridTextColumn Header="Ответственный мастер" Binding="{Binding master}" Width="150" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Дата создания" Binding="{Binding [Дата created_time]}" Width="120" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Дата визита" Binding="{Binding [Дата visit_time]}" Width="100" IsReadOnly="True" Visibility="Hidden"/>
+                    <DataGridTextColumn Header="Дата закрытия заявки" Binding="{Binding [Дата closed_time]}" Width="100" IsReadOnly="True" Visibility="Hidden"/>
+                    <DataGridTextColumn Header="Комментарий" Binding="{Binding [Комментарий master_comment]}" Width="150" IsReadOnly="True" Visibility="Hidden"/>
 
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>

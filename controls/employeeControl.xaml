@@ -5,7 +5,30 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:finalExam_diplom_.controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
+
+    <UserControl.Resources>
+        <Style TargetType="Button">
+            <Style.Setters>
+                <Setter Property="Button.Background" Value="#dfd3c3"/>
+                <Setter Property="Button.Width" Value="120"/>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Button.Background" Value="Red"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="DataGrid">
+            <Style.Setters>
+                <Setter Property="DataGrid.Background" Value="White"/>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="DataGrid.Background" Value="Gray"/>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    
     <Grid Background="white">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -13,24 +36,49 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60"/>
             <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+
+        <Border Grid.Row="0" Grid.Column="0">
+            <Label x:Name="searchLabel" Content="Поиск" FontFamily="Century Gothic" FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+        </Border>
         
-        <Border Grid.Row="0">
+        <Border Grid.Row="0" Grid.Column="1">
             <TextBox x:Name="employeeTextBox" 
-                     Text="Поиск" FontFamily="Century Gothic" FontSize="16" 
+                     FontFamily="Century Gothic" FontSize="16" 
                      Height="25" Margin="10" BorderBrush="Gray" 
-                     GotFocus="employeeTextBox_GotFocus" LostFocus="employeeTextBox_LostFocus"/>
+                     TextChanged="employeeTextBox_TextChanged"/>
         </Border>
 
-        <Border Grid.Row="1" Grid.ColumnSpan="2">
-            <DataGrid x:Name="employeeDataGrid" AutoGenerateColumns="False" Background="white">
-                <DataGridTextColumn Header="#" Binding="{Binding [# заявки]}" FontFamily="Century Gothic" FontSize="14" IsReadOnly="True"/>
-                <DataGridTextColumn/>
-                <DataGridTextColumn/>
-                <DataGridTextColumn/>
-                <DataGridTextColumn/>
+        <Border Grid.Row="1" Grid.ColumnSpan="3">
+            <DataGrid x:Name="employeeDataGrid" 
+                      Background="white" FontFamily="Century Gothic" 
+                      FontSize="14" SelectionMode="Single" 
+                      RowBackground="White" IsTabStop="True" IsHitTestVisible="True"
+                      SelectionUnit="FullRow" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="#" Binding="{Binding id}" Width="50" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Табельный номер" Binding="{Binding employee_number}" Width="100" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="ФИО" Binding="{Binding fio}" Width="*" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Возраст" Binding="{Binding age}" Width="80" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Должность" Binding="{Binding position}" Width="100" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Опыт работы" Binding="{Binding experience}" Width="110" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Номер телефона" Binding="{Binding phone_number}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Статус" Binding="{Binding status}" Width="80" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Трудоустроен?" Binding="{Binding is_actual}" Width="150" IsReadOnly="True" Visibility="Hidden"/>
+
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Button x:Name="openApplication" Content="Открыть" ToolTip="Открыть заявку"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
             </DataGrid>
         </Border>
     </Grid>

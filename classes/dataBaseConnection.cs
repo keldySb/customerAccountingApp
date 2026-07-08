@@ -12,24 +12,10 @@ namespace finalExam_diplom_.classes
     class dataBaseConnection
     {
 
-        NpgsqlConnection connection = new NpgsqlConnection("Host=localhost;Username=postgres;Password=123;Database=uk_application_db");
-
-
-        private void openConnection()
-        {
-            if (connection.State == System.Data.ConnectionState.Closed)
-                connection.Open();
-        }
-
-        public void closeConnection()
-        {
-            if (connection.State == System.Data.ConnectionState.Open)
-                connection.Close();
-        }
-
+        private readonly string connection = "Host=localhost;Username=postgres;Password=123;Database=uk_applications_db";
         public NpgsqlConnection getConnection()
         {
-            return connection;
+            return new NpgsqlConnection(connection);
         }
     }
 }

@@ -6,6 +6,25 @@
         xmlns:local="clr-namespace:finalExam_diplom_"
         xmlns:controls="clr-namespace:finalExam_diplom_.controls"
         mc:Ignorable="d" Height="900" Width="1200" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Style.Setters>
+                <Setter Property="Background" Value="#dfd3c3"/>
+                <Setter Property="Height" Value="40"/>
+                <Setter Property="FontFamily" Value="Century Gothic"/>
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="Margin" Value="1"/>
+            </Style.Setters>
+
+            <Style.Triggers>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="Red"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    
+    
     <Grid x:Name="mainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
@@ -23,15 +42,9 @@
 
         <Border Grid.Row="1" Grid.Column="0">
             <StackPanel Background="#f0ece2">
-                <Button x:Name="mainButton"  Content="Заявки клиентов" 
-                        FontFamily="Century Gothic" FontSize="16" Background="#dfd3c3" BorderBrush="Gray" 
-                        Height="40" Margin="1" Click="mainButton_Click"/>
-                <Button x:Name="employeeButton" Content="Сотрудники" 
-                        FontFamily="Century Gothic" FontSize="16" Background="#dfd3c3" BorderBrush="Gray" 
-                        Margin="1" Height="40" Click="employeeButton_Click"/>
-                <Button x:Name="reportButton"  Content="Отчеты" 
-                        FontFamily="Century Gothic" FontSize="16" Background="#dfd3c3" BorderBrush="Gray" 
-                        Margin="1" Height="40" Click="reportButton_Click"/>
+                <Button x:Name="mainButton"  Content="Заявки клиентов" Click="mainButton_Click"/>
+                <Button x:Name="employeeButton" Content="Сотрудники" Click="employeeButton_Click"/>
+                <Button x:Name="reportButton"  Content="Отчеты" Click="reportButton_Click"/>
             </StackPanel>
         </Border>
 

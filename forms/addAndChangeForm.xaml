@@ -9,29 +9,12 @@
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="80"/>
-            <RowDefinition Height="400"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-
         <Border Grid.Row="0" Grid.ColumnSpan="2" Background="#c7b198">
-            <Label x:Name="headerLabel" Content="Форма добавления" FontFamily="Century Gothic" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20"/>
+            <Label x:Name="headerLabel" Content="Форма изменения" FontFamily="Century Gothic" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20"/>
         </Border>
 
-        <Border Grid.Row="2" Grid.Column="0">
-            <Button x:Name="addOrChangeButton" Content="Добавить" Background="#dfd3c3"
-                    FontFamily="Century Gothic" FontSize="16" 
-                    VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="150"/>
-        </Border>
-
-        <Border Grid.Row="2" Grid.Column="1">
-            <Button x:Name="cancelButton" Content="Отменить" Background="#dfd3c3"
-                    FontFamily="Century Gothic" FontSize="16" 
-                    VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="150"/>
-        </Border>
     </Grid>
 </Window>
