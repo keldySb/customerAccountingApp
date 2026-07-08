@@ -4,17 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:finalExam_diplom_.forms"
+        xmlns:controls="clr-namespace:finalExam_diplom_.controls"
         mc:Ignorable="d"
-        Title="" Height="600" Width="600">
+        Title="" Height="600" Width="600" Loaded="Window_Loaded">
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="80"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="#c7b198">
+        <Border Grid.Row="0" Background="#c7b198">
             <Label x:Name="headerLabel" Content="Форма изменения" FontFamily="Century Gothic" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20"/>
         </Border>
 
+        <Border Grid.Row="1">
+            <ContentControl x:Name="useControl"/>
+        </Border>
     </Grid>
 </Window>

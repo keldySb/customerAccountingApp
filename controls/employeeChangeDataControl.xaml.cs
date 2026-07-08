@@ -1,5 +1,4 @@
-﻿using finalExam_diplom_.controls;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,27 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace finalExam_diplom_.forms
+namespace finalExam_diplom_.controls
 {
     /// <summary>
-    /// Логика взаимодействия для Window1.xaml
+    /// Логика взаимодействия для employeeChangeDataControl.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class employeeChangeDataControl : UserControl
     {
-        public Window1()
+        public employeeChangeDataControl()
         {
             InitializeComponent();
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            employeeChangeDataControl ecdc = new employeeChangeDataControl();
-
-            useControl.Content = ecdc;
-
-
         }
     }
 }
