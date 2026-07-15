@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:finalExam_diplom_.controls"
+             xmlns:forms="clr-namespace:finalExam_diplom_.forms"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
 
@@ -57,7 +58,7 @@
                       Background="white" FontFamily="Century Gothic" 
                       FontSize="14" SelectionMode="Single" 
                       RowBackground="White" IsTabStop="True" IsHitTestVisible="True"
-                      SelectionUnit="FullRow" AutoGenerateColumns="False">
+                      SelectionUnit="FullRow" AutoGenerateColumns="False" MouseDoubleClick="employeeDataGrid_MouseDoubleClick">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="#" Binding="{Binding id}" Width="50" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Табельный номер" Binding="{Binding employee_number}" Width="100" IsReadOnly="True"/>
@@ -73,7 +74,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Button x:Name="openApplication" Content="Открыть" ToolTip="Открыть заявку"/>
+                                    <Button x:Name="openApplication" Content="Открыть" Tag="{Binding openApp}"  ToolTip="Открыть заявку"/>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

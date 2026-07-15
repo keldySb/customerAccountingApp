@@ -70,7 +70,7 @@
                       Background="white" FontFamily="Century Gothic" 
                       FontSize="14" SelectionMode="Single" 
                       RowBackground="White" IsTabStop="True" IsHitTestVisible="True"
-                      SelectionUnit="FullRow" AutoGenerateColumns="False">
+                      SelectionUnit="FullRow" AutoGenerateColumns="False" MouseDoubleClick="mainDataGrid_MouseDoubleClick">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="#" Binding="{Binding id}" Width="50" IsReadOnly="True"/>
                     <DataGridTextColumn Header="ФИО" Binding="{Binding fio}" Width="100" IsReadOnly="True"/>
@@ -79,7 +79,7 @@
                     <DataGridTextColumn Header="Статус" Binding="{Binding status}" Width="80" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Приоритет" Binding="{Binding priority}" Width="80" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Ответственный менеджер" Binding="{Binding manager}" Width="80" IsReadOnly="True" Visibility="Hidden"/>
-                    <DataGridTextColumn Header="Ответственный мастер" Binding="{Binding master}" Width="150" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Ответственный мастер" Binding="{Binding master}" Width="200" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Дата создания" Binding="{Binding [Дата created_time]}" Width="120" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Дата визита" Binding="{Binding [Дата visit_time]}" Width="100" IsReadOnly="True" Visibility="Hidden"/>
                     <DataGridTextColumn Header="Дата закрытия заявки" Binding="{Binding [Дата closed_time]}" Width="100" IsReadOnly="True" Visibility="Hidden"/>

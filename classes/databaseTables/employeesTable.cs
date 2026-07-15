@@ -10,24 +10,18 @@ namespace finalExam_diplom_.classes.databaseTables
     {
         public int id { get; set; }
 
-        public static string employee_number { get; set; }
+        public string? employee_number { get; set; }
 
-        public static string first_name { get; set; }
-
-        public static string last_name { get; set; }
-
-        public static string middle_name { get; set; }
+        public string? fio { get; set; }
 
         public int age { get; set; }
 
-        public static string position { get; set; }
+        public string? position { get; set; }
 
         public int experience { get; set; }
 
-        public static string phone_number { get; set; }
+        public string? phone_number { get; set; }
 
-        public int status_id { get; set; }
-
-        public Boolean is_active { get; set; }
+        public string? status { get; set; }
     }
 }

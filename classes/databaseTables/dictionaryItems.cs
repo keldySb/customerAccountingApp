@@ -10,6 +10,6 @@ namespace finalExam_diplom_.classes.databaseTables
     {
         public int id { get; set; }
 
-        public static string name { get; set; }
+        public string? name { get; set; }
     }
 }

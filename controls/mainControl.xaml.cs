@@ -1,20 +1,9 @@
 ﻿using finalExam_diplom_.classes;
 using finalExam_diplom_.classes.databaseTables;
-using Npgsql;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using finalExam_diplom_.forms;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace finalExam_diplom_.controls
 {
@@ -47,10 +36,14 @@ namespace finalExam_diplom_.controls
 
         private void showAllInformations()
         {
-            showInformationForDataGrid.information("SELECT cr.id, " +
+
+            showInformationForComboBox.information("SELECT id, name FROM statuses", mainComboBox);
+
+            showInformationClientsREquestForDataGrid.information("SELECT cr.id, " +
                                 "c.first_name || ' ' || c.last_name || ' ' || c.middle_name as fio," +
                                 "a.street || ', ' || a.house_number || ', ' || a.number_apartment as address," +
-                                "e.age, cr.description, s.name as status, p.name as priority, " +
+                                "cr.description, s.name as status, p.name as priority, " +
+                                "u.employee_id as master," +
                                 "e.first_name || ' ' || e.last_name || ' ' || e.middle_name as master, cr.created_time, " +
                                 "cr.visit_time, cr.closed_time, cr.master_comment " +
                            "FROM clients_requests cr " +
@@ -58,14 +51,14 @@ namespace finalExam_diplom_.controls
                            "LEFT JOIN addresses a ON cr.apartment_id = a.id " +
                            "LEFT JOIN statuses s ON cr.status_id = s.id " +
                            "LEFT JOIN priorities p ON cr.priority_id = p.id " +
-                           "LEFT JOIN employees e ON cr.master_id = e.id", mainDataGrid);
-
-            showInformationForComboBox.information("SELECT id, name FROM statuses", mainComboBox);
+                           "LEFT JOIN employees e ON cr.master_id = e.id " +
+                           "LEFT JOIN users u ON e.id = u.id WHERE cr.status_id = @status_id", mainDataGrid, (int)mainComboBox.SelectedValue);
+           
         }
 
         private void mainTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            showInformationForDataGrid.information("SELECT " +
+            showInformationClientsREquestForDataGrid.information("SELECT " +
                                             "c.first_name || ' ' || c.last_name || ' ' || c.middle_name as fio," +
                                             "a.street || ', ' || a.house_number || ', ' || a.number_apartment as address," +
                                             "e.age, cr.description, s.name as status, p.name as priority, " +
@@ -79,6 +72,18 @@ namespace finalExam_diplom_.controls
                                         "LEFT JOIN employees e ON cr.master_id = e.id" + "\n" +
                                         "WHERE c.first_name || c.last_name || c.middle_name || a.street || a.house_number " +
                                         "|| a.number_apartment || cr.description || e.first_name || e.last_name || e.middle_name ILIKE '%" + mainTextBox.Text + "%'", mainDataGrid);
+        
+        
         }
+
+        private void mainDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var clientData = mainDataGrid.SelectedItem as clientsRequestTable;
+
+            clientsChangeDataControl control = new clientsChangeDataControl(clientData);
+            addAndChangeForm form = new addAndChangeForm(control);
+            form.ShowDialog();
+        }
+
     }
 }
