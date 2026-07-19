@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:finalExam_diplom_"
         xmlns:controls="clr-namespace:finalExam_diplom_.controls"
-        mc:Ignorable="d" Height="900" Width="1200" WindowStartupLocation="CenterScreen">
+        mc:Ignorable="d" Height="900" Width="1200" WindowStartupLocation="CenterScreen" WindowState="Maximized" >
     <Window.Resources>
         <Style TargetType="Button">
             <Style.Setters>
@@ -15,12 +15,6 @@
                 <Setter Property="FontSize" Value="16"/>
                 <Setter Property="Margin" Value="1"/>
             </Style.Setters>
-
-            <Style.Triggers>
-                <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Background" Value="Red"/>
-                </Trigger>
-            </Style.Triggers>
         </Style>
     </Window.Resources>
     
@@ -34,13 +28,14 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="180"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="#c7b198">
+        <Border Grid.Row="0" Grid.ColumnSpan="3" Background="#c7b198">
             <TextBlock x:Name="headerTextBox" Text="Заявки клиентов" FontFamily="Century Gothic" FontSize="20" Foreground="Black" VerticalAlignment="Center" Margin="20"/>
         </Border>
 
-        <Border Grid.Row="1" Grid.Column="0">
+        <Border Grid.Row="1" Grid.Column="0" Grid.RowSpan="2">
             <StackPanel Background="#f0ece2">
                 <Button x:Name="mainButton"  Content="Заявки клиентов" Click="mainButton_Click"/>
                 <Button x:Name="employeeButton" Content="Сотрудники" Click="employeeButton_Click"/>
@@ -49,7 +44,19 @@
         </Border>
 
         <Border Grid.Row="1" Grid.Column="1" Margin="5">
-            <ContentControl x:Name="useControl"/>
+            <ContentControl x:Name="useControl" />
+        </Border>
+
+        <Border x:Name="setBorder" Visibility="Collapsed" Grid.Row="2" Grid.Column="3" Margin="5,5,0,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label x:Name="setTaskOrEmpLabel" Content="Назначение задачи" Background="#c7b198" VerticalContentAlignment="Center"
+                       HorizontalContentAlignment="Center" FontFamily="Century Gothic" FontSize="16"/>
+                <ContentControl x:Name="setTaskOrEmpControl" />
+            </Grid>
         </Border>
     </Grid>
 </Window>

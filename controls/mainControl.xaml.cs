@@ -1,6 +1,7 @@
 ﻿using finalExam_diplom_.classes;
 using finalExam_diplom_.classes.databaseTables;
 using finalExam_diplom_.forms;
+using Npgsql;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -31,49 +32,53 @@ namespace finalExam_diplom_.controls
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            showAllInformations();
-        }
-
-        private void showAllInformations()
-        {
-
             showInformationForComboBox.information("SELECT id, name FROM statuses", mainComboBox);
 
+            showDataGridnformations();
+        }
+
+        private void showDataGridnformations()
+        {
             showInformationClientsREquestForDataGrid.information("SELECT cr.id, " +
-                                "c.first_name || ' ' || c.last_name || ' ' || c.middle_name as fio," +
-                                "a.street || ', ' || a.house_number || ', ' || a.number_apartment as address," +
-                                "cr.description, s.name as status, p.name as priority, " +
-                                "u.employee_id as master," +
-                                "e.first_name || ' ' || e.last_name || ' ' || e.middle_name as master, cr.created_time, " +
-                                "cr.visit_time, cr.closed_time, cr.master_comment " +
-                           "FROM clients_requests cr " +
-                           "LEFT JOIN clients c ON cr.client_id = c.id " +
-                           "LEFT JOIN addresses a ON cr.apartment_id = a.id " +
-                           "LEFT JOIN statuses s ON cr.status_id = s.id " +
-                           "LEFT JOIN priorities p ON cr.priority_id = p.id " +
-                           "LEFT JOIN employees e ON cr.master_id = e.id " +
-                           "LEFT JOIN users u ON e.id = u.id WHERE cr.status_id = @status_id", mainDataGrid, (int)mainComboBox.SelectedValue);
-           
+                    "CONCAT(c.first_name, ' ', c.last_name, ' ', c.middle_name) as fio," +
+                    "CONCAT(a.street, ', ', a.house_number, ', ', a.number_apartment) as address," +
+                    "cr.description, cr.status_id, s.name as status, cr.priority_id, p.name as priority, " +
+                    "cr.manager_id, u.employee_id as manager, " +
+                    "cr.master_id, CONCAT(e.first_name, ' ', e.last_name, ' ', e.middle_name) as master, cr.created_time, " +
+                    "cr.visit_time, cr.closed_time, cr.master_comment " +
+               "FROM clients_requests cr " +
+               "LEFT JOIN clients c ON cr.client_id = c.id " +
+               "LEFT JOIN addresses a ON cr.apartment_id = a.id " +
+               "LEFT JOIN statuses s ON cr.status_id = s.id " +
+               "LEFT JOIN priorities p ON cr.priority_id = p.id " +
+               "LEFT JOIN employees e ON cr.master_id = e.id " +
+               "LEFT JOIN users u ON e.id = u.id WHERE cr.status_id = " + mainComboBox.SelectedValue, mainDataGrid, null);
         }
 
         private void mainTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            showInformationClientsREquestForDataGrid.information("SELECT " +
-                                            "c.first_name || ' ' || c.last_name || ' ' || c.middle_name as fio," +
-                                            "a.street || ', ' || a.house_number || ', ' || a.number_apartment as address," +
-                                            "e.age, cr.description, s.name as status, p.name as priority, " +
-                                            "e.first_name || ' ' || e.last_name || ' ' || e.middle_name as master, cr.created_time, " +
-                                            "cr.visit_time, cr.closed_time, cr.master_comment" + "\n" +
-                                        "FROM clients_requests cr " + "\n" +
-                                        "LEFT JOIN clients c ON cr.client_id = c.id " + "\n" +
-                                        "LEFT JOIN addresses a ON cr.apartment_id = a.id " + "\n" +
-                                        "LEFT JOIN statuses s ON cr.status_id = s.id " + "\n" +
-                                        "LEFT JOIN priorities p ON cr.priority_id = p.id " + "\n" +
-                                        "LEFT JOIN employees e ON cr.master_id = e.id" + "\n" +
-                                        "WHERE c.first_name || c.last_name || c.middle_name || a.street || a.house_number " +
-                                        "|| a.number_apartment || cr.description || e.first_name || e.last_name || e.middle_name ILIKE '%" + mainTextBox.Text + "%'", mainDataGrid);
-        
-        
+
+            string sql = "SELECT cr.id, " +
+                            "CONCAT(c.first_name, ' ', c.last_name, ' ', c.middle_name) as fio," +
+                            "CONCAT(a.street, ', ', a.house_number, ', ', a.number_apartment) as address," +
+                            "cr.description, cr.status_id, s.name as status, cr.priority_id, p.name as priority, " +
+                            "cr.manager_id, u.employee_id as manager, " +
+                            "cr.master_id, CONCAT(e.first_name, ' ', e.last_name, ' ', e.middle_name) as master, cr.created_time, " +
+                            "cr.visit_time, cr.closed_time, cr.master_comment " +
+                        "FROM clients_requests cr " +
+                        "LEFT JOIN clients c ON cr.client_id = c.id " +
+                        "LEFT JOIN addresses a ON cr.apartment_id = a.id " +
+                        "LEFT JOIN statuses s ON cr.status_id = s.id " +
+                        "LEFT JOIN priorities p ON cr.priority_id = p.id " +
+                        "LEFT JOIN employees e ON cr.master_id = e.id " +
+                        "LEFT JOIN users u ON e.id = u.id";
+
+            if (!string.IsNullOrWhiteSpace(mainTextBox.Text))
+            {
+                sql += " WHERE CONCAT(c.first_name, c.last_name, c.middle_name, a.street, a.house_number, a.number_apartment, cr.description, p.name) ILIKE @search";
+            }
+
+            showInformationClientsREquestForDataGrid.information(sql, mainDataGrid, mainTextBox.Text);
         }
 
         private void mainDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -85,5 +90,9 @@ namespace finalExam_diplom_.controls
             form.ShowDialog();
         }
 
+        private void mainComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            showDataGridnformations();
+        }
     }
 }

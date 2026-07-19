@@ -14,19 +14,11 @@
                 <Setter Property="Button.Background" Value="#dfd3c3"/>
                 <Setter Property="Button.Width" Value="120"/>
             </Style.Setters>
-            <Style.Triggers>
-                <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Button.Background" Value="Red"></Setter>
-                </Trigger>
-            </Style.Triggers>
         </Style>
         <Style TargetType="DataGrid">
             <Style.Setters>
                 <Setter Property="DataGrid.Background" Value="White"/>
             </Style.Setters>
-            <Style.Triggers>
-                <Trigger Property="DataGrid.Background" Value="Gray"/>
-            </Style.Triggers>
         </Style>
     </UserControl.Resources>
     
@@ -58,23 +50,24 @@
                       Background="white" FontFamily="Century Gothic" 
                       FontSize="14" SelectionMode="Single" 
                       RowBackground="White" IsTabStop="True" IsHitTestVisible="True"
-                      SelectionUnit="FullRow" AutoGenerateColumns="False" MouseDoubleClick="employeeDataGrid_MouseDoubleClick">
+                      SelectionUnit="FullRow" AutoGenerateColumns="False" CanUserAddRows="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="#" Binding="{Binding id}" Width="50" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Табельный номер" Binding="{Binding employee_number}" Width="100" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="#" Binding="{Binding id}" Width="Auto" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Табельный номер" Binding="{Binding employee_number}" Width="Auto" IsReadOnly="True"/>
                     <DataGridTextColumn Header="ФИО" Binding="{Binding fio}" Width="*" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Возраст" Binding="{Binding age}" Width="80" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Должность" Binding="{Binding position}" Width="100" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Опыт работы" Binding="{Binding experience}" Width="110" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Номер телефона" Binding="{Binding phone_number}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Статус" Binding="{Binding status}" Width="80" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Трудоустроен?" Binding="{Binding is_actual}" Width="150" IsReadOnly="True" Visibility="Hidden"/>
+                    <DataGridTextColumn Header="Возраст" Binding="{Binding age}" Width="Auto" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Должность" Binding="{Binding position}" Width="Auto" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Опыт работы" Binding="{Binding experience}" Width="Auto" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Номер телефона" Binding="{Binding phone_number}" Width="Auto" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Статус" Binding="{Binding status}" Width="Auto" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Трудоустроен?" Binding="{Binding is_actual}" Width="Auto" IsReadOnly="True" Visibility="Hidden"/>
 
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Button x:Name="openApplication" Content="Открыть" Tag="{Binding openApp}"  ToolTip="Открыть заявку"/>
+                                    <Button x:Name="openApplication" Content="Открыть" Tag="{Binding openApp}"  ToolTip="Открыть заявку" Click="openApplication_Click"/>
+                                    <Button x:Name="setTask" Content="Назначить задачу" Tag="{Binding setTask}"  ToolTip="Назначить задачу для этого сотрудника" IsEnabled="true" Click="setTask_Click"/>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using finalExam_diplom_.classes.databaseTables;
+using Npgsql;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -6,14 +9,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using finalExam_diplom_.classes.databaseTables;
-using Npgsql;
 
 namespace finalExam_diplom_.classes
 {
     public class showInformationEmployeeForDataGrid
     {
-        public static void information(string query, DataGrid dataGrid) 
+        public static void information(string query, DataGrid dataGrid, string? search) 
         {
             List<employeesTable> tableData = new List<employeesTable>();
 
@@ -25,6 +26,9 @@ namespace finalExam_diplom_.classes
 
                 using (NpgsqlCommand command = new NpgsqlCommand(query, con))
                 {
+                    if (!string.IsNullOrEmpty(search))
+                        command.Parameters.AddWithValue("@search", $"%{search}%"); 
+
                     NpgsqlDataReader reader = command.ExecuteReader();
 
                     while (reader.Read())
@@ -49,8 +53,8 @@ namespace finalExam_diplom_.classes
 
     public class showInformationClientsREquestForDataGrid
     {
-        public static void information(string query, DataGrid dataGrid, int ?statusId = null)
-        {
+        public static void information(string query, DataGrid dataGrid, string? search)
+        { 
             List<clientsRequestTable> tableData = new List<clientsRequestTable>();
 
             dataBaseConnection connection = new dataBaseConnection();
@@ -61,7 +65,8 @@ namespace finalExam_diplom_.classes
 
                 using (NpgsqlCommand command = new NpgsqlCommand(query, con))
                 {
-                    command.Parameters.AddWithValue("@status_id", statusId);
+                    if (!string.IsNullOrEmpty(search))
+                        command.Parameters.AddWithValue("@search", $"%{search}%");
 
                     NpgsqlDataReader reader = command.ExecuteReader();
 
@@ -73,14 +78,18 @@ namespace finalExam_diplom_.classes
                             fio = reader[1].ToString(),
                             address = reader[2].ToString(),
                             description = reader[3].ToString(),
-                            status = reader[4].ToString(),
-                            priority = reader[5].ToString(),
-                            manager = reader[6].ToString(),
-                            master = reader[7].ToString(),
-                            created_time = reader.IsDBNull(8) ? null : reader.GetDateTime(8),
-                            visit_time = reader.IsDBNull(9) ? null : reader.GetDateTime(9),
-                            closed_time = reader.IsDBNull(10) ? null : reader.GetDateTime(10),
-                            master_comment = reader[11].ToString()
+                            status_id = reader.GetInt32(4),
+                            status = reader[5].ToString(),
+                            priority_id = reader.GetInt32(6),
+                            priority = reader[7].ToString(),
+                            manager_id = reader.IsDBNull(8) ? null : reader.GetInt32(8),
+                            manager = reader[9].ToString(),
+                            master_id = reader.IsDBNull(10) ? null : reader.GetInt32(10),
+                            master = reader[11].ToString(),
+                            created_time = reader.IsDBNull(12) ? null : reader.GetDateTime(12),
+                            visit_time = reader.IsDBNull(13) ? null : reader.GetDateTime(13),
+                            closed_time = reader.IsDBNull(14) ? null : reader.GetDateTime(14),
+                            master_comment = reader[15].ToString()
                         });
                     }
 
@@ -94,9 +103,9 @@ namespace finalExam_diplom_.classes
     {
         public static void information(string query, ComboBox comboBox)
         {
-            dataBaseConnection connection = new dataBaseConnection();
-
             List<dictionaryItems> tableData = new List<dictionaryItems>();
+
+            dataBaseConnection connection = new dataBaseConnection();
 
             using (NpgsqlConnection con = connection.getConnection())
             {

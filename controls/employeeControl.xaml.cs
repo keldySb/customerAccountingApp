@@ -20,29 +20,41 @@ namespace finalExam_diplom_.controls
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             showInformationEmployeeForDataGrid.information("SELECT " +
-                                                    "e.id, e.employee_number, e.first_name || ' ' || e.last_name || ' ' || e.middle_name as fio, " +
+                                                    "e.id, e.employee_number, CONCAT(e.first_name, ' ', e.last_name, ' ', e.middle_name) as fio, " +
                                                     "e.age, e.position, e.experience, e.phone_number, s.name as status " +
-                                                    "FROM employees e LEFT JOIN employees_status s ON e.status_id = s.id", employeeDataGrid);
+                                                    "FROM employees e LEFT JOIN employees_status s ON e.status_id = s.id", employeeDataGrid, null);
         }
 
         private void employeeTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            showInformationEmployeeForDataGrid.information("SELECT " +
-                                        "e.id, e.employee_number, e.first_name || ' ' || e.last_name || ' ' || e.middle_name as fio, " +
-                                        "e.age, e.position, e.experience, e.phone_number, s.name as status " + "\n" +
-                                        "FROM employees e " + "\n" +
-                                        "LEFT JOIN employees_status s ON e.status_id = s.id" + "\n" +
-                                        "WHERE e.employee_number || e.first_name || e.last_name || e.middle_name || e.position || s.name ILIKE '%" + employeeTextBox.Text + "%'", employeeDataGrid);
+            string sql = "SELECT " +
+                             "e.id, e.employee_number, CONCAT(e.first_name, ' ', e.last_name, ' ', e.middle_name) as fio, " +
+                             "e.age, e.position, e.experience, e.phone_number, s.name as status " +
+                             "FROM employees e " +
+                             "LEFT JOIN employees_status s ON e.status_id = s.id ";
+
+            if (!string.IsNullOrWhiteSpace(employeeTextBox.Text))
+            {
+                sql += "WHERE CONCAT(e.employee_number, e.first_name, e.last_name, e.middle_name, e.position, s.name) ILIKE @search";
+            }
+
+            showInformationEmployeeForDataGrid.information(sql, employeeDataGrid, employeeTextBox.Text);
         }
 
-
-        private void employeeDataGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void openApplication_Click(object sender, RoutedEventArgs e)
         {
             var empData = employeeDataGrid.SelectedItem as employeesTable;
 
             employeeOpenDataControl control = new employeeOpenDataControl(empData);
             addAndChangeForm form = new addAndChangeForm(control);
             form.ShowDialog();
+        }
+
+        public event Action setTask = delegate { };
+
+        private void setTask_Click(object sender, RoutedEventArgs e)
+        {
+            setTask();
         }
     }
 }

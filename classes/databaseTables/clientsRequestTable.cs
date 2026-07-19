@@ -10,17 +10,25 @@ namespace finalExam_diplom_.classes.databaseTables
     {
         public int id {  get; set; }
 
-        public string fio { get; set; }
+        public string? fio { get; set; }
 
-        public string address { get; set; }
+        public string? address { get; set; }
 
         public string? description { get; set; }
 
+        public int status_id { get; set; }
+
         public string? status { get; set; }
+
+        public int priority_id { get; set; }
 
         public string? priority { get; set; }
 
+        public int? manager_id { get; set; }
+
         public string? manager { get; set; }
+
+        public int? master_id { get; set; }
 
         public string? master { get; set; }
 

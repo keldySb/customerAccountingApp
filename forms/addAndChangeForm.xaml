@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:finalExam_diplom_.forms"
         xmlns:controls="clr-namespace:finalExam_diplom_.controls"
         mc:Ignorable="d"
-        Title=""  SizeToContent="WidthAndHeight">
+        Title=""  SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="80"/>

@@ -28,10 +28,11 @@ namespace finalExam_diplom_.controls
             statusTextBox.Text = _empData.status;
         }
 
-        private void closeFormButton_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
+        public event Action closeUC = delegate { };
 
+        private void closeUCButton_Click(object sender, RoutedEventArgs e)
+        {
+            closeUC();
+        }
     }
 }

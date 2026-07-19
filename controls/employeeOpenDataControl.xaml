@@ -10,31 +10,32 @@
     <UserControl.Resources>
         <Style TargetType="Button">
             <Style.Setters>
-                <Setter Property="Button.Background" Value="#dfd3c3"/>
-                <Setter Property="Button.Width" Value="250"/>
-                <Setter Property="Button.Height" Value="40"/>
-                <Setter Property="Button.FontFamily" Value="Century Gothic"/>
-                <Setter Property="Button.FontSize" Value="16"/>
+                <Setter Property="Background" Value="#dfd3c3"/>
+                <Setter Property="Width" Value="250"/>
+                <Setter Property="Height" Value="40"/>
+                <Setter Property="FontFamily" Value="Century Gothic"/>
+                <Setter Property="FontSize" Value="16"/>
             </Style.Setters>
         </Style>
         <Style TargetType="TextBox">
             <Style.Setters>
-                <Setter Property="TextBox.Width" Value="250"/>
-                <Setter Property="TextBox.Height" Value="35"/>
-                <Setter Property="TextBox.FontFamily" Value="Century Gothic"/>
-                <Setter Property="TextBox.FontSize" Value="18"/>
-                <Setter Property="TextBox.VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Width" Value="250"/>
+                <Setter Property="Height" Value="35"/>
+                <Setter Property="FontFamily" Value="Century Gothic"/>
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="IsEnabled" Value="false"/>
             </Style.Setters>
         </Style>
         <Style TargetType="Label">
             <Style.Setters>
-                <Setter Property="Label.Width" Value="Auto"/>
-                <Setter Property="Label.Height" Value="30"/>
-                <Setter Property="Label.FontFamily" Value="Century Gothic"/>
-                <Setter Property="Label.FontSize" Value="16"/>
-                <Setter Property="Label.Margin" Value="30,0,0,0"/>
-                <Setter Property="Label.Padding" Value="0,10,0,0"/>
-                <Setter Property="Label.HorizontalAlignment" Value="Left"/>
+                <Setter Property="Width" Value="Auto"/>
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="FontFamily" Value="Century Gothic"/>
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="Margin" Value="30,0,0,0"/>
+                <Setter Property="Padding" Value="0,10,0,0"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
             </Style.Setters>
         </Style>
     </UserControl.Resources>
@@ -50,12 +51,10 @@
             <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Row="1" Grid.Column="0">
-            <Button x:Name="addTaskButton" Content="Назначить"/>
-        </Border>
+        <Border Grid.Row="1" Grid.Column="0"/>
 
         <Border Grid.Row="1" Grid.Column="1">
-            <Button x:Name="closeFormButton" Content="Закрыть" Click="closeFormButton_Click"/>
+            <Button x:Name="closeUCButton" Content="Закрыть" Click="closeUCButton_Click"/>
         </Border>
 
         <Border Grid.Row="0" Grid.Column="0">

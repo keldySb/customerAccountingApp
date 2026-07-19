@@ -1,4 +1,5 @@
-﻿using finalExam_diplom_.classes.databaseTables;
+﻿using finalExam_diplom_.classes;
+using finalExam_diplom_.classes.databaseTables;
 using finalExam_diplom_.controls;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,7 +16,22 @@ namespace finalExam_diplom_.forms
             InitializeComponent();
 
             useControl.Content = control;
+
+            if (control is clientsChangeDataControl actionControl)
+            {
+                actionControl.closeUC += closeUC;
+            }
+
+            if (control is employeeOpenDataControl actionEmpControl)
+            {
+                actionEmpControl.closeUC += closeUC;
+            }
         }
 
+        void closeUC()
+        {
+            useControl.Visibility = Visibility.Collapsed;
+            this.Hide();
+        }
     }
 }

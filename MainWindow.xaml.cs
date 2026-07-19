@@ -1,14 +1,5 @@
 ﻿using finalExam_diplom_.controls;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace finalExam_diplom_
 {
@@ -20,7 +11,6 @@ namespace finalExam_diplom_
         public MainWindow()
         {
             InitializeComponent();
-
         }
 
         private void employeeButton_Click(object sender, RoutedEventArgs e)
@@ -28,6 +18,20 @@ namespace finalExam_diplom_
             employeeControl ec = new employeeControl();
             useControl.Content = ec;
             headerTextBox.Text = "Список сотрудников";
+
+            ec.setTask += setTask;
+        }
+
+        void setTask()
+        {
+            setBorder.Visibility = Visibility.Visible;
+            mainControl mc = new mainControl();
+            setTaskOrEmpControl.Content = mc;
+            mc.statusBorder.Visibility = Visibility.Collapsed;
+            mc.id.Visibility = Visibility.Collapsed;
+            mc.fio.Visibility = Visibility.Collapsed;
+            mc.status.Visibility = Visibility.Collapsed;
+            mc.created_time.Visibility = Visibility.Collapsed;
         }
 
         private void mainButton_Click(object sender, RoutedEventArgs e)
