@@ -11,13 +11,37 @@
     <UserControl.Resources>
         <Style TargetType="Button">
             <Style.Setters>
-                <Setter Property="Button.Background" Value="#dfd3c3"/>
-                <Setter Property="Button.Width" Value="120"/>
+                <Setter Property="Background" Value="#dfd3c3"/>
+                <Setter Property="Width" Value="120"/>
+            </Style.Setters>
+        </Style>
+        <Style TargetType="Label">
+            <Style.Setters>
+                <Setter Property="FontFamily" Value="Bahnschrift Light"/>
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            </Style.Setters>
+        </Style>
+        <Style TargetType="TextBox">
+            <Style.Setters>
+                <Setter Property="FontFamily" Value="Bahnschrift Light"/>
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="Height" Value="25"/>
+                <Setter Property="Margin" Value="10"/>
             </Style.Setters>
         </Style>
         <Style TargetType="DataGrid">
             <Style.Setters>
-                <Setter Property="DataGrid.Background" Value="White"/>
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="FontFamily" Value="Bahnschrift Light"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="RowBackground" Value="White"/>
+                <Setter Property="IsTabStop" Value="True"/>
+                <Setter Property="IsHitTestVisible" Value="True"/>
+                <Setter Property="SelectionUnit" Value="FullRow"/>
+                <Setter Property="AutoGenerateColumns" Value="False"/>
+                <Setter Property="CanUserAddRows" Value="False"/>
             </Style.Setters>
         </Style>
     </UserControl.Resources>
@@ -29,38 +53,35 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="60"/>
-            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Row="0" Grid.Column="0">
-            <Label x:Name="searchLabel" Content="Поиск" FontFamily="Century Gothic" FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+        <Border Grid.Row="0" Grid.Column="0" x:Name="searchBorder">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="searchLabel" Content="Поиск" Grid.Column="0"/>
+                <TextBox x:Name="employeeTextBox" TextChanged="employeeTextBox_TextChanged" Grid.Column="1"/>
+            </Grid>
         </Border>
-        
-        <Border Grid.Row="0" Grid.Column="1">
-            <TextBox x:Name="employeeTextBox" 
-                     FontFamily="Century Gothic" FontSize="16" 
-                     Height="25" Margin="10" BorderBrush="Gray" 
-                     TextChanged="employeeTextBox_TextChanged"/>
-        </Border>
+       
 
         <Border Grid.Row="1" Grid.ColumnSpan="3">
-            <DataGrid x:Name="employeeDataGrid" 
-                      Background="white" FontFamily="Century Gothic" 
-                      FontSize="14" SelectionMode="Single" 
-                      RowBackground="White" IsTabStop="True" IsHitTestVisible="True"
-                      SelectionUnit="FullRow" AutoGenerateColumns="False" CanUserAddRows="False">
+            <DataGrid x:Name="employeeDataGrid">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="#" Binding="{Binding id}" Width="Auto" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Табельный номер" Binding="{Binding employee_number}" Width="Auto" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="ФИО" Binding="{Binding fio}" Width="*" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Возраст" Binding="{Binding age}" Width="Auto" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Должность" Binding="{Binding position}" Width="Auto" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Опыт работы" Binding="{Binding experience}" Width="Auto" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Номер телефона" Binding="{Binding phone_number}" Width="Auto" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Статус" Binding="{Binding status}" Width="Auto" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Трудоустроен?" Binding="{Binding is_actual}" Width="Auto" IsReadOnly="True" Visibility="Hidden"/>
+                    <DataGridTextColumn Header="#" Binding="{Binding Id}" Width="Auto" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Табельный номер" Binding="{Binding Employee_number}" Width="Auto" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="ФИО" Binding="{Binding Fio}" Width="*" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Возраст" Binding="{Binding Age}" Width="Auto" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Должность" Binding="{Binding Position}" Width="Auto" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Опыт работы" Binding="{Binding Experience}" Width="Auto" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Номер телефона" Binding="{Binding Phone_number}" Width="Auto" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Идентификатор статуса" Binding="{Binding Status_Id}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
+                    <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="Auto" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Трудоустроен?" Binding="{Binding Is_actual}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
 
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>

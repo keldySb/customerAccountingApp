@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
 
         <Border Grid.Row="0" Background="#c7b198">
-            <Label x:Name="headerLabel" Content="Форма изменения" FontFamily="Century Gothic" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20"/>
+            <Label x:Name="headerLabel" Content="Форма изменения" FontFamily="Bahnschrift Light" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20"/>
         </Border>
 
         <Border Grid.Row="1">

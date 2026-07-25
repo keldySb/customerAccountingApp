@@ -1,43 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace finalExam_diplom_.classes.databaseTables
+﻿namespace finalExam_diplom_.classes.databaseTables
 {
-    public class clientsRequestTable
+    public class ClientsRequestTable
     {
-        public int id {  get; set; }
+        public int Id { get; private set; }
 
-        public string? fio { get; set; }
+        public string? Fio { get; private set; }
 
-        public string? address { get; set; }
+        public string? Address { get; private set; }
 
-        public string? description { get; set; }
+        public string? Description { get; private set; }
 
-        public int status_id { get; set; }
+        public int Status_id { get; private set; }
 
-        public string? status { get; set; }
+        public string? Status { get; private set; }
 
-        public int priority_id { get; set; }
+        public int Priority_id { get; private set; }
 
-        public string? priority { get; set; }
+        public string? Priority { get; private set; }
 
-        public int? manager_id { get; set; }
+        public int? Manager_id { get; private set; }
 
-        public string? manager { get; set; }
+        public string? Manager { get; private set; }
 
-        public int? master_id { get; set; }
+        public int? Master_id { get; private set; }
 
-        public string? master { get; set; }
+        public string? Master { get; private set; }
 
-        public DateTime? created_time { get; set; }
+        public DateTime? Created_time { get; private set; }
 
-        public DateTime? visit_time { get; set; }
+        public DateTime? Visit_time { get; private set; }
 
-        public DateTime? closed_time { get; set; }
+        public DateTime? Closed_time { get; private set; }
 
-        public string? master_comment { get; set; }
+        public string? Master_comment { get; private set; }
+
+        public ClientsRequestTable(int id, string? fio, string? address, string? description, int status_id, string? status, int priority_id, string? priority, int? manager_id, string? manager, int? master_id,
+    string? master, DateTime? created_time, DateTime? visit_time, DateTime? closed_time, string? master_comment)
+        {
+            Id = id;
+            Fio = fio;
+            Address = address;
+            Description = description;
+            Status_id = status_id;
+            Status = status;
+            Priority_id = priority_id;
+            Priority = priority;
+            Manager_id = manager_id;
+            Manager = manager;
+            Master_id = master_id;
+            Master = master;
+            Created_time = created_time;
+            Visit_time = visit_time;
+            Closed_time = closed_time;
+            Master_comment = master_comment;
+        }
     }
-}
+} 

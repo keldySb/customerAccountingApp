@@ -4,35 +4,32 @@ using finalExam_diplom_.classes.databaseTables;
 
 namespace finalExam_diplom_.controls
 {
-    /// <summary>
-    /// Логика взаимодействия для employeeChangeDataControl.xaml
-    /// </summary>
     public partial class employeeOpenDataControl : UserControl
     {
-        private employeesTable _empData;
-        public employeeOpenDataControl(employeesTable empData)
+        private EmployeesTable _empData;
+        public employeeOpenDataControl(EmployeesTable empData)
         {
             InitializeComponent();
             _empData = empData;
-            loadEmployeeData();
+            LoadEmployeeData();
         }
 
-        private void loadEmployeeData()
+        private void LoadEmployeeData()
         {
-            employeeNumberTextBox.Text = _empData.employee_number;
-            fioTextBox.Text = _empData.fio;
-            ageTextBox.Text = _empData.age.ToString();
-            positionTextBox.Text = _empData.position;
-            experienceTextBox.Text = _empData.experience.ToString();
-            phoneNumberTextBox.Text = _empData.phone_number;
-            statusTextBox.Text = _empData.status;
+            employeeNumberTextBox.Text = _empData.Employee_number;
+            fioTextBox.Text = _empData.Fio;
+            ageTextBox.Text = _empData.Age.ToString();
+            positionTextBox.Text = _empData.Position;
+            experienceTextBox.Text = _empData.Experience.ToString();
+            phoneNumberTextBox.Text = _empData.Phone_number;
+            statusTextBox.Text = _empData.Status;
         }
 
-        public event Action closeUC = delegate { };
+        public event Action CloseUC = delegate { };
 
-        private void closeUCButton_Click(object sender, RoutedEventArgs e)
+        private void CloseUCButton_Click(object sender, RoutedEventArgs e)
         {
-            closeUC();
+            CloseUC();
         }
     }
 }

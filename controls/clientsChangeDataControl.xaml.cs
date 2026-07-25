@@ -6,49 +6,78 @@ using System.Windows.Controls;
 
 namespace finalExam_diplom_.controls
 {
-    /// <summary>
-    /// Логика взаимодействия для clientsChangeDataControl.xaml
-    /// </summary>
     public partial class clientsChangeDataControl : UserControl
     {
-        private clientsRequestTable _clientData;
-        public clientsChangeDataControl(clientsRequestTable clientData)
+        private ClientsRequestTable _clientData;
+        public clientsChangeDataControl(ClientsRequestTable clientData)
         {
             InitializeComponent();
 
             _clientData = clientData;
-            loadClienteData();
+            LoadClienteData();
         }
 
-        private void loadClienteData()
+        private void LoadClienteData()
         {
-            showInformationForComboBox.information("SELECT id, name FROM priorities", priorityComboBox);
-            showInformationForComboBox.information("SELECT id, name FROM statuses", statusComboBox);
-            showInformationForComboBox.information("SELECT id, first_name || ' ' || last_name || ' ' || middle_name as name FROM employees", masterComboBox);
+            GetStatuses status = new GetStatuses();
 
-            clientTextBox.Text = _clientData.fio;
-            addressTextBox.Text = _clientData.address;
-            statusComboBox.SelectedValue = _clientData.status_id;
-            createdTimeDatePicker.SelectedDate = _clientData.created_time;
-            priorityComboBox.SelectedValue = _clientData.priority_id;
-            masterComboBox.SelectedValue = _clientData.master_id;
-            visitTimeDatePicker.SelectedDate = _clientData.visit_time;
-            closedTimeDatePicker.SelectedDate = _clientData.closed_time;
-            managerComboBox.SelectedItem = _clientData.manager_id;
-            descriptionTextBox.Text = _clientData.description;
-            masterCommentTextBox.Text = _clientData.master_comment;
+            priorityComboBox.ItemsSource = status.GetPriority();
+            priorityComboBox.SelectedValuePath = "Id";
+            priorityComboBox.DisplayMemberPath = "Name";
+
+            statusComboBox.ItemsSource = status.GetStatus();
+            statusComboBox.SelectedValuePath = "Id";
+            statusComboBox.DisplayMemberPath = "Name";
+
+
+            masterComboBox.ItemsSource = status.GetMaster();
+            masterComboBox.SelectedValuePath = "Id";
+            masterComboBox.DisplayMemberPath = "Name";
+
+
+            clientTextBox.Text = _clientData.Fio;
+            addressTextBox.Text = _clientData.Address;
+            statusComboBox.SelectedValue = _clientData.Status_id;
+            createdTimeDatePicker.SelectedDate = _clientData.Created_time;
+            priorityComboBox.SelectedValue = _clientData.Priority_id;
+            masterComboBox.SelectedValue = _clientData.Master_id;
+            visitTimeDatePicker.SelectedDate = _clientData.Visit_time;
+            closedTimeDatePicker.SelectedDate = _clientData.Closed_time;
+            managerComboBox.SelectedValue = _clientData.Manager_id;
+            descriptionTextBox.Text = _clientData.Description;
+            masterCommentTextBox.Text = _clientData.Master_comment;
         }
 
-        public event Action closeUC = delegate { };
+        public event Action CloseUC = delegate { };
 
-        public void raise()
+        public void Raise()
         {
-            closeUC();
+            CloseUC();
         }
 
-        private void closeUCButton_Click(object sender, RoutedEventArgs e)
+        private void CloseUCButton_Click(object sender, RoutedEventArgs e)
         {
-            raise();
+            Raise();
+        }
+
+        private void AddTaskButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (visitTimeDatePicker.SelectedDate != null && masterComboBox.SelectedValue != null)
+            {
+                if (visitTimeDatePicker.SelectedDate > DateTime.Now)
+                {
+                    ClientsRequestTable NewData = new ClientsRequestTable(_clientData.Id, null, null, null, _clientData.Status_id, null, _clientData.Priority_id, null, _clientData.Manager_id, null, _clientData.Master_id, null, null, _clientData.Visit_time, null, null);
+
+                    UpdateInformation information = new UpdateInformation();
+
+                    information.UpdateClientRequest(NewData);
+
+                    Raise();
+                }
+                else { MessageBox.Show("Дата визита не может быть меньше текущей даты"); }
+
+            } else { MessageBox.Show("Не все поля заполнены"); }
+
         }
     }
 }

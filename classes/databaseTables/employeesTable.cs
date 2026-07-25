@@ -6,22 +6,38 @@ using System.Threading.Tasks;
 
 namespace finalExam_diplom_.classes.databaseTables
 {
-    public class employeesTable
+    public class EmployeesTable
     {
-        public int id { get; set; }
+        public int Id { get; private set; }
 
-        public string? employee_number { get; set; }
+        public string? Employee_number { get; private set; }
 
-        public string? fio { get; set; }
+        public string? Fio { get; private set; }
 
-        public int age { get; set; }
+        public int Age { get; private set; }
 
-        public string? position { get; set; }
+        public string? Position { get; private set; }
 
-        public int experience { get; set; }
+        public int Experience { get; private set; }
 
-        public string? phone_number { get; set; }
+        public string? Phone_number { get; private set; }
 
-        public string? status { get; set; }
+        public string? Status_Id { get; private set; } 
+
+        public string? Status { get; private set; }
+
+
+        public EmployeesTable(int id, string? employee_number, string? fio, int age, string? position, int experience, string? phone_number, string? status_id, string? status)
+        {
+            Id = id;
+            Employee_number = employee_number;
+            Fio = fio;
+            Age = age;
+            Position = position;
+            Experience = experience;
+            Phone_number = phone_number;
+            Status_Id = status_id;
+            Status = status;
+        }
     }
 }

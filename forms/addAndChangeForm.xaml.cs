@@ -19,16 +19,16 @@ namespace finalExam_diplom_.forms
 
             if (control is clientsChangeDataControl actionControl)
             {
-                actionControl.closeUC += closeUC;
+                actionControl.CloseUC += CloseUC;
             }
 
             if (control is employeeOpenDataControl actionEmpControl)
             {
-                actionEmpControl.closeUC += closeUC;
+                actionEmpControl.CloseUC += CloseUC;
             }
         }
 
-        void closeUC()
+        void CloseUC()
         {
             useControl.Visibility = Visibility.Collapsed;
             this.Hide();

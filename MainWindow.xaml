@@ -5,20 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:finalExam_diplom_"
         xmlns:controls="clr-namespace:finalExam_diplom_.controls"
-        mc:Ignorable="d" Height="900" Width="1200" WindowStartupLocation="CenterScreen" WindowState="Maximized" >
+        mc:Ignorable="d" Height="900" Width="1200" WindowStartupLocation="CenterScreen" WindowState="Maximized" Loaded="Window_Loaded" >
     <Window.Resources>
         <Style TargetType="Button">
             <Style.Setters>
                 <Setter Property="Background" Value="#dfd3c3"/>
                 <Setter Property="Height" Value="40"/>
-                <Setter Property="FontFamily" Value="Century Gothic"/>
+                <Setter Property="FontFamily" Value="Bahnschrift Light"/>
                 <Setter Property="FontSize" Value="16"/>
                 <Setter Property="Margin" Value="1"/>
             </Style.Setters>
         </Style>
+        <Style TargetType="Label">
+            <Style.Setters>
+                <Setter Property="Background" Value="#c7b198"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="FontFamily" Value="Bahnschrift Light"/>
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="Height" Value="50"/>
+            </Style.Setters>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Style.Setters>
+                <Setter Property="Background" Value="#c7b198"/>
+                <Setter Property="FontFamily" Value="Bahnschrift Light"/>
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="Margin" Value="20"/>
+            </Style.Setters>
+        </Style>
     </Window.Resources>
-    
-    
+
+
     <Grid x:Name="mainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
@@ -28,35 +48,48 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="180"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Row="0" Grid.ColumnSpan="3" Background="#c7b198">
-            <TextBlock x:Name="headerTextBox" Text="Заявки клиентов" FontFamily="Century Gothic" FontSize="20" Foreground="Black" VerticalAlignment="Center" Margin="20"/>
+        
+        <GridSplitter x:Name="Splitter" Grid.Column="2" Grid.Row="1" Width="5" Visibility="Collapsed"
+                      VerticalAlignment="Stretch" ResizeDirection ="Columns" ResizeBehavior="PreviousAndNext"/>
+
+        <Border Grid.Row="0" Grid.ColumnSpan="4" Background="#c7b198">
+            <TextBlock x:Name="headerTextBox" Text="Заявки клиентов"/>
         </Border>
 
         <Border Grid.Row="1" Grid.Column="0" Grid.RowSpan="2">
-            <StackPanel Background="#f0ece2">
-                <Button x:Name="mainButton"  Content="Заявки клиентов" Click="mainButton_Click"/>
-                <Button x:Name="employeeButton" Content="Сотрудники" Click="employeeButton_Click"/>
-                <Button x:Name="reportButton"  Content="Отчеты" Click="reportButton_Click"/>
-            </StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <StackPanel Background="#f0ece2" Grid.Row="0">
+                    <Button x:Name="mainButton"  Content="Заявки клиентов" Click="MainButton_Click"/>
+                    <Button x:Name="employeeButton" Content="Сотрудники" Click="EmployeeButton_Click"/>
+                    <Button x:Name="reportButton" Content="Отчеты" Click="ReportButton_Click"/>
+                </StackPanel>
+                <Button x:Name="SignOutButton" Content="Выйти из акканута" Grid.Row="1" Click="SignOutButton_Click"/>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="1" Grid.ColumnSpan="4">
+            <ContentControl x:Name="authControl"/>
         </Border>
 
         <Border Grid.Row="1" Grid.Column="1" Margin="5">
-            <ContentControl x:Name="useControl" />
+            <ContentControl x:Name="useControl"/>
         </Border>
 
-        <Border x:Name="setBorder" Visibility="Collapsed" Grid.Row="2" Grid.Column="3" Margin="5,5,0,0">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Label x:Name="setTaskOrEmpLabel" Content="Назначение задачи" Background="#c7b198" VerticalContentAlignment="Center"
-                       HorizontalContentAlignment="Center" FontFamily="Century Gothic" FontSize="16"/>
+        <Border x:Name="setBorder" Visibility="Collapsed" Grid.Row="2" Grid.Column="3" Margin="5,0,2,5" BorderThickness="1" BorderBrush="Gray" Width="Auto">
+            <StackPanel Grid.Column="1">
+                <Label x:Name="setTaskOrEmpLabel" Content="Назначение задачи"/>
                 <ContentControl x:Name="setTaskOrEmpControl" />
-            </Grid>
+                <Button x:Name="closeUCButton" Content="Закрыть окно" Background="#f0ece2" VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center" Click="CloseUCButton_Click"/>
+            </StackPanel>
         </Border>
     </Grid>
 </Window>

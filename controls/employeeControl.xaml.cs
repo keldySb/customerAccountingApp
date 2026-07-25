@@ -19,31 +19,25 @@ namespace finalExam_diplom_.controls
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            showInformationEmployeeForDataGrid.information("SELECT " +
-                                                    "e.id, e.employee_number, CONCAT(e.first_name, ' ', e.last_name, ' ', e.middle_name) as fio, " +
-                                                    "e.age, e.position, e.experience, e.phone_number, s.name as status " +
-                                                    "FROM employees e LEFT JOIN employees_status s ON e.status_id = s.id", employeeDataGrid, null);
+            showDataGridInformation();
+        }
+
+        private void showDataGridInformation()
+        {
+            GetEmployeeTable table = new GetEmployeeTable();
+
+            List<EmployeesTable> employee = table.GetEmployee(employeeTextBox.Text);
+            employeeDataGrid.ItemsSource = employee;
         }
 
         private void employeeTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string sql = "SELECT " +
-                             "e.id, e.employee_number, CONCAT(e.first_name, ' ', e.last_name, ' ', e.middle_name) as fio, " +
-                             "e.age, e.position, e.experience, e.phone_number, s.name as status " +
-                             "FROM employees e " +
-                             "LEFT JOIN employees_status s ON e.status_id = s.id ";
-
-            if (!string.IsNullOrWhiteSpace(employeeTextBox.Text))
-            {
-                sql += "WHERE CONCAT(e.employee_number, e.first_name, e.last_name, e.middle_name, e.position, s.name) ILIKE @search";
-            }
-
-            showInformationEmployeeForDataGrid.information(sql, employeeDataGrid, employeeTextBox.Text);
+            showDataGridInformation();
         }
 
         private void openApplication_Click(object sender, RoutedEventArgs e)
         {
-            var empData = employeeDataGrid.SelectedItem as employeesTable;
+            var empData = employeeDataGrid.SelectedItem as EmployeesTable;
 
             employeeOpenDataControl control = new employeeOpenDataControl(empData);
             addAndChangeForm form = new addAndChangeForm(control);

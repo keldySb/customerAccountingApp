@@ -1,23 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace finalExam_diplom_.classes.databaseTables
+﻿namespace finalExam_diplom_.classes.databaseTables
 {
-    internal class clientsTable
+    internal class ClientsTable
     {
-        public int id { get; set; }
+        public int Id { get; set; }
 
-        public string? first_name { get; set; }
+        public string? First_name { get; set; }
 
-        public string? last_name { get; set; }
+        public string? Last_name { get; set; }
 
-        public string? middle_name { get; set; }
+        public string? Middle_name { get; set; }
 
-        public string? phone { get; set; }
+        public string? Phone { get; set; }
 
-        public string? email { get; set; }
+        public string? Email { get; set; }
     }
 }

@@ -9,9 +9,8 @@ using System.Threading.Tasks;
 
 namespace finalExam_diplom_.classes
 {
-    class dataBaseConnection
+    class DataBaseConnection
     {
-
         private readonly string connection = "Host=localhost;Username=postgres;Password=123;Database=uk_applications_db";
         public NpgsqlConnection getConnection()
         {

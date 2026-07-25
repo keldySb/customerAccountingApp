@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="finalExam_diplom_.controls.mainControl"
+﻿<UserControl x:Class="finalExam_diplom_.controls.MainControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,22 +9,29 @@
     <UserControl.Resources>
         <Style TargetType="Button">
             <Style.Setters>
-                <Setter Property="Button.Background" Value="#dfd3c3"/>
-                <Setter Property="Button.Width" Value="120"/>
+                <Setter Property="Background" Value="#dfd3c3"/>
+                <Setter Property="Width" Value="120"/>
             </Style.Setters>
-            <Style.Triggers>
-                <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Button.Background" Value="Red"></Setter>
-                </Trigger>
-            </Style.Triggers>
         </Style>
         <Style TargetType="DataGrid">
             <Style.Setters>
-                <Setter Property="DataGrid.Background" Value="White"/>
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="FontFamily" Value="Bahnschrift Light"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="SelectionMode" Value="Single"/>
+                <Setter Property="RowBackground" Value="White"/>
+                <Setter Property="IsTabStop" Value="True"/>
+                <Setter Property="IsHitTestVisible" Value="True"/>
+                <Setter Property="AutoGenerateColumns" Value="False"/>
+                <Setter Property="CanUserAddRows" Value="False"/>
             </Style.Setters>
-            <Style.Triggers>
-                <Trigger Property="DataGrid.Background" Value="Gray"/>
-            </Style.Triggers>
+        </Style>
+        <Style TargetType="Label">
+            <Style.Setters>
+                <Setter Property="FontFamily" Value="Bahnschrift Light"/>
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style.Setters>
         </Style>
     </UserControl.Resources>
 
@@ -45,10 +52,9 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Label x:Name="mainSearchLabel" Content="Поиск" FontFamily="Century Gothic" FontSize="16" 
-                       VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Grid.Column="0"/>
+                <Label x:Name="mainSearchLabel" Content="Поиск" HorizontalContentAlignment="Right" Grid.Column="0"/>
                 <TextBox x:Name="mainTextBox" 
-                     FontFamily="Century Gothic" FontSize="16" BorderBrush="Gray" 
+                     FontFamily="Bahnschrift Light" FontSize="16" BorderBrush="Gray" 
                      Height="25" Margin="10" TextChanged="mainTextBox_TextChanged" Grid.Column="1"/>
             </Grid>
         </Border>
@@ -58,43 +64,36 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
-
                 </Grid.ColumnDefinitions>
             
             <Label x:Name="mainComboBoxLabel" 
-                   Content="Выбор статуса" FontFamily="Century Gothic" FontSize="16" 
-                   HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-                   Width="150" Grid.Column="0"/>
+                   Content="Выбор статуса" HorizontalContentAlignment="Center" Width="150" Grid.Column="0"/>
             <ComboBox x:Name="mainComboBox" 
-                      FontFamily="Century Gothic" FontSize="16" 
+                      FontFamily="Bahnschrift Light" FontSize="16" 
                       BorderBrush="white" Height="25" 
-                      DisplayMemberPath="name" SelectedValuePath="id" SelectedIndex="0" SelectionChanged="mainComboBox_SelectionChanged" Grid.Column="1"/>
+                      DisplayMemberPath="Name" SelectedValuePath="Id" SelectedIndex="0" SelectionChanged="MainComboBox_SelectionChanged" Grid.Column="1"/>
             </Grid>
         </Border>
 
         <Border Grid.Row="1" Grid.ColumnSpan="4">
-            <DataGrid x:Name="mainDataGrid" 
-                      Background="white" FontFamily="Century Gothic" 
-                      FontSize="14" SelectionMode="Single" 
-                      RowBackground="White" IsTabStop="True" IsHitTestVisible="True"
-                      SelectionUnit="FullRow" AutoGenerateColumns="False" MouseDoubleClick="mainDataGrid_MouseDoubleClick" CanUserAddRows="False">
+            <DataGrid x:Name="mainDataGrid"  ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseDoubleClick="MainDataGrid_MouseDoubleClick">
                 <DataGrid.Columns>
-                    <DataGridTextColumn x:Name="id" Header="#" Binding="{Binding id}" Width="Auto" IsReadOnly="True"/>
-                    <DataGridTextColumn x:Name="fio" Header="ФИО" Binding="{Binding fio}" Width="Auto" IsReadOnly="True"/>
-                    <DataGridTextColumn x:Name="address" Header="Адрес" Binding="{Binding address}" Width="Auto" IsReadOnly="True"/>
-                    <DataGridTextColumn x:Name="description" Header="Описание" Binding="{Binding description}" Width="*" IsReadOnly="True"/>
-                    <DataGridTextColumn x:Name="status_id" Header="Идентификатор статуса" Binding="{Binding status_id}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
-                    <DataGridTextColumn x:Name="status" Header="Статус" Binding="{Binding status}" Width="Auto" IsReadOnly="True"/>
-                    <DataGridTextColumn x:Name="priority_id" Header="Идентификатор приоритета" Binding="{Binding priority_id}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
-                    <DataGridTextColumn x:Name="priority" Header="Приоритет" Binding="{Binding priority}" Width="Auto" IsReadOnly="True"/>
-                    <DataGridTextColumn x:Name="manager_id" Header="Идентификатор менеджерa" Binding="{Binding manager_id}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
-                    <DataGridTextColumn x:Name="manager" Header="Ответственный менеджер" Binding="{Binding manager}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
-                    <DataGridTextColumn x:Name="master_id" Header="Идентификатор мастерa" Binding="{Binding master_id}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
-                    <DataGridTextColumn x:Name="master" Header="Ответственный мастер" Binding="{Binding master}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
-                    <DataGridTextColumn x:Name="created_time" Header="Дата создания" Binding="{Binding created_time}" Width="Auto" IsReadOnly="True"/>
-                    <DataGridTextColumn x:Name="visit_time" Header="Дата визита" Binding="{Binding visit_time}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
-                    <DataGridTextColumn x:Name="closed_time" Header="Дата закрытия заявки" Binding="{Binding closed_time}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
-                    <DataGridTextColumn x:Name="master_comment" Header="Комментарий" Binding="{Binding master_comment}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
+                    <DataGridTextColumn x:Name="Id" Header="#" Binding="{Binding Id}" Width="Auto" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="Fio" Header="ФИО" Binding="{Binding Fio}" Width="Auto" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="Address" Header="Адрес" Binding="{Binding Address}" Width="Auto" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="Description" Header="Описание" Binding="{Binding Description}" Width="*" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="Status_id" Header="Идентификатор статуса" Binding="{Binding Status_id}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
+                    <DataGridTextColumn x:Name="Status" Header="Статус" Binding="{Binding Status}" Width="Auto" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="Priority_id" Header="Идентификатор приоритета" Binding="{Binding Priority_id}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
+                    <DataGridTextColumn x:Name="Priority" Header="Приоритет" Binding="{Binding Priority}" Width="Auto" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="Manager_id" Header="Идентификатор менеджерa" Binding="{Binding Manager_id}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
+                    <DataGridTextColumn x:Name="Manager" Header="Ответственный менеджер" Binding="{Binding Manager}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
+                    <DataGridTextColumn x:Name="Master_id" Header="Идентификатор мастерa" Binding="{Binding Master_id}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
+                    <DataGridTextColumn x:Name="Master" Header="Ответственный мастер" Binding="{Binding Master}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
+                    <DataGridTextColumn x:Name="Created_time" Header="Дата создания" Binding="{Binding Created_time}" Width="Auto" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="Visit_time" Header="Дата визита" Binding="{Binding Visit_time}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
+                    <DataGridTextColumn x:Name="Closed_time" Header="Дата закрытия заявки" Binding="{Binding Closed_time}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
+                    <DataGridTextColumn x:Name="Master_comment" Header="Комментарий" Binding="{Binding Master_comment}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
 
                     <DataGridTemplateColumn Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>

@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace finalExam_diplom_.classes.databaseTables
+﻿namespace finalExam_diplom_.classes.databaseTables
 {
-    internal class dictionaryItems
+    public class DictionaryItems
     {
-        public int id { get; set; }
+        public int Id { get; private set; }
 
-        public string? name { get; set; }
+        public string? Name { get; private set; }
+
+        public DictionaryItems(int id, string? name)
+        {
+            Id = id; 
+            Name = name;
+        }
     }
 }
