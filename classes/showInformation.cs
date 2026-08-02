@@ -90,12 +90,14 @@ namespace finalExam_diplom_.classes
 
                 string sql = "SELECT " +
                                   "e.id, e.employee_number, CONCAT(e.first_name, ' ', e.last_name, ' ', e.middle_name) as fio, " +
-                                  "e.age, e.position, e.experience, e.phone_number, e.status_id, s.name as status " +
-                                "FROM employees e LEFT JOIN employees_status s ON e.status_id = s.id";
+                                  "e.age, e.position_id, p.name as position, e.experience, e.phone_number, e.status_id, s.name as status " +
+                                "FROM employees e" +
+                                " LEFT JOIN employees_status s ON e.status_id = s.id" +
+                                " LEFT JOIN positions p ON e.position_id = p.id";
 
                 if (!string.IsNullOrEmpty(search))
                 {
-                    sql += " WHERE CONCAT(e.employee_number, e.first_name, e.last_name, e.middle_name, e.position, s.name) ILIKE @search";
+                    sql += " WHERE CONCAT(e.employee_number, e.first_name, e.last_name, e.middle_name, p.name, s.name) ILIKE @search";
                 }
 
                 using (NpgsqlCommand command = new NpgsqlCommand(sql, con))
@@ -111,11 +113,12 @@ namespace finalExam_diplom_.classes
                             reader[1].ToString(),
                             reader[2].ToString(),
                             reader.GetInt32(3),
-                            reader[4].ToString(),
-                            reader.GetInt32(5),
-                            reader[6].ToString(),
+                            reader.GetInt32(4),
+                            reader[5].ToString(),
+                            reader.GetInt32(6),
                             reader[7].ToString(),
-                            reader[8].ToString()));
+                            reader.GetInt32(8),
+                            reader[9].ToString()));
                     }
                     return tableData;
                 }
@@ -137,7 +140,16 @@ namespace finalExam_diplom_.classes
 
         public List<DictionaryItems> GetMaster()
         {
-            return GetItems("SELECT id, CONCAT(first_name, ' ', last_name, ' ', middle_name) as name FROM employees");
+            return GetItems("SELECT id, CONCAT(first_name, ' ', last_name, ' ', middle_name) as name FROM employees" +
+                " WHERE NOT position_id = 2 AND status_id = 1");
+        }
+
+        public List<DictionaryItems> GetManager()
+        {
+            return GetItems("SELECT d.id," +
+                                    " CONCAT(e.first_name, ' ', e.last_name, ' ', e.middle_name) as name" +
+                                    " FROM dispatchers d" +
+                                    " LEFT JOIN employees e ON d.employee_id = e.id");
         }
 
         public List<DictionaryItems> GetItems(string sql)
@@ -152,6 +164,7 @@ namespace finalExam_diplom_.classes
 
                 using (NpgsqlCommand command = new NpgsqlCommand(sql, con))
                 {
+
                     NpgsqlDataReader reader = command.ExecuteReader();
 
                     while (reader.Read())

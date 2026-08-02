@@ -72,7 +72,7 @@
         </Grid.ColumnDefinitions>
 
         <Border Grid.Row="2" Grid.Column="0">
-            <Button x:Name="addTaskButton" Content="Назначить" Click="AddTaskButton_Click"/>
+            <Button x:Name="addTaskButton" Content="Назначить" Visibility="Collapsed" Click="AddTaskButton_Click"/>
         </Border>
 
         <Border Grid.Row="2" Grid.Column="1">
@@ -98,13 +98,13 @@
         <Border Grid.Row="0" Grid.Column="1">
             <StackPanel Orientation="Vertical">
                 <Label x:Name="priorityLabel" Content="Приоритет заявки"/>
-                <ComboBox x:Name="priorityComboBox" DisplayMemberPath="name" SelectedValuePath="id"/>
+                <ComboBox x:Name="priorityComboBox" IsEnabled="False"/>
 
                 <Label x:Name="masterLabel" Content="Мастер"/>
-                <ComboBox x:Name="masterComboBox"/>
+                <ComboBox x:Name="masterComboBox" IsEnabled="False"/>
 
                 <Label x:Name="visitTimeLabel" Content="Время визита"/>
-                <DatePicker x:Name="visitTimeDatePicker"/>
+                <DatePicker x:Name="visitTimeDatePicker" IsEnabled="False"/>
 
                 <Label x:Name="closedTimeLabel" Content="Время закрытия заявки" Visibility="Collapsed"/>
                 <DatePicker x:Name="closedTimeDatePicker" Visibility="Collapsed"/>
@@ -113,8 +113,8 @@
 
         <Border Grid.Row="1" Grid.ColumnSpan="2">
             <StackPanel>
-                <Label x:Name="managerLabel" Content="Ответственный диспетчер" Visibility="Collapsed"/>
-                <ComboBox x:Name="managerComboBox" Width="550" Visibility="Collapsed"/>
+                <Label x:Name="managerLabel" Content="Ответственный диспетчер" Visibility="Visible"/>
+                <ComboBox x:Name="managerComboBox" Width="550" Visibility="Visible"/>
                 
                 <Label x:Name="descriptionLabel" Content="Описание"/>
                 <TextBox x:Name="descriptionTextBox" Width="550" Height="150" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" IsEnabled="false"/>

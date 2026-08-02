@@ -1,4 +1,5 @@
-﻿using finalExam_diplom_.controls;
+﻿using finalExam_diplom_.classes;
+using finalExam_diplom_.controls;
 using finalExam_diplom_.forms;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,6 +9,7 @@ namespace finalExam_diplom_
 {
     public partial class MainWindow : Window
     {
+        private EmployeeControl? _employeeControl;
         public MainWindow()
         {
             InitializeComponent();
@@ -17,6 +19,8 @@ namespace finalExam_diplom_
         {
             AuthorizationControl auth = new AuthorizationControl();
             authControl.Content = auth;
+            authControl.Visibility = Visibility.Visible;
+            MainMenu.Visibility = Visibility.Collapsed;
             headerTextBox.Text = "Авторизация";
             auth.Succsessful += Sucsessful;
         }
@@ -24,14 +28,17 @@ namespace finalExam_diplom_
         private void Sucsessful()
         {
             authControl.Visibility = Visibility.Collapsed;
+            MainMenu.Visibility = Visibility.Visible;
         }
 
         private void SetTask()
         {
             setBorder.Visibility = Visibility.Visible;
-            Splitter.Visibility = Visibility.Visible;
-            MainControl mc = new MainControl();
+            Splitter.Visibility = Visibility.Visible;  
+            MainControl mc = new MainControl(HideObjects);
+            mc.RequesInfo -= _employeeControl.RefreshData;
             setTaskOrEmpControl.Content = mc;
+            mc.RequesInfo += _employeeControl.RefreshData;
 
             mc.statusBorder.Visibility = Visibility.Collapsed;
             mc.Id.Visibility = Visibility.Collapsed;
@@ -40,11 +47,14 @@ namespace finalExam_diplom_
             mc.Created_time.Visibility = Visibility.Collapsed;
         }
 
-        private void HideObjects()
+        internal void HideObjects()
         {
-            setBorder.Visibility = Visibility.Collapsed;
-            Splitter.Visibility = Visibility.Collapsed;
-            mainGrid.ColumnDefinitions[3].Width = GridLength.Auto;
+            if (setBorder.Visibility == Visibility.Visible)
+            {
+                setBorder.Visibility = Visibility.Collapsed;
+                Splitter.Visibility = Visibility.Collapsed;
+                mainGrid.ColumnDefinitions[2].Width = GridLength.Auto;
+            }
         }
 
         private void CheckStateButton(object sender)
@@ -66,18 +76,18 @@ namespace finalExam_diplom_
 
         private void EmployeeButton_Click(object sender, RoutedEventArgs e)
         {
-            employeeControl ec = new employeeControl();
-            useControl.Content = ec;
+            _employeeControl = new EmployeeControl();
+            useControl.Content = _employeeControl;
             headerTextBox.Text = "Список сотрудников";
 
-            ec.setTask += SetTask;
+            _employeeControl.SetTask += SetTask;
 
             CheckStateButton(employeeButton);
         }
 
         private void MainButton_Click(object sender, RoutedEventArgs e)
         {
-            MainControl mc = new MainControl();
+            MainControl mc = new MainControl(HideObjects);
             useControl.Content = mc;
             headerTextBox.Text = "Заявки клиентов";
 

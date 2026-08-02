@@ -24,6 +24,13 @@
                 <Setter Property="FontSize" Value="26"/>
             </Style.Setters>
         </Style>
+        <Style TargetType="PasswordBox">
+            <Style.Setters>
+                <Setter Property="Height" Value="40"/>
+                <Setter Property="FontFamily" Value="Bahnschrift Light"/>
+                <Setter Property="FontSize" Value="26"/>
+            </Style.Setters>
+        </Style>
 
         <Style TargetType="Label">
             <Style.Setters>
@@ -31,12 +38,11 @@
                 <Setter Property="FontSize" Value="18"/>
                 <Setter Property="Width" Value="Auto"/>
                 <Setter Property="HorizontalAlignment" Value="Left"/>
-                <Setter Property="Padding" Value="0,15,0,0"/>
+                <Setter Property="Padding" Value="0,10,0,0"/>
             </Style.Setters>
         </Style>
     </UserControl.Resources>
     <Grid>
-
         <Border>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -60,18 +66,25 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Bottom">
-                            <Label x:Name="LoginLabel" Content="Логин"/>
-                            <TextBox x:Name="LoginTextBox"/>
-                            <Label x:Name="PasswordLabel" Content="Пароль"/>
-                            <TextBox x:Name="PasswordTextBox"/>
-                        </StackPanel>
+                        <Border Grid.Column="0" Grid.Row="0" VerticalAlignment="Bottom">
+                            <StackPanel >
+                                <Label x:Name="LoginLabel" Content="Логин"/>
+                                <TextBox x:Name="LoginTextBox"/>
+                                <Label x:Name="PasswordLabel" Content="Пароль"/>
+                                <TextBox x:Name="PasswordTextBox" Visibility="Collapsed" KeyDown="PasswordTextBox_KeyDown"/>
+                                <PasswordBox x:Name="PasswordBox" KeyDown="PasswordBox_KeyDown"/>
+                            </StackPanel>
+                        </Border>
 
-
-                        <Button x:Name="SignInButton" Content="Войти" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Click="SignInButton_Click"/>
+                        <Border Grid.Column="1" Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+                            <StackPanel>
+                                <Image x:Name="SeeSymblosPassword" Width="40" Height="40" ToolTip="Показать пароль" Visibility="Collapsed" Source="/Resources/visible.png" MouseLeftButtonDown="SeeSymblosPassword_MouseLeftButtonDown" />
+                                <Image x:Name="DontSeeSymblosPassword" Width="40" Height="40" ToolTip="Скрыть пароль" Source="/Resources/notvisible.png" MouseLeftButtonDown="DontSeeSymblosPassword_MouseLeftButtonDown" />
+                            </StackPanel>
+                        </Border>
+                        <Button x:Name="SignInButton" Content="Войти" Grid.ColumnSpan="2" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Click="SignInButton_Click"/>
                     </Grid>
                 </Border>
-                
             </Grid>
         </Border>
     </Grid>

@@ -1,8 +1,10 @@
 ﻿using finalExam_diplom_.classes;
 using finalExam_diplom_.classes.databaseTables;
 using finalExam_diplom_.forms;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace finalExam_diplom_.controls
 {
@@ -15,6 +17,18 @@ namespace finalExam_diplom_.controls
 
             _clientData = clientData;
             LoadClienteData();
+            SetVisibility();
+        }
+
+        private void SetVisibility()
+        {
+            if (_clientData.Status_id == 1)
+            {
+                addTaskButton.Visibility = Visibility.Visible;
+                masterComboBox.IsEnabled = true;
+                priorityComboBox.IsEnabled = true;
+                visitTimeDatePicker.IsEnabled = true;
+            }
         }
 
         private void LoadClienteData()
@@ -34,21 +48,26 @@ namespace finalExam_diplom_.controls
             masterComboBox.SelectedValuePath = "Id";
             masterComboBox.DisplayMemberPath = "Name";
 
+            managerComboBox.ItemsSource = status.GetManager();
+            managerComboBox.SelectedValuePath = "Id";
+            managerComboBox.DisplayMemberPath = "Name"; 
 
             clientTextBox.Text = _clientData.Fio;
             addressTextBox.Text = _clientData.Address;
-            statusComboBox.SelectedValue = _clientData.Status_id;
-            createdTimeDatePicker.SelectedDate = _clientData.Created_time;
-            priorityComboBox.SelectedValue = _clientData.Priority_id;
-            masterComboBox.SelectedValue = _clientData.Master_id;
-            visitTimeDatePicker.SelectedDate = _clientData.Visit_time;
-            closedTimeDatePicker.SelectedDate = _clientData.Closed_time;
-            managerComboBox.SelectedValue = _clientData.Manager_id;
             descriptionTextBox.Text = _clientData.Description;
             masterCommentTextBox.Text = _clientData.Master_comment;
+
+            createdTimeDatePicker.SelectedDate = _clientData.Created_time;
+            visitTimeDatePicker.SelectedDate = _clientData.Visit_time;
+            closedTimeDatePicker.SelectedDate = _clientData.Closed_time;
+
+            statusComboBox.SelectedValue = _clientData.Status_id;
+            priorityComboBox.SelectedValue = _clientData.Priority_id;
+            masterComboBox.SelectedValue = _clientData.Master_id;
+            managerComboBox.SelectedValue = CurrentUser.Id;
         }
 
-        public event Action CloseUC = delegate { };
+        public Action CloseUC;
 
         public void Raise()
         {
@@ -66,11 +85,13 @@ namespace finalExam_diplom_.controls
             {
                 if (visitTimeDatePicker.SelectedDate > DateTime.Now)
                 {
-                    ClientsRequestTable NewData = new ClientsRequestTable(_clientData.Id, null, null, null, _clientData.Status_id, null, _clientData.Priority_id, null, _clientData.Manager_id, null, _clientData.Master_id, null, null, _clientData.Visit_time, null, null);
+                    ClientsRequestTable NewData = new ClientsRequestTable(_clientData.Id, null, null, null, null, null, Convert.ToInt32(priorityComboBox.SelectedValue), null, CurrentUser.Id, null, Convert.ToInt32(masterComboBox.SelectedValue), null, null, visitTimeDatePicker.SelectedDate, null, null);
+                    EmployeesTable NewEmployeeData = new EmployeesTable(Convert.ToInt32(masterComboBox.SelectedValue), null, null, null, null, null, null, null, null, null);
 
                     UpdateInformation information = new UpdateInformation();
 
                     information.UpdateClientRequest(NewData);
+                    information.UpdateEmployeeRequest(NewEmployeeData);
 
                     Raise();
                 }

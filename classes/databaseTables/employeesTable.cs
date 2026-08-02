@@ -14,25 +14,28 @@ namespace finalExam_diplom_.classes.databaseTables
 
         public string? Fio { get; private set; }
 
-        public int Age { get; private set; }
+        public int? Age { get; private set; }
+
+        public int? Position_Id { get; private set; }
 
         public string? Position { get; private set; }
 
-        public int Experience { get; private set; }
+        public int? Experience { get; private set; }
 
         public string? Phone_number { get; private set; }
 
-        public string? Status_Id { get; private set; } 
+        public int? Status_Id { get; private set; } 
 
         public string? Status { get; private set; }
 
 
-        public EmployeesTable(int id, string? employee_number, string? fio, int age, string? position, int experience, string? phone_number, string? status_id, string? status)
+        public EmployeesTable(int id, string? employee_number, string? fio, int? age, int? position_id, string? position, int? experience, string? phone_number, int? status_id, string? status)
         {
             Id = id;
             Employee_number = employee_number;
             Fio = fio;
             Age = age;
+            Position_Id = position_id;
             Position = position;
             Experience = experience;
             Phone_number = phone_number;

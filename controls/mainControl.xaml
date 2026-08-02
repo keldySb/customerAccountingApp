@@ -13,6 +13,12 @@
                 <Setter Property="Width" Value="120"/>
             </Style.Setters>
         </Style>
+
+        <Style TargetType="DataGridColumnHeader">
+            <Style.Setters>
+                <Setter Property="Height" Value="40"/>
+            </Style.Setters>
+        </Style>
         <Style TargetType="DataGrid">
             <Style.Setters>
                 <Setter Property="Background" Value="White"/>
@@ -24,6 +30,10 @@
                 <Setter Property="IsHitTestVisible" Value="True"/>
                 <Setter Property="AutoGenerateColumns" Value="False"/>
                 <Setter Property="CanUserAddRows" Value="False"/>
+                <Setter Property="MinRowHeight" Value="35"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="GridLinesVisibility" Value="All"/>
+                <Setter Property="IsReadOnly" Value="True"/>
             </Style.Setters>
         </Style>
         <Style TargetType="Label">
@@ -76,29 +86,29 @@
         </Border>
 
         <Border Grid.Row="1" Grid.ColumnSpan="4">
-            <DataGrid x:Name="mainDataGrid"  ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseDoubleClick="MainDataGrid_MouseDoubleClick">
+            <DataGrid x:Name="mainDataGrid"  ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="{x:Null}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn x:Name="Id" Header="#" Binding="{Binding Id}" Width="Auto" IsReadOnly="True"/>
-                    <DataGridTextColumn x:Name="Fio" Header="ФИО" Binding="{Binding Fio}" Width="Auto" IsReadOnly="True"/>
-                    <DataGridTextColumn x:Name="Address" Header="Адрес" Binding="{Binding Address}" Width="Auto" IsReadOnly="True"/>
-                    <DataGridTextColumn x:Name="Description" Header="Описание" Binding="{Binding Description}" Width="*" IsReadOnly="True"/>
-                    <DataGridTextColumn x:Name="Status_id" Header="Идентификатор статуса" Binding="{Binding Status_id}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
+                    <DataGridTextColumn x:Name="Id" Header="#" Binding="{Binding Id}" Width="Auto"/>
+                    <DataGridTextColumn x:Name="Fio" Header="ФИО" Binding="{Binding Fio}" Width="Auto"/>
+                    <DataGridTextColumn x:Name="Address" Header="Адрес" Binding="{Binding Address}" Width="Auto"/>
+                    <DataGridTextColumn x:Name="Description" Header="Описание" Binding="{Binding Description}" Width="*"/>
+                    <DataGridTextColumn x:Name="Status_id" Header="Идентификатор статуса" Binding="{Binding Status_id}" Width="Auto" Visibility="Collapsed"/>
                     <DataGridTextColumn x:Name="Status" Header="Статус" Binding="{Binding Status}" Width="Auto" IsReadOnly="True"/>
-                    <DataGridTextColumn x:Name="Priority_id" Header="Идентификатор приоритета" Binding="{Binding Priority_id}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
+                    <DataGridTextColumn x:Name="Priority_id" Header="Идентификатор приоритета" Binding="{Binding Priority_id}" Width="Auto" Visibility="Collapsed"/>
                     <DataGridTextColumn x:Name="Priority" Header="Приоритет" Binding="{Binding Priority}" Width="Auto" IsReadOnly="True"/>
-                    <DataGridTextColumn x:Name="Manager_id" Header="Идентификатор менеджерa" Binding="{Binding Manager_id}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
-                    <DataGridTextColumn x:Name="Manager" Header="Ответственный менеджер" Binding="{Binding Manager}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
-                    <DataGridTextColumn x:Name="Master_id" Header="Идентификатор мастерa" Binding="{Binding Master_id}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
-                    <DataGridTextColumn x:Name="Master" Header="Ответственный мастер" Binding="{Binding Master}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
-                    <DataGridTextColumn x:Name="Created_time" Header="Дата создания" Binding="{Binding Created_time}" Width="Auto" IsReadOnly="True"/>
-                    <DataGridTextColumn x:Name="Visit_time" Header="Дата визита" Binding="{Binding Visit_time}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
-                    <DataGridTextColumn x:Name="Closed_time" Header="Дата закрытия заявки" Binding="{Binding Closed_time}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
-                    <DataGridTextColumn x:Name="Master_comment" Header="Комментарий" Binding="{Binding Master_comment}" Width="Auto" IsReadOnly="True" Visibility="Collapsed"/>
+                    <DataGridTextColumn x:Name="Manager_id" Header="Идентификатор менеджерa" Binding="{Binding Manager_id}" Width="Auto" Visibility="Collapsed"/>
+                    <DataGridTextColumn x:Name="Manager" Header="Ответственный менеджер" Binding="{Binding Manager}" Width="Auto" Visibility="Collapsed"/>
+                    <DataGridTextColumn x:Name="Master_id" Header="Идентификатор мастерa" Binding="{Binding Master_id}" Width="Auto" Visibility="Collapsed"/>
+                    <DataGridTextColumn x:Name="Master" Header="Ответственный мастер" Binding="{Binding Master}" Width="Auto" Visibility="Collapsed"/>
+                    <DataGridTextColumn x:Name="Created_time" Header="Дата создания" Binding="{Binding Created_time}" Width="Auto" />
+                    <DataGridTextColumn x:Name="Visit_time" Header="Дата визита" Binding="{Binding Visit_time}" Width="Auto" Visibility="Collapsed"/>
+                    <DataGridTextColumn x:Name="Closed_time" Header="Дата закрытия заявки" Binding="{Binding Closed_time}" Width="Auto" Visibility="Collapsed"/>
+                    <DataGridTextColumn x:Name="Master_comment" Header="Комментарий" Binding="{Binding Master_comment}" Width="Auto" Visibility="Collapsed"/>
 
                     <DataGridTemplateColumn Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button x:Name="openApplication" Content="Открыть" Width="120" ToolTip="Открыть заявку"/>
+                                <Button x:Name="openApplication" Content="Открыть" Width="120" ToolTip="Открыть заявку" Click="openApplication_Click"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

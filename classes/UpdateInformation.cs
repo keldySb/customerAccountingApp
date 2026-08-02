@@ -13,12 +13,11 @@ namespace finalExam_diplom_.classes
             {
                 con.Open();
 
-                string sql = $"UPDATE clients_requests SET status_id = @status_id, priority_id = @priority_id, manager_id = @manager_id, master_id = @master_id, visit_time = @visit_time WHERE id = @id";
+                string sql = "UPDATE clients_requests SET status_id = 2, priority_id = @priority_id, manager_id = @manager_id, master_id = @master_id, visit_time = @visit_time WHERE id = @id";
 
                 using (NpgsqlCommand command = new NpgsqlCommand(sql, con))
                 {
                     command.Parameters.AddWithValue("@id", ClientData.Id);
-                    command.Parameters.AddWithValue("@status_id", ClientData.Status_id);
                     command.Parameters.AddWithValue("@priority_id", ClientData.Priority_id);
                     command.Parameters.AddWithValue("@manager_id", ClientData.Manager_id);
                     command.Parameters.AddWithValue("@master_id", ClientData.Master_id);
@@ -37,12 +36,11 @@ namespace finalExam_diplom_.classes
             {
                 con.Open();
 
-                string sql = $"UPDATE employees SET status_id = @status_id WHERE id = @id";
+                string sql = $"UPDATE employees SET status_id = 2 WHERE id = @id";
 
                 using (NpgsqlCommand command = new NpgsqlCommand(sql, con))
                 {
                     command.Parameters.AddWithValue("@id", EmpData.Id);
-                    command.Parameters.AddWithValue("@status_id", EmpData.Status_Id);
 
                     command.ExecuteNonQuery();
                 }

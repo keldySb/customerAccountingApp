@@ -10,6 +10,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\notvisible.png" />
+    <None Remove="Resources\NotVisiblePassword.png" />
     <None Remove="Resources\visible.png" />
   </ItemGroup>
 
@@ -19,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\notvisible.png" />
     <Resource Include="Resources\visible.png" />
   </ItemGroup>
 

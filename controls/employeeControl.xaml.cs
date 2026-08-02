@@ -3,6 +3,8 @@ using finalExam_diplom_.classes.databaseTables;
 using finalExam_diplom_.forms;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Threading;
 
 namespace finalExam_diplom_.controls
 {
@@ -10,32 +12,32 @@ namespace finalExam_diplom_.controls
     /// Логика взаимодействия для employeeControl.xaml
     /// </summary>
 
-    public partial class employeeControl : UserControl
+    public partial class EmployeeControl : UserControl
     {
-        public employeeControl()
+        public Action? SetTask;
+        private DispatcherTimer timer;
+        public EmployeeControl()
         {
             InitializeComponent();
+            timer = new DispatcherTimer();
+            timer.Tick += Timer_Tick;
+            timer.Interval = new TimeSpan(0, 0, 30);
+            timer.Start();
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            showDataGridInformation();
-        }
-
-        private void showDataGridInformation()
+        private void ShowDataGridInformation()
         {
             GetEmployeeTable table = new GetEmployeeTable();
 
             List<EmployeesTable> employee = table.GetEmployee(employeeTextBox.Text);
             employeeDataGrid.ItemsSource = employee;
         }
-
-        private void employeeTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        public void RefreshData()
         {
-            showDataGridInformation();
+            ShowDataGridInformation();
         }
 
-        private void openApplication_Click(object sender, RoutedEventArgs e)
+        private void OpenApplication_Click(object sender, RoutedEventArgs e)
         {
             var empData = employeeDataGrid.SelectedItem as EmployeesTable;
 
@@ -44,11 +46,24 @@ namespace finalExam_diplom_.controls
             form.ShowDialog();
         }
 
-        public event Action setTask = delegate { };
-
-        private void setTask_Click(object sender, RoutedEventArgs e)
+        private void Timer_Tick(object? sender, EventArgs e)
         {
-            setTask();
+            ShowDataGridInformation();
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            ShowDataGridInformation();
+        }
+
+        private void employeeTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ShowDataGridInformation();
+        }
+
+        private void SetTaskButton_Click(object sender, RoutedEventArgs e)
+        {
+            SetTask();
         }
     }
 }

@@ -10,7 +10,7 @@
 
         public string? Description { get; private set; }
 
-        public int Status_id { get; private set; }
+        public int? Status_id { get; private set; }
 
         public string? Status { get; private set; }
 
@@ -34,7 +34,7 @@
 
         public string? Master_comment { get; private set; }
 
-        public ClientsRequestTable(int id, string? fio, string? address, string? description, int status_id, string? status, int priority_id, string? priority, int? manager_id, string? manager, int? master_id,
+        public ClientsRequestTable(int id, string? fio, string? address, string? description, int? status_id, string? status, int priority_id, string? priority, int? manager_id, string? manager, int? master_id,
     string? master, DateTime? created_time, DateTime? visit_time, DateTime? closed_time, string? master_comment)
         {
             Id = id;
