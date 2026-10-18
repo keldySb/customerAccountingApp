@@ -5,6 +5,8 @@ VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "finalExam(diplom)", "finalExam(diplom).csproj", "{864FE91D-A985-4201-901E-2BAD1CBBB64E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "customerAccountingAppServer", "..\customerAccountingAppServer\customerAccountingAppServer.csproj", "{1C58B3F2-7109-4440-BF7D-5AFFE07F50AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{864FE91D-A985-4201-901E-2BAD1CBBB64E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{864FE91D-A985-4201-901E-2BAD1CBBB64E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{864FE91D-A985-4201-901E-2BAD1CBBB64E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C58B3F2-7109-4440-BF7D-5AFFE07F50AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C58B3F2-7109-4440-BF7D-5AFFE07F50AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C58B3F2-7109-4440-BF7D-5AFFE07F50AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C58B3F2-7109-4440-BF7D-5AFFE07F50AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
