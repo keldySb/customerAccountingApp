@@ -1,0 +1,276 @@
+
+openapi: 3.0.3
+
+info:
+  title: API системы учета заявок
+  description: API для работы с заявками клиентов, сотрудниками и справочниками
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:5000
+    description: Локальный сервер разработки
+
+tags:
+  - name: Requests
+    description: Работа с заявками клиентов
+  - name: Employees
+    description: Работа с сотрудниками
+  - name: Dictionaries
+    description: Справочники системы
+
+paths:
+  /api/requests:
+    get:
+      tags:
+        - Requests
+      summary: Получить список заявок
+      parameters:
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Поиск по заявкам
+        - name: statusId
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Фильтр по ID статуса
+      responses:
+        "200":
+          description: Список заявок
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ClientRequest"
+
+  /api/requests/{id}:
+    put:
+      tags:
+        - Requests
+      summary: Обновить заявку
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateClientRequest"
+      responses:
+        "204":
+          description: Заявка обновлена
+        "400":
+          description: Некорректный ID
+
+  /api/employees:
+    get:
+      tags:
+        - Employees
+      summary: Получить список сотрудников
+      parameters:
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Поиск по сотрудникам
+      responses:
+        "200":
+          description: Список сотрудников
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Employee"
+
+  /api/employees/{id}/status:
+    put:
+      tags:
+        - Employees
+      summary: Изменить статус сотрудника
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Статус сотрудника обновлен
+
+  /api/dictionaries/statuses:
+    get:
+      tags: [Dictionaries]
+      summary: Получить статусы заявок
+      responses:
+        "200":
+          description: Список статусов
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DictionaryItem"
+
+  /api/dictionaries/priorities:
+    get:
+      tags: [Dictionaries]
+      summary: Получить приоритеты
+      responses:
+        "200":
+          description: Список приоритетов
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DictionaryItem"
+
+  /api/dictionaries/masters:
+    get:
+      tags: [Dictionaries]
+      summary: Получить список доступных мастеров
+      responses:
+        "200":
+          description: Список мастеров
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DictionaryItem"
+
+  /api/dictionaries/managers:
+    get:
+      tags: [Dictionaries]
+      summary: Получить список менеджеров
+      responses:
+        "200":
+          description: Список менеджеров
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DictionaryItem"
+
+components:
+  schemas:
+    ClientRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+        fio:
+          type: string
+          nullable: true
+        address:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        status_id:
+          type: integer
+        status:
+          type: string
+          nullable: true
+        priority_id:
+          type: integer
+        priority:
+          type: string
+          nullable: true
+        manager_id:
+          type: integer
+          nullable: true
+        manager:
+          type: string
+          nullable: true
+        master_id:
+          type: integer
+          nullable: true
+        master:
+          type: string
+          nullable: true
+        created_time:
+          type: string
+          format: date-time
+          nullable: true
+        visit_time:
+          type: string
+          format: date-time
+          nullable: true
+        closed_time:
+          type: string
+          format: date-time
+          nullable: true
+        master_comment:
+          type: string
+          nullable: true
+
+    UpdateClientRequest:
+      type: object
+      required:
+        - id
+        - priority_id
+      properties:
+        id:
+          type: integer
+        priority_id:
+          type: integer
+        manager_id:
+          type: integer
+          nullable: true
+        master_id:
+          type: integer
+          nullable: true
+        visit_time:
+          type: string
+          format: date-time
+          nullable: true
+
+    Employee:
+      type: object
+      properties:
+        id:
+          type: integer
+        employee_number:
+          type: string
+          nullable: true
+        fio:
+          type: string
+          nullable: true
+        age:
+          type: integer
+        position_id:
+          type: integer
+        position:
+          type: string
+          nullable: true
+        experience:
+          type: integer
+        phone_number:
+          type: string
+          nullable: true
+        status_id:
+          type: integer
+        status:
+          type: string
+          nullable: true
+
+    DictionaryItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
