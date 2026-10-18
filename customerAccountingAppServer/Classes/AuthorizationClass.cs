@@ -1,12 +1,12 @@
-﻿using finalExam_diplom_.classes.databaseTables;
+﻿using BCrypt.Net;
+using customerAccountingAppServer.Classes.databaseTables;
 using Npgsql;
-using System.Windows;
 
-namespace finalExam_diplom_.classes
+namespace customerAccountingAppServer.Classes
 {
     public class AuthorizationClass()
-    { 
-        public DispatchersTable CheckUsers(string login, string? password) 
+    {
+        public DispatchersTable CheckUsers(string login, string? password)
         {
             DispatchersTable? tableData = null;
 
@@ -26,18 +26,18 @@ namespace finalExam_diplom_.classes
 
                     if (reader.Read())
                     {
-                         if (BCrypt.Net.BCrypt.Verify(password, reader[3].ToString()) == true)
-                         {
-                              tableData = new DispatchersTable();
-                              tableData.Id = reader.GetInt32(0);
-                              tableData.Employee_id = reader.GetInt32(1);
-                         }
+                        if (BCrypt.Net.BCrypt.Verify(password, reader[3].ToString()) == true)
+                        {
+                            tableData = new DispatchersTable();
+                            tableData.Id = reader.GetInt32(0);
+                            tableData.Employee_id = reader.GetInt32(1);
+                        }
                     }
 
                     return tableData;
                 }
             }
-        
-        } 
+
+        }
     }
 }

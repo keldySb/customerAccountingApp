@@ -1,19 +1,9 @@
 ﻿using finalExam_diplom_.classes;
 using finalExam_diplom_.classes.databaseTables;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net.Http;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace finalExam_diplom_.controls
 {
@@ -26,23 +16,32 @@ namespace finalExam_diplom_.controls
 
         public event Action Succsessful = delegate { };
 
-        private void Authorization()
+        private async void Authorization()
         {
-            AuthorizationClass authorization = new AuthorizationClass();
+            AuthClient authorization = new AuthClient();
 
             if (PasswordBox.Visibility == Visibility.Collapsed)
                 PasswordBox.Password = PasswordTextBox.Text;
 
-            DispatchersTable users = authorization.CheckUsers(LoginTextBox.Text, PasswordBox.Password);
+            var auth = new AuthClient();
 
-            if (users != null)
+            try
             {
-                CurrentUser.Id = users.Id;
-                Succsessful();
-            }
-            else
+                DispatchersTable? users = await auth.LoginAsync(
+                            LoginTextBox.Text,
+                            PasswordBox.Password);
+                if (users != null)
+                {
+                    CurrentUser.Id = users.Id;
+                    Succsessful();
+                }
+                else
+                {
+                    MessageBox.Show("Неверный логин или пароль");
+                }
+            } catch (HttpRequestException)
             {
-                MessageBox.Show("Неверный логин или пароль");
+                MessageBox.Show("Не удалось подключиться к серверу авторизации");
             }
         }
 
