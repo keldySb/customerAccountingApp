@@ -11,8 +11,38 @@
     <UserControl.Resources>
         <Style TargetType="Button">
             <Style.Setters>
-                <Setter Property="Background" Value="#dfd3c3"/>
+                <Setter Property="Background" Value="#FFFFFF"/>
                 <Setter Property="Width" Value="120"/>
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="buttonBorder"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Margin="{TemplateBinding Padding}"
+                                    RecognizesAccessKey="True"/>
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="buttonBorder" Property="Background" Value="#FFF0E6"/>
+                                    <Setter Property="Foreground" Value="#E96518"/>
+                                </Trigger>
+
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="buttonBorder" Property="Background" Value="#FFD6BD"/>
+                                </Trigger>
+
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="buttonBorder" Property="Opacity" Value="0.5"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
             </Style.Setters>
         </Style>
         <Style TargetType="Label">
@@ -33,7 +63,12 @@
         </Style>
         <Style TargetType="DataGridColumnHeader">
             <Style.Setters>
-                <Setter Property="Height" Value="40"/>
+                <Setter Property="Background" Value="#F8F9FA"/>
+                <Setter Property="Padding" Value="10,8"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                <Setter Property="BorderBrush" Value="#D0D0D0"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
             </Style.Setters>
         </Style>
         <Style TargetType="DataGrid">
@@ -79,7 +114,7 @@
        
 
         <Border Grid.Row="1" Grid.ColumnSpan="3">
-            <DataGrid x:Name="employeeDataGrid">
+            <DataGrid x:Name="employeeDataGrid" VerticalGridLinesBrush="Transparent">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="#" Binding="{Binding Id}" Width="Auto"/>
                     <DataGridTextColumn Header="Табельный номер" Binding="{Binding Employee_number}" Width="Auto"/>
@@ -97,13 +132,44 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" x:Name="DataGridButtons">
-                                    <Button x:Name="openApplication" Content="Открыть" ToolTip="Открыть заявку" Click="OpenApplication_Click"/>
-                                    <Button x:Name="SetTaskButton" Content="Назначить задачу"  
-                                            ToolTip="Назначить задачу для этого сотрудника" Click="SetTaskButton_Click">
+                                    <Button x:Name="openApplication" ToolTip="Открыть заявку" Click="OpenApplication_Click">
+                                        <TextBlock Text="Открыть" Foreground="Black"/>
+                                    </Button>
+                                    <Button x:Name="SetTaskButton" ToolTip="Назначить задачу для этого сотрудника" Click="SetTaskButton_Click">
+                                        <TextBlock Text="Назначить задачу" Foreground="Black"/>
                                         <Button.Style>
                                             <Style TargetType="Button">
-                                                <Setter Property="Background" Value="#dfd3c3"/>
-                                                <Setter Property="Width" Value="120"/>
+                                                <Setter Property="Width" Value="130"/>
+                                                <Setter Property="Background" Value="#FFFFFF"/>
+                                                <Setter Property="Foreground" Value="Black"/>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="Button">
+                                                            <Border x:Name="buttonBorder"
+                                                                        Background="{TemplateBinding Background}">
+                                                                                                    <ContentPresenter
+                                                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                        Margin="{TemplateBinding Padding}"
+                                                                        RecognizesAccessKey="True"/>
+                                                            </Border>
+
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter TargetName="buttonBorder" Property="Background" Value="#FFF0E6"/>
+                                                                </Trigger>
+
+                                                                <Trigger Property="IsPressed" Value="True">
+                                                                    <Setter TargetName="buttonBorder" Property="Background" Value="#FFD6BD"/>
+                                                                </Trigger>
+
+                                                                <Trigger Property="IsEnabled" Value="False">
+                                                                    <Setter TargetName="buttonBorder" Property="Opacity" Value="0.5"/>
+                                                                </Trigger>
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding Status_Id}" Value="2">
                                                         <Setter Property="IsEnabled" Value="False"/>
@@ -120,6 +186,15 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFF0E6"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
             </DataGrid>
         </Border>
     </Grid>

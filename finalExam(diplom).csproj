@@ -10,18 +10,41 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\chart-column.png" />
+    <None Remove="Resources\file-text.png" />
+    <None Remove="Resources\log-in.png" />
+    <None Remove="Resources\log-out.png" />
     <None Remove="Resources\notvisible.png" />
     <None Remove="Resources\NotVisiblePassword.png" />
+    <None Remove="Resources\t-plus.png" />
+    <None Remove="Resources\users.png" />
     <None Remove="Resources\visible.png" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.2.0" />
+    <PackageReference Include="LiveChartsCore" Version="2.0.5" />
+    <PackageReference Include="LiveChartsCore.SkiaSharpView" Version="2.0.5" />
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.5" />
     <PackageReference Include="Npgsql" Version="10.0.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\chart-column.png">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\file-text.png">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\log-in.png" />
+    <Resource Include="Resources\log-out.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\notvisible.png" />
+    <Resource Include="Resources\t-plus.png" />
+    <Resource Include="Resources\users.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\visible.png" />
   </ItemGroup>
 

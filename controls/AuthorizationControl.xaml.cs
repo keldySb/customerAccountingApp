@@ -35,7 +35,7 @@ namespace finalExam_diplom_.controls
 
             DispatchersTable users = authorization.CheckUsers(LoginTextBox.Text, PasswordBox.Password);
 
-            if (users != null || (LoginTextBox.Text == "admin" && PasswordBox.Password == "admin"))
+            if (users != null)
             {
                 CurrentUser.Id = users.Id;
                 Succsessful();

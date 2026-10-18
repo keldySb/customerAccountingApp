@@ -5,15 +5,53 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:finalExam_diplom_.controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="White">
+             d:DesignHeight="450" d:DesignWidth="800" Background="#F7F4EF">
     <UserControl.Resources>
         <Style TargetType="Button">
             <Style.Setters>
-                <Setter Property="Background" Value="#dfd3c3"/>
-                <Setter Property="Height" Value="40"/>
-                <Setter Property="Width" Value="200"/>
+                <Setter Property="Background" Value="#FFFFFF"/>
+                <Setter Property="Height" Value="50"/>
+                <Setter Property="Width" Value="250"/>
                 <Setter Property="FontFamily" Value="Bahnschrift Light"/>
                 <Setter Property="FontSize" Value="18"/>
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="buttonBorder"
+                Background="{TemplateBinding Background}"
+                CornerRadius="5">
+                                <ContentPresenter
+                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                Margin="{TemplateBinding Padding}"
+                RecognizesAccessKey="True"/>
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="buttonBorder"
+                        Property="Background"
+                        Value="#FFF0E6"/>
+                                    <Setter Property="Foreground"
+                        Value="#E96518"/>
+                                </Trigger>
+
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="buttonBorder"
+                        Property="Background"
+                        Value="#FFD6BD"/>
+                                </Trigger>
+
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="buttonBorder"
+                        Property="Opacity"
+                        Value="0.5"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
             </Style.Setters>
         </Style>
 
@@ -47,7 +85,7 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition Width="4*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
@@ -82,7 +120,13 @@
                                 <Image x:Name="DontSeeSymblosPassword" Width="40" Height="40" ToolTip="Скрыть пароль" Source="/Resources/notvisible.png" MouseLeftButtonDown="DontSeeSymblosPassword_MouseLeftButtonDown" />
                             </StackPanel>
                         </Border>
-                        <Button x:Name="SignInButton" Content="Войти" Grid.ColumnSpan="2" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Click="SignInButton_Click"/>
+                        <Button x:Name="SignInButton" Grid.ColumnSpan="2" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Click="SignInButton_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/Resources/log-in.png" Width="20" Height="20" Margin="0,0,10,0"/>
+
+                                <TextBlock Text="Войти" Foreground="#25272B" FontSize="16" Margin="0"/>
+                            </StackPanel>
+                        </Button>
                     </Grid>
                 </Border>
             </Grid>

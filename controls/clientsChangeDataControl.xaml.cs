@@ -10,7 +10,7 @@ namespace finalExam_diplom_.controls
 {
     public partial class clientsChangeDataControl : UserControl
     {
-        private ClientsRequestTable _clientData;
+        private ClientsRequestTable? _clientData;
         public clientsChangeDataControl(ClientsRequestTable clientData)
         {
             InitializeComponent();

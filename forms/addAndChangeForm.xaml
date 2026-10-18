@@ -13,7 +13,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="0" Background="#c7b198">
+        <Border Grid.Row="0" Background="white">
             <Label x:Name="headerLabel" Content="Форма изменения" FontFamily="Bahnschrift Light" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20"/>
         </Border>
 

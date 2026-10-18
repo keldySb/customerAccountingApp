@@ -5,16 +5,49 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:finalExam_diplom_.controls"
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="600">
+             d:DesignHeight="800" d:DesignWidth="600" Background="#F7F4EF">
     
     <UserControl.Resources>
         <Style TargetType="Button">
             <Style.Setters>
-                <Setter Property="Background" Value="#dfd3c3"/>
+                <Setter Property="Background" Value="#FFFFFF"/>
                 <Setter Property="Width" Value="250"/>
                 <Setter Property="Height" Value="40"/>
                 <Setter Property="FontFamily" Value="Bahnschrift Light"/>
                 <Setter Property="FontSize" Value="16"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="buttonBorder"
+                                    Background="{TemplateBinding Background}"
+                                    CornerRadius="5">
+                                                        <ContentPresenter
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Margin="{TemplateBinding Padding}"
+                                    RecognizesAccessKey="True"/>
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="buttonBorder" Property="Background" Value="#FFF0E6"/>
+                                    <Setter Property="Foreground" Value="#E96518"/>
+                                </Trigger>
+
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="buttonBorder" Property="Background" Value="#FFD6BD"/>
+                                </Trigger>
+
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="buttonBorder" Property="Opacity" Value="0.5"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
             </Style.Setters>
         </Style>
         <Style TargetType="TextBox">
@@ -58,7 +91,7 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid Background="White">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="270"/>
             <RowDefinition Height="*"/>
@@ -72,11 +105,15 @@
         </Grid.ColumnDefinitions>
 
         <Border Grid.Row="2" Grid.Column="0">
-            <Button x:Name="addTaskButton" Content="Назначить" Visibility="Collapsed" Click="AddTaskButton_Click"/>
+            <Button x:Name="addTaskButton" Visibility="Collapsed" Click="AddTaskButton_Click">
+                <TextBlock Text="Назначить" Foreground="Black"/>
+            </Button>
         </Border>
 
         <Border Grid.Row="2" Grid.Column="1">
-            <Button x:Name="closeUCButton" Content="Закрыть" Click="CloseUCButton_Click"/>
+            <Button x:Name="closeUCButton" Click="CloseUCButton_Click">
+                <TextBlock Text="Закрыть" Foreground="Black"/>
+            </Button>
         </Border>
 
         <Border Grid.Row="0" Grid.Column="0">
@@ -113,8 +150,8 @@
 
         <Border Grid.Row="1" Grid.ColumnSpan="2">
             <StackPanel>
-                <Label x:Name="managerLabel" Content="Ответственный диспетчер" Visibility="Visible"/>
-                <ComboBox x:Name="managerComboBox" Width="550" Visibility="Visible"/>
+                <Label x:Name="managerLabel" Content="Ответственный диспетчер" Visibility="Collapsed"/>
+                <ComboBox x:Name="managerComboBox" Width="550" Visibility="Collapsed"/>
                 
                 <Label x:Name="descriptionLabel" Content="Описание"/>
                 <TextBox x:Name="descriptionTextBox" Width="550" Height="150" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" IsEnabled="false"/>
