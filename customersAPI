@@ -1,24 +1,51 @@
-
 openapi: 3.0.3
 
 info:
-  title: API системы учета заявок
-  description: API для работы с заявками клиентов, сотрудниками и справочниками
+  title: Customer Accounting API
+  description: API системы учета клиентских заявок и сотрудников
   version: 1.0.0
 
 servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/not-531/CustomerAccountingAPI/1.0.0
   - url: http://localhost:5000
-    description: Локальный сервер разработки
+    description: Локальный сервер
 
 tags:
+  - name: Authorization
+    description: Авторизация сотрудников
   - name: Requests
-    description: Работа с заявками клиентов
+    description: Работа с клиентскими заявками
   - name: Employees
     description: Работа с сотрудниками
   - name: Dictionaries
     description: Справочники системы
 
 paths:
+  /api/authorization/login:
+    post:
+      tags:
+        - Authorization
+      summary: Авторизация сотрудника
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Авторизация успешна
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dispatcher'
+        '400':
+          description: Логин или пароль не указаны
+        '401':
+          description: Неверный логин или пароль
+
   /api/requests:
     get:
       tags:
@@ -30,22 +57,22 @@ paths:
           required: false
           schema:
             type: string
-          description: Поиск по заявкам
+          description: Поиск по данным заявки, клиенту, адресу и приоритету
         - name: statusId
           in: query
           required: false
           schema:
             type: integer
-          description: Фильтр по ID статуса
+          description: Фильтрация по ID статуса
       responses:
-        "200":
+        '200':
           description: Список заявок
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/ClientRequest"
+                  $ref: '#/components/schemas/ClientRequest'
 
   /api/requests/{id}:
     put:
@@ -63,12 +90,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateClientRequest"
+              $ref: '#/components/schemas/UpdateClientRequest'
       responses:
-        "204":
+        '204':
           description: Заявка обновлена
-        "400":
-          description: Некорректный ID
+        '400':
+          description: Некорректный ID заявки
+        '404':
+          description: Заявка не найдена
 
   /api/employees:
     get:
@@ -81,16 +110,16 @@ paths:
           required: false
           schema:
             type: string
-          description: Поиск по сотрудникам
+          description: Поиск по табельному номеру, ФИО, должности и статусу
       responses:
-        "200":
+        '200':
           description: Список сотрудников
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Employee"
+                  $ref: '#/components/schemas/Employee'
 
   /api/employees/{id}/status:
     put:
@@ -104,67 +133,99 @@ paths:
           schema:
             type: integer
       responses:
-        "204":
+        '204':
           description: Статус сотрудника обновлен
+        '400':
+          description: Некорректный ID сотрудника
+        '404':
+          description: Сотрудник не найден
 
   /api/dictionaries/statuses:
     get:
-      tags: [Dictionaries]
+      tags:
+        - Dictionaries
       summary: Получить статусы заявок
       responses:
-        "200":
+        '200':
           description: Список статусов
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/DictionaryItem"
+                  $ref: '#/components/schemas/DictionaryItem'
 
   /api/dictionaries/priorities:
     get:
-      tags: [Dictionaries]
-      summary: Получить приоритеты
+      tags:
+        - Dictionaries
+      summary: Получить приоритеты заявок
       responses:
-        "200":
+        '200':
           description: Список приоритетов
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/DictionaryItem"
+                  $ref: '#/components/schemas/DictionaryItem'
 
   /api/dictionaries/masters:
     get:
-      tags: [Dictionaries]
-      summary: Получить список доступных мастеров
+      tags:
+        - Dictionaries
+      summary: Получить список мастеров
       responses:
-        "200":
+        '200':
           description: Список мастеров
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/DictionaryItem"
+                  $ref: '#/components/schemas/DictionaryItem'
 
   /api/dictionaries/managers:
     get:
-      tags: [Dictionaries]
+      tags:
+        - Dictionaries
       summary: Получить список менеджеров
       responses:
-        "200":
+        '200':
           description: Список менеджеров
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/DictionaryItem"
+                  $ref: '#/components/schemas/DictionaryItem'
 
 components:
   schemas:
+    LoginRequest:
+      type: object
+      required:
+        - login
+        - password
+      properties:
+        login:
+          type: string
+          example: dispatcher1
+        password:
+          type: string
+          format: password
+          example: password123
+
+    Dispatcher:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        employee_id:
+          type: integer
+          example: 5
+
     ClientRequest:
       type: object
       properties:
@@ -172,23 +233,18 @@ components:
           type: integer
         fio:
           type: string
-          nullable: true
         address:
           type: string
-          nullable: true
         description:
           type: string
-          nullable: true
         status_id:
           type: integer
         status:
           type: string
-          nullable: true
         priority_id:
           type: integer
         priority:
           type: string
-          nullable: true
         manager_id:
           type: integer
           nullable: true
@@ -219,21 +275,16 @@ components:
 
     UpdateClientRequest:
       type: object
-      required:
-        - id
-        - priority_id
       properties:
-        id:
+        priorityId:
           type: integer
-        priority_id:
-          type: integer
-        manager_id:
+        managerId:
           type: integer
           nullable: true
-        master_id:
+        masterId:
           type: integer
           nullable: true
-        visit_time:
+        visitTime:
           type: string
           format: date-time
           nullable: true
@@ -245,27 +296,22 @@ components:
           type: integer
         employee_number:
           type: string
-          nullable: true
         fio:
           type: string
-          nullable: true
         age:
           type: integer
         position_id:
           type: integer
         position:
           type: string
-          nullable: true
         experience:
           type: integer
         phone_number:
           type: string
-          nullable: true
         status_id:
           type: integer
         status:
           type: string
-          nullable: true
 
     DictionaryItem:
       type: object
