@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:finalExam_diplom_.controls"
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="600" Background="#F7F4EF">
+             d:DesignHeight="800" d:DesignWidth="600" Background="#F7F4EF" MaxHeight="800" MinHeight="800" MaxWidth="600" MinWidth="600">
     
     <UserControl.Resources>
         <Style TargetType="Button">
@@ -93,8 +93,8 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="270"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="250"/>
             <RowDefinition Height="70"/>
         </Grid.RowDefinitions>
 
@@ -116,13 +116,36 @@
             </Button>
         </Border>
 
-        <Border Grid.Row="0" Grid.Column="0">
-            <StackPanel Orientation="Vertical">
+        <Border Grid.Row="0" Grid.ColumnSpan="2">
+            <StackPanel>
                 <Label x:Name="clientTLabel" Content="ФИО клиента"/>
-                <TextBox x:Name="clientTextBox" IsEnabled="false"/>
-                
+                <TextBox x:Name="clientTextBox" IsEnabled="false"  Width="550"/>
+
                 <Label x:Name="addressLabel" Content="Адрес" />
-                <TextBox x:Name="addressTextBox" IsEnabled="false"/>
+                <TextBox x:Name="addressTextBox" IsEnabled="false"  Width="550"/>
+
+                <Label x:Name="reasonLabel" Content="Причина" />
+                <TextBox x:Name="reasonTextBox" IsEnabled="false"  Width="550"/>
+
+                <Label x:Name="categoryLabel" Content="Категория" />
+                <TextBox x:Name="categoryTextBox" IsEnabled="false"  Width="550"/>
+
+                <Label x:Name="managerLabel" Content="Ответственный диспетчер" Visibility="Collapsed"/>
+                <ComboBox x:Name="managerComboBox" Width="550" Visibility="Collapsed"/>
+
+                <Label x:Name="descriptionLabel" Content="Описание"/>
+                <TextBox x:Name="descriptionTextBox" Width="550" Height="150" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" IsEnabled="false"/>
+
+                <Label x:Name="masterCommentLabel" Content="Комментарий мастера" Visibility="Collapsed"/>
+                <TextBox x:Name="masterCommentTextBox" Width="550" Height="150" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Visibility="Collapsed"/>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="1" Grid.Column="0">
+            <StackPanel Orientation="Vertical">
+
+                <Label x:Name="durationLabel" Content="Продолжительность"/>
+                <TextBox x:Name="durationTextBox" IsEnabled="False"/>
 
                 <Label x:Name="statusLabel" Content="Статус заявки"/>
                 <ComboBox x:Name="statusComboBox" IsEnabled="False"/>
@@ -132,7 +155,7 @@
             </StackPanel>
         </Border>
 
-        <Border Grid.Row="0" Grid.Column="1">
+        <Border Grid.Row="1" Grid.Column="1">
             <StackPanel Orientation="Vertical">
                 <Label x:Name="priorityLabel" Content="Приоритет заявки"/>
                 <ComboBox x:Name="priorityComboBox" IsEnabled="False"/>
@@ -148,17 +171,5 @@
             </StackPanel>
         </Border>
 
-        <Border Grid.Row="1" Grid.ColumnSpan="2">
-            <StackPanel>
-                <Label x:Name="managerLabel" Content="Ответственный диспетчер" Visibility="Collapsed"/>
-                <ComboBox x:Name="managerComboBox" Width="550" Visibility="Collapsed"/>
-                
-                <Label x:Name="descriptionLabel" Content="Описание"/>
-                <TextBox x:Name="descriptionTextBox" Width="550" Height="150" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" IsEnabled="false"/>
-
-                <Label x:Name="masterCommentLabel" Content="Комментарий мастера" Visibility="Collapsed"/>
-                <TextBox x:Name="masterCommentTextBox" Width="550" Height="150" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Visibility="Collapsed"/>
-            </StackPanel>
-        </Border>
     </Grid>
 </UserControl>

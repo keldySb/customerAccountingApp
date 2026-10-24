@@ -1,39 +1,40 @@
 ﻿using BCrypt.Net;
 using customerAccountingAppServer.Classes.databaseTables;
+using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
 namespace customerAccountingAppServer.Classes
 {
     public class AuthorizationClass()
     {
-        public DispatchersTable CheckUsers(string login, string? password)
+        public async Task<DispatchersTable> CheckUsers(string login, string? password)
         {
             DispatchersTable? tableData = null;
 
             DataBaseConnection connection = new DataBaseConnection();
 
-            using (NpgsqlConnection con = connection.getConnection())
+            await using (NpgsqlConnection con = connection.getConnection())
             {
                 con.Open();
 
                 string sql = "SELECT * FROM dispatchers WHERE login = @login";
 
-                using (NpgsqlCommand command = new NpgsqlCommand(sql, con))
+                await using(NpgsqlCommand command = new NpgsqlCommand(sql, con))
                 {
                     command.Parameters.AddWithValue("@login", login);
 
-                    NpgsqlDataReader reader = command.ExecuteReader();
-
-                    if (reader.Read())
+                    await using (NpgsqlDataReader reader = await command.ExecuteReaderAsync())
                     {
-                        if (BCrypt.Net.BCrypt.Verify(password, reader[3].ToString()) == true)
+                        if (await reader.ReadAsync())
                         {
-                            tableData = new DispatchersTable();
-                            tableData.Id = reader.GetInt32(0);
-                            tableData.Employee_id = reader.GetInt32(1);
+                            if (BCrypt.Net.BCrypt.Verify(password, reader[3].ToString()) == true)
+                            {
+                                tableData = new DispatchersTable();
+                                tableData.Id = reader.GetInt32(0);
+                                tableData.Employee_id = reader.GetInt32(1);
+                            }
                         }
                     }
-
                     return tableData;
                 }
             }

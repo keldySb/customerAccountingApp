@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:finalExam_diplom_.controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="1000" Loaded="UserControl_Loaded">
+             d:DesignHeight="450" d:DesignWidth="1200" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <Style TargetType="Button">
             <Style.Setters>
@@ -128,7 +128,10 @@
                     <DataGridTextColumn x:Name="Id" Header="#" Binding="{Binding Id}" Width="Auto"/>
                     <DataGridTextColumn x:Name="Fio" Header="ФИО" Binding="{Binding Fio}" Width="Auto"/>
                     <DataGridTextColumn x:Name="Address" Header="Адрес" Binding="{Binding Address}" Width="Auto"/>
-                    <DataGridTextColumn x:Name="Description" Header="Описание" Binding="{Binding Description}" Width="*"/>
+                    <DataGridTextColumn x:Name="Reason" Header="Причина" Binding="{Binding Reason}" Width="*"/>
+                    <DataGridTextColumn x:Name="Category" Header="Категория" Binding="{Binding Category}" Width="*"/>
+                    <DataGridTextColumn x:Name="Duration" Header="Длительность" Binding="{Binding Duration}" Width="Auto"/>
+                    <DataGridTextColumn x:Name="Description" Header="Описание" Binding="{Binding Description}" Width="Auto"/>
                     <DataGridTextColumn x:Name="Status_id" Header="Идентификатор статуса" Binding="{Binding Status_id}" Width="Auto" Visibility="Collapsed"/>
                     <DataGridTextColumn x:Name="Status" Header="Статус" Binding="{Binding Status}" Width="Auto" IsReadOnly="True"/>
                     <DataGridTextColumn x:Name="Priority_id" Header="Идентификатор приоритета" Binding="{Binding Priority_id}" Width="Auto" Visibility="Collapsed"/>
@@ -142,7 +145,7 @@
                     <DataGridTextColumn x:Name="Closed_time" Header="Дата закрытия заявки" Binding="{Binding Closed_time}" Width="Auto" Visibility="Collapsed"/>
                     <DataGridTextColumn x:Name="Master_comment" Header="Комментарий" Binding="{Binding Master_comment}" Width="Auto" Visibility="Collapsed"/>
 
-                    <DataGridTemplateColumn Width="Auto">
+                    <DataGridTemplateColumn Width="100">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button x:Name="openApplication" Width="120" ToolTip="Открыть заявку" Click="openApplication_Click">
@@ -152,7 +155,7 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
-                    <DataGridTemplateColumn x:Name="setTaskFoeEmpColumn"  Width="Auto" Visibility="Collapsed">
+                    <DataGridTemplateColumn x:Name="setTaskFoeEmpColumn"  Width="100" Visibility="Collapsed">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">

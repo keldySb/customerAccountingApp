@@ -1,16 +1,21 @@
 ﻿using finalExam_diplom_.classes;
 using finalExam_diplom_.classes.databaseTables;
-using finalExam_diplom_.forms;
-using System.ComponentModel;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Threading;
 
 namespace finalExam_diplom_.controls
 {
     public partial class clientsChangeDataControl : UserControl
     {
         private ClientsRequestTable? _clientData;
+
+        private readonly HttpClient _httpClient = new HttpClient
+        {
+            BaseAddress = new Uri("https://localhost:7070/")
+        };
         public clientsChangeDataControl(ClientsRequestTable clientData)
         {
             InitializeComponent();
@@ -31,27 +36,32 @@ namespace finalExam_diplom_.controls
             }
         }
 
-        private void LoadClienteData()
+        private async Task LoadClienteData()
         {
-            GetStatuses status = new GetStatuses();
+            DictionaryClass dictionary = new DictionaryClass();
 
-            priorityComboBox.ItemsSource = status.GetPriority();
+            priorityComboBox.ItemsSource = await dictionary.GetPriorityAsync();
             priorityComboBox.SelectedValuePath = "Id";
             priorityComboBox.DisplayMemberPath = "Name";
 
-            statusComboBox.ItemsSource = status.GetStatus();
+            statusComboBox.ItemsSource = await dictionary.GetStatusAsync();
             statusComboBox.SelectedValuePath = "Id";
             statusComboBox.DisplayMemberPath = "Name";
 
 
-            masterComboBox.ItemsSource = status.GetMaster();
+            masterComboBox.ItemsSource = await dictionary.GetMasterAsync();
             masterComboBox.SelectedValuePath = "Id";
             masterComboBox.DisplayMemberPath = "Name";
 
-            managerComboBox.ItemsSource = status.GetManager();
+            managerComboBox.ItemsSource = await dictionary.GetManagerAsync();
             managerComboBox.SelectedValuePath = "Id";
-            managerComboBox.DisplayMemberPath = "Name"; 
+            managerComboBox.DisplayMemberPath = "Name";
 
+
+
+            reasonTextBox.Text = _clientData.Reason;
+            categoryTextBox.Text = _clientData.Category;
+            durationTextBox.Text = _clientData.Duration;
             clientTextBox.Text = _clientData.Fio;
             addressTextBox.Text = _clientData.Address;
             descriptionTextBox.Text = _clientData.Description;
@@ -79,19 +89,25 @@ namespace finalExam_diplom_.controls
             Raise();
         }
 
-        private void AddTaskButton_Click(object sender, RoutedEventArgs e)
+        private async void AddTaskButton_Click(object sender, RoutedEventArgs e)
         {
             if (visitTimeDatePicker.SelectedDate != null && masterComboBox.SelectedValue != null)
             {
                 if (visitTimeDatePicker.SelectedDate > DateTime.Now)
                 {
-                    ClientsRequestTable NewData = new ClientsRequestTable(_clientData.Id, null, null, null, null, null, Convert.ToInt32(priorityComboBox.SelectedValue), null, CurrentUser.Id, null, Convert.ToInt32(masterComboBox.SelectedValue), null, null, visitTimeDatePicker.SelectedDate, null, null);
-                    EmployeesTable NewEmployeeData = new EmployeesTable(Convert.ToInt32(masterComboBox.SelectedValue), null, null, null, null, null, null, null, null, null);
+                    ClientsRequestTable NewData = new ClientsRequestTable();
+                    NewData.Id = _clientData.Id;
+                    NewData.Priority_id = (int)priorityComboBox.SelectedValue;
+                    NewData.Manager_id = CurrentUser.Id;
+                    NewData.Master_id = (int?)masterComboBox.SelectedValue;
+                    NewData.Visit_time = visitTimeDatePicker.SelectedDate;
 
-                    UpdateInformation information = new UpdateInformation();
+                    EmployeesTable NewEmployeeData = new EmployeesTable();
+                    NewEmployeeData.Id = Convert.ToInt32(masterComboBox.SelectedValue);
 
-                    information.UpdateClientRequest(NewData);
-                    information.UpdateEmployeeRequest(NewEmployeeData);
+                    var statusRequest = await _httpClient.PostAsJsonAsync("api/requests", NewData);
+                    
+                    var statusEmployee = await _httpClient.PostAsJsonAsync("api/employees", NewEmployeeData);
 
                     Raise();
                 }

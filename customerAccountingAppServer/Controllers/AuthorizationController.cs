@@ -9,7 +9,7 @@ namespace customerAccountingAppServer.Controllers
     public class AuthorizationController : ControllerBase
     {
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginRequest request)
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             if (request == null ||
                 string.IsNullOrWhiteSpace(request.Login) ||
@@ -23,7 +23,7 @@ namespace customerAccountingAppServer.Controllers
 
             AuthorizationClass authorization = new AuthorizationClass();
 
-            DispatchersTable? user = authorization.CheckUsers(
+            DispatchersTable? user = await authorization.CheckUsers(
                 request.Login,
                 request.Password
             );

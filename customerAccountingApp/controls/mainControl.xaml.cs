@@ -31,32 +31,30 @@ namespace finalExam_diplom_.controls
             ShowDataGridnformations();
         }
 
-        private void ShowDataGridnformations()
+        private async void ShowDataGridnformations()
         {
-            GetClientsRequestsTable client = new GetClientsRequestsTable();
+            if (string.IsNullOrWhiteSpace(mainTextBox.Text) == true)
+            {
+                GetClientsRequestsTable client = new GetClientsRequestsTable();
 
-            List<ClientsRequestTable> data = client.GetClientsRequests(mainTextBox.Text, Convert.ToInt32(mainComboBox.SelectedValue));
+                List<ClientsRequestTable> dataStatus = await client.GetClientsRequestsAsync(Convert.ToInt32(mainComboBox.SelectedValue));
 
-            mainDataGrid.ItemsSource = data;
+                mainDataGrid.ItemsSource = dataStatus;
+            } else
+            {
+                GetClientsRequestsTable client = new GetClientsRequestsTable();
+
+                List<ClientsRequestTable> dataSearch = await client.GetClientsRequestsSearchAsync(Convert.ToInt32(mainComboBox.SelectedValue), mainTextBox.Text);
+
+                mainDataGrid.ItemsSource = dataSearch;
+            }
         }
 
-        private void MainTextBox_GotFocus(object sender, RoutedEventArgs e)
+        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            if (mainTextBox.Text == "Поиск")
-                mainTextBox.Text = "";
-        }
+            DictionaryClass status = new DictionaryClass();
 
-        private void MainTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(mainTextBox.Text))
-                mainTextBox.Text = "Поиск"; 
-        }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            GetStatuses status = new GetStatuses();
-
-            mainComboBox.ItemsSource = status.GetStatus();
+            mainComboBox.ItemsSource = await status.GetStatusAsync();
             mainComboBox.SelectedValuePath = "Id";
             mainComboBox.DisplayMemberPath = "Name";
 

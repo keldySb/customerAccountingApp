@@ -3,34 +3,71 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:finalExam_diplom_.controls"
              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+             xmlns:local="clr-namespace:finalExam_diplom_.controls"
+             xmlns:vms="clr-namespace:finalExam_diplom_.classes"
              x:Class="finalExam_diplom_.controls.reportControl"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="1200">
+             d:DesignHeight="650" d:DesignWidth="1200">
+
+    <UserControl.DataContext>
+        <vms:DiagramsClass/>
+    </UserControl.DataContext>
+    
     <UserControl.Resources>
         <Style TargetType="Button">
             <Style.Setters>
-                <Setter Property="Background" Value="#dfd3c3"/>
-                <Setter Property="Width" Value="180"/>
-                <Setter Property="Height" Value="35"/>
+                <Setter Property="Background" Value="#FFFFFF"/>
+                <Setter Property="Foreground" Value="#25272B"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Height" Value="40"/>
                 <Setter Property="FontFamily" Value="Bahnschrift Light"/>
                 <Setter Property="FontSize" Value="16"/>
-                <Setter Property="Margin" Value="0,20,0,0"/>
+                <Setter Property="Margin" Value="1"/>
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="buttonBorder"
+                    Background="{TemplateBinding Background}"
+                    CornerRadius="5">
+                                <ContentPresenter
+                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                    Margin="{TemplateBinding Padding}"
+                    RecognizesAccessKey="True"/>
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="buttonBorder"
+                            Property="Background"
+                            Value="#FFF0E6"/>
+                                    <Setter Property="Foreground"
+                            Value="#E96518"/>
+                                </Trigger>
+
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="buttonBorder"
+                            Property="Background"
+                            Value="#FFD6BD"/>
+                                </Trigger>
+
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="buttonBorder"
+                            Property="Opacity"
+                            Value="0.5"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
             </Style.Setters>
         </Style>
-        <Style TargetType="TextBox">
-            <Style.Setters>
-                <Setter Property="Width" Value="250"/>
-                <Setter Property="Height" Value="30"/>
-                <Setter Property="FontFamily" Value="Bahnschrift Light"/>
-                <Setter Property="FontSize" Value="18"/>
-                <Setter Property="VerticalContentAlignment" Value="Center"/>
-            </Style.Setters>
-        </Style>
+            
         <Style TargetType="ComboBox">
             <Style.Setters>
-                <Setter Property="Width" Value="250"/>
+                <Setter Property="Margin" Value="15,0,15,0"/>
                 <Setter Property="Height" Value="30"/>
                 <Setter Property="FontFamily" Value="Bahnschrift Light"/>
                 <Setter Property="FontSize" Value="18"/>
@@ -43,48 +80,58 @@
                 <Setter Property="Height" Value="30"/>
                 <Setter Property="FontFamily" Value="Bahnschrift Light"/>
                 <Setter Property="FontSize" Value="16"/>
-                <Setter Property="Margin" Value="30,0,0,0"/>
+                <Setter Property="Margin" Value="20,0,0,0"/>
                 <Setter Property="Padding" Value="0,10,0,0"/>
                 <Setter Property="HorizontalAlignment" Value="Left"/>
             </Style.Setters>
         </Style>
-        <Style TargetType="DatePicker">
-            <Style.Setters>
-                <Setter Property="Width" Value="250"/>
-                <Setter Property="Height" Value="35"/>
-                <Setter Property="FontFamily" Value="Bahnschrift Light"/>
-                <Setter Property="FontSize" Value="18"/>
-                <Setter Property="VerticalContentAlignment" Value="Center"/>
-                <Setter Property="SelectedDateFormat" Value="Long"/>
-            </Style.Setters>
-        </Style>
     </UserControl.Resources>
 
-    <Grid Background="white">
+    <Grid Background="#F7F4EF">
         <Grid.RowDefinitions>
-            <RowDefinition Height="200"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="100"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+        <Border Grid.Row="0" Background="White" Margin="0,0,0,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Center">
+                    <Label x:Name="PeriodLabel" Content="Период"/>
+                    <ComboBox x:Name="PeriodComboBox">
+                        <ComboBoxItem Content="За все время"/>
+                        <ComboBoxItem Content="За месяц"/>
+                        <ComboBoxItem Content="За неделю"/>
+                        <ComboBoxItem Content="За 24 часа"/>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center" >
+                    <Label x:Name="ReasonLabel" Content="Причина обращения"/>
+                    <ComboBox x:Name="ReasonComboBox"/>
+                </StackPanel>
 
-        <Border Grid.Column="0" Grid.Row="1">
-            <lvc:PieChart x:Name="PieChart" SeriesSource="{Binding PieData}">
-                <lvc:PieChart.SeriesTemplate>
-                    <DataTemplate>
-                        <lvc:XamlPieSeries SeriesName="{Binding Name}" Values="{Binding Value}"/>
-                    </DataTemplate>
-                </lvc:PieChart.SeriesTemplate>
-                <lvc:PieChart.Title>
-                    <lvc:XamlDrawnLabelVisual Text="{Binding Text}" Paint="#000" TextSize="20" />
-                </lvc:PieChart.Title>
-            </lvc:PieChart>
+                <StackPanel Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center">
+                    <Label x:Name="CategoryLabel" Content="Категория обращения"/>
+                    <ComboBox x:Name="CategoryComboBox"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Right">
+                    <Button x:Name="PrintButton" Content="Распечатать" Margin="0,0,15,0"/>
+                    <Button x:Name="UpdateSetting" Content="Обновить" Margin="0,0,15,0"/>
+                    <Button x:Name="BackDefaultSettingsButton" Content="Сбросить изменения" Margin="0,0,15,0"/>
+                </StackPanel>
+            </Grid>
         </Border>
 
-        <Border Grid.ColumnSpan="2" Grid.Row="0">
+        <Border Grid.Row="1" Margin="0,10,0,10" CornerRadius="5">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -92,28 +139,51 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0" Orientation="Vertical">
-                    <Label x:Name="EmployeeLabel" Content="Сотрудник"/>
-                    <ComboBox x:Name="EmployeeComboBox"/>
-                    <Label />
-                    <TextBox />
+                <StackPanel Grid.Column="0" Orientation="Vertical" Margin="0,0,10,0" Background="White">
+                    <Label x:Name="AllRequests" Content="Все обращения: "/>
+                    <TextBlock x:Name="CountAllRequests" Text="0"  FontSize="25" FontWeight="Bold" Margin="20,0,0,0"/>
                 </StackPanel>
-                <StackPanel Grid.Column="1" Orientation="Vertical">
-                    <Label x:Name="StatusComboBox" Content="Статус заявки"/>
-                    <ComboBox/>
-                    <Label x:Name="PriorityComboBox" Content="Приоритет заявки"/>
-                    <ComboBox/>
+
+                <StackPanel  Grid.Column="1" Orientation="Vertical" Margin="10,0,10,0" Background="White">
+                    <Label x:Name="FinishRequests" Content="Завершенные обращения: "/>
+                    <TextBlock x:Name="CountFinishRequests" Text="0" FontSize="25" FontWeight="Bold" Margin="20,0,0,0"/>
                 </StackPanel>
-                <StackPanel Grid.Column="2" Orientation="Vertical">
-                    <Label x:Name="DateFromDatePicker" Content="Дата с"/>
-                    <DatePicker/>
-                    <Label x:Name="DateToDatePicker" Content="Дата по"/>
-                    <DatePicker/>
+
+                <StackPanel Grid.Column="2" Orientation="Vertical" Margin="10,0,10,0" Background="White">
+                    <Label x:Name="WorkRequests" Content="Обращений в работе: "/>
+                    <TextBlock x:Name="CountWorkRequests" Text="0" FontSize="25" FontWeight="Bold" Margin="20,0,0,0"/>
                 </StackPanel>
-                <StackPanel Grid.Column="3" Orientation="Vertical">
-                    <Button x:Name="PrintButton" Content="Распечатать"/>
-                    <Button x:Name="BackDefaultSettingsButton" Content="Сбросить изменения"/>
+
+                <StackPanel Grid.Column="3" Orientation="Vertical" Margin="10,0,0,0" Background="White">
+                    <Label x:Name="CancelRequests" Content="Отмененные обращения: "/>
+                    <TextBlock x:Name="CountCancelRequests" Text="0" FontSize="25" FontWeight="Bold" Margin="20,0,0,0"/>
                 </StackPanel>
+            </Grid>
+        </Border>
+
+
+        <Border Grid.ColumnSpan="2" Grid.Row="2" Background="White" Margin="0,10,0,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Распределение заявок" FontSize="25" FontWeight="Bold"
+                           Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="15,0,0,0"/>
+                <lvc:PieChart Grid.Row="1" x:Name="pieChart" Series="{Binding Series}"/>
+                <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
+                    <Label x:Name="DiagramAllRequestsLabel" Content="Все заявки: " Visibility="Collapsed"/>
+                    <Label x:Name="DiagramWorkRequestsLabel" Content="В работе: " Visibility="Collapsed"/>
+                    <Label x:Name="DiagramFinishRequestsLabel" Content="Завершенные: " Visibility="Collapsed"/>
+                    <Label x:Name="DiagramCancelRequestsLabel" Content="Отмененные: " Visibility="Collapsed"/>
+                </StackPanel>
+
             </Grid>
         </Border>
     </Grid>

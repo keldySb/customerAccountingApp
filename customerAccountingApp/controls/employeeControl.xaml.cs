@@ -1,6 +1,7 @@
 ﻿using finalExam_diplom_.classes;
 using finalExam_diplom_.classes.databaseTables;
 using finalExam_diplom_.forms;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -25,12 +26,19 @@ namespace finalExam_diplom_.controls
             timer.Start();
         }
 
-        private void ShowDataGridInformation()
+        private async void ShowDataGridInformation()
         {
             GetEmployeeTable table = new GetEmployeeTable();
 
-            List<EmployeesTable> employee = table.GetEmployee(employeeTextBox.Text);
-            employeeDataGrid.ItemsSource = employee;
+            if (employeeTextBox.Text == null)
+            {
+                List<EmployeesTable> employee = await table.GetEmployeesAsync();
+                employeeDataGrid.ItemsSource = employee;
+            } else
+            {
+                List<EmployeesTable> employee = await table.GetEmployeesSearchAsync(employeeTextBox.Text);
+                employeeDataGrid.ItemsSource = employee;
+            } 
         }
         public void RefreshData()
         {

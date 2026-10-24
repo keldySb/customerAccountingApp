@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:finalExam_diplom_"
         xmlns:controls="clr-namespace:finalExam_diplom_.controls"
         mc:Ignorable="d" Height="900" Width="1200" WindowStartupLocation="CenterScreen" WindowState="Maximized" Loaded="Window_Loaded" 
-        Background="#F7F4EF  ">
+        Background="#F7F4EF">
     <Window.Resources>
         <Style TargetType="Button">
             <Style.Setters>
@@ -112,7 +112,7 @@
         <Border Grid.Row="1" x:Name="MainMenu" Margin="5" CornerRadius="8 ">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition Width="250"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
