@@ -9,7 +9,7 @@ namespace customerAccountingAppServer.Controllers
     public class DiagramController : ControllerBase
     {
         [HttpGet("statuses")]
-        public async Task<ActionResult<List<DiagramClass>>> GetCountRequests([FromQuery] string? reason, [FromQuery] string? category)
+        public async Task<ActionResult<List<DiagramClass>>> GetCountRequests([FromQuery] int? time, [FromQuery] string? reason, [FromQuery] string? category)
         {
             List<DiagramClass> diagram = new List<DiagramClass>();
             
@@ -18,12 +18,30 @@ namespace customerAccountingAppServer.Controllers
             await using (NpgsqlConnection con = connection.getConnection())
             {
                 string request = "";
+                string timeRequest = "";
+                switch (time)
+                {
+                    case 1:
+                        timeRequest = " AND c.created_time >= NOW() - INTERVAL '1 month'";
+                        break;
+                    case 2:
+                        timeRequest = " AND c.created_time >= NOW() - INTERVAL '1 week'";
+                        break;
+                    case 3:
+                        timeRequest = " AND c.created_time >= NOW() - INTERVAL '1 day'";
+                        break;
+                    default:
+                        timeRequest = "";
+                        break;
+                }
 
                 if (string.IsNullOrEmpty(reason) && string.IsNullOrEmpty(category))
                 {
                     request = "SELECT count(*), s.name FROM clients_requests c" +
-                                      " LEFT JOIN statuses s ON c.status_id = s.id"
-                                    + " GROUP BY s.name";
+                                      " LEFT JOIN statuses s ON c.status_id = s.id" +
+                                      " WHERE c.status_id = s.id" +
+                                      timeRequest +
+                                      " GROUP BY s.name";
                 }
                 else if (reason != null && string.IsNullOrEmpty(category))
                 {
@@ -32,6 +50,7 @@ namespace customerAccountingAppServer.Controllers
                                         " LEFT JOIN categories ct ON c.category_id = ct.id" +
                                         " LEFT JOIN reasons r ON ct.reason_id = r.id" +
                                         " WHERE r.name = @reason" +
+                                        timeRequest +
                                         " GROUP BY s.name";
                 }
                 else if (reason != null && category != null)
@@ -40,6 +59,7 @@ namespace customerAccountingAppServer.Controllers
                                     " LEFT JOIN statuses s ON c.status_id = s.id" +
                                     " LEFT JOIN categories ct ON c.category_id = ct.id" +
                                     " WHERE ct.name = @category" +
+                                    timeRequest +
                                     " GROUP BY s.name";
                 }
 

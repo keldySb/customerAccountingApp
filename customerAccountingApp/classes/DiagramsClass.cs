@@ -12,9 +12,9 @@ namespace finalExam_diplom_.classes
         {
             BaseAddress = new Uri("https://localhost:7070/")
         };
-        public async Task<List<DiagramTable>> GetCountAsync(string? reason, string? category)
+        public async Task<List<DiagramTable>> GetCountAsync(int? time, string? reason, string? category)
         {
-            var status = await _httpClient.GetFromJsonAsync<List<DiagramTable>>($"api/count/statuses?reason={reason}&category={category}");
+            var status = await _httpClient.GetFromJsonAsync<List<DiagramTable>>($"api/count/statuses?time={time}&reason={reason}&category={category}");
             return status ?? new List<DiagramTable>();
         }
 

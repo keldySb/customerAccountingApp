@@ -43,6 +43,14 @@
         ],
         "parameters": [
           {
+            "name": "time",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
             "name": "reason",
             "in": "query",
             "schema": {

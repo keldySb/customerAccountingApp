@@ -107,7 +107,7 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Center">
                     <Label x:Name="PeriodLabel" Content="Период"/>
-                    <ComboBox x:Name="PeriodComboBox">
+                    <ComboBox x:Name="PeriodComboBox" SelectionChanged="PeriodComboBox_SelectionChanged">
                         <ComboBoxItem Content="За все время"/>
                         <ComboBoxItem Content="За месяц"/>
                         <ComboBoxItem Content="За неделю"/>

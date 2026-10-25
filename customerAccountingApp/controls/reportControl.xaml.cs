@@ -13,9 +13,10 @@ namespace finalExam_diplom_.controls
 {
     public partial class reportControl : UserControl
     {
+        private int time;
 
-        public ISeries[] Series { get; set; } = Array.Empty<ISeries>();
-        public ISeries[] SeriesPriorities { get; set; } = Array.Empty<ISeries>();
+        public ISeries[] Series { get; set; } = [];
+        public ISeries[] SeriesPriorities { get; set; } = [];
 
         public reportControl()
         {
@@ -31,7 +32,7 @@ namespace finalExam_diplom_.controls
         {
             DiagramsClass count = new DiagramsClass();
 
-            List<DiagramTable> table = await count.GetCountAsync(ReasonComboBox.Text, CategoryComboBox.Text);
+            List<DiagramTable> table = await count.GetCountAsync(time, ReasonComboBox.Text, CategoryComboBox.Text);
 
             List<DiagramTable> tablePriorities = await count.GetCountPrioritiesAsync(ReasonComboBox.Text, CategoryComboBox.Text);
 
@@ -111,7 +112,7 @@ namespace finalExam_diplom_.controls
         {
             DiagramsClass countRequest = new DiagramsClass();
 
-            List<DiagramTable> table = await countRequest.GetCountAsync(ReasonComboBox.Text, CategoryComboBox.Text);
+            List<DiagramTable> table = await countRequest.GetCountAsync(time, ReasonComboBox.Text, CategoryComboBox.Text);
 
             if (table.Count > 0)
             {
@@ -171,6 +172,13 @@ namespace finalExam_diplom_.controls
             LoadInformationData();
             LoadReason();
             LoadCategory();
+        }
+
+        private void PeriodComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            time = PeriodComboBox.SelectedIndex;
+            LoadDiagramData();
+            LoadInformationData();
         }
     }
 }
