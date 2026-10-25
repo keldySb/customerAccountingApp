@@ -41,9 +41,9 @@ namespace finalExam_diplom_.classes
             return status ?? new List<DictionaryItems>();
         }
 
-        public async Task<List<DictionaryItems>> GetCategory()
+        public async Task<List<DictionaryItems>> GetCategory(int? reason)
         {
-            var status = await _httpClient.GetFromJsonAsync<List<DictionaryItems>>("api/dictionaries/categories");
+            var status = await _httpClient.GetFromJsonAsync<List<DictionaryItems>>($"api/dictionaries/categories?reason={reason}");
             return status ?? new List<DictionaryItems>();
         }
     }

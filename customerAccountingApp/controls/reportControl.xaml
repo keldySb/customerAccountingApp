@@ -116,17 +116,38 @@
                 </StackPanel>
                 <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center" >
                     <Label x:Name="ReasonLabel" Content="Причина обращения"/>
-                    <ComboBox x:Name="ReasonComboBox"/>
+                    <ComboBox x:Name="ReasonComboBox" SelectionChanged="ReasonComboBox_SelectionChanged"/>
                 </StackPanel>
 
                 <StackPanel Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center">
                     <Label x:Name="CategoryLabel" Content="Категория обращения"/>
-                    <ComboBox x:Name="CategoryComboBox"/>
+                    <ComboBox x:Name="CategoryComboBox" IsEnabled="false"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Right">
-                    <Button x:Name="PrintButton" Content="Распечатать" Margin="0,0,15,0"/>
-                    <Button x:Name="UpdateSetting" Content="Обновить" Margin="0,0,15,0"/>
-                    <Button x:Name="BackDefaultSettingsButton" Content="Сбросить изменения" Margin="0,0,15,0"/>
+                    <Button x:Name="PrintButton" Margin="0,0,15,0">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Resources/printer.png" Width="20" Height="20"  Margin="0,0,15,0"/>
+
+                            <TextBlock Text="Распечатать" Foreground="#25272B" FontSize="16" Margin="0"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="UpdateSetting" Margin="0,0,15,0" Click="UpdateSetting_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Resources/reload.png" Width="20" Height="20"  Margin="0,0,15,0"/>
+
+                            <TextBlock Text="Обновить" Foreground="#25272B" FontSize="16" Margin="0"/>
+                        </StackPanel>
+                    </Button>
+
+
+                    <Button x:Name="BackDefaultSettingsButton" Margin="0,0,15,0" Click="BackDefaultSettingsButton_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Resources/reset.png" Width="20" Height="20"  Margin="0,0,15,0"/>
+
+                            <TextBlock Text="Сбросить изменения" Foreground="#25272B" FontSize="16" Margin="0"/>
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
             </Grid>
         </Border>
@@ -170,20 +191,29 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="150"/>
-                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="Распределение заявок" FontSize="25" FontWeight="Bold"
+                <TextBlock x:Name="ZeroRequestsTextBlock" Grid.ColumnSpan="2" Grid.Row="1" Text="Заявок с таким запросом не найдено" 
+                           FontSize="25" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Collapsed"/>
+                <TextBlock Text="Распределение заявок" FontSize="30" FontWeight="Bold"
                            Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="15,0,0,0"/>
-                <lvc:PieChart Grid.Row="1" x:Name="pieChart" Series="{Binding Series}"/>
-                <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
-                    <Label x:Name="DiagramAllRequestsLabel" Content="Все заявки: " Visibility="Collapsed"/>
-                    <Label x:Name="DiagramWorkRequestsLabel" Content="В работе: " Visibility="Collapsed"/>
-                    <Label x:Name="DiagramFinishRequestsLabel" Content="Завершенные: " Visibility="Collapsed"/>
-                    <Label x:Name="DiagramCancelRequestsLabel" Content="Отмененные: " Visibility="Collapsed"/>
-                </StackPanel>
+                <lvc:PieChart Grid.Row="1" Grid.Column="0" x:Name="pieChartRequests" Series="{Binding Series}" Margin="25,45,25,0" LegendPosition="Right">
+                    <lvc:PieChart.Title>
+                        <lvc:XamlDrawnLabelVisual
+                            Text="Количество заявок"
+                            Paint="#000"
+                            TextSize="25"/>
+                    </lvc:PieChart.Title>
+                </lvc:PieChart>
 
+                <lvc:PieChart Grid.Row="1" Grid.Column="1" x:Name="pieChartPriorities" Series="{Binding SeriesPriorities}" Margin="25,45,25,0" LegendPosition="Right">
+                    <lvc:PieChart.Title>
+                        <lvc:XamlDrawnLabelVisual
+                            Text="Приоритеты заявок"
+                            Paint="#000"
+                            TextSize="25"/>
+                    </lvc:PieChart.Title>
+                </lvc:PieChart>
             </Grid>
         </Border>
     </Grid>

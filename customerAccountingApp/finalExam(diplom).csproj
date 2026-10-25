@@ -16,6 +16,9 @@
     <None Remove="Resources\log-out.png" />
     <None Remove="Resources\notvisible.png" />
     <None Remove="Resources\NotVisiblePassword.png" />
+    <None Remove="Resources\printer.png" />
+    <None Remove="Resources\reload.png" />
+    <None Remove="Resources\reset.png" />
     <None Remove="Resources\t-plus.png" />
     <None Remove="Resources\users.png" />
     <None Remove="Resources\visible.png" />
@@ -42,6 +45,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\notvisible.png" />
+    <Resource Include="Resources\printer.png" />
+    <Resource Include="Resources\reload.png" />
+    <Resource Include="Resources\reset.png" />
     <Resource Include="Resources\t-plus.png" />
     <Resource Include="Resources\users.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>

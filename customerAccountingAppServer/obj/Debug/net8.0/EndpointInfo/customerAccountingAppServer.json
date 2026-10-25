@@ -36,10 +36,80 @@
         }
       }
     },
-    "/api/count": {
+    "/api/count/statuses": {
       "get": {
         "tags": [
           "Diagram"
+        ],
+        "parameters": [
+          {
+            "name": "reason",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DiagramClass"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DiagramClass"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DiagramClass"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/count/priorities": {
+      "get": {
+        "tags": [
+          "Diagram"
+        ],
+        "parameters": [
+          {
+            "name": "reason",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -268,6 +338,16 @@
       "get": {
         "tags": [
           "Dictionaries"
+        ],
+        "parameters": [
+          {
+            "name": "reason",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "responses": {
           "200": {

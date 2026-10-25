@@ -148,7 +148,7 @@ namespace customerAccountingAppServer.Controllers
         }
 
         [HttpGet("categories")]
-        public async Task<ActionResult<List<DictionaryItems>>> GetCategory()
+        public async Task<ActionResult<List<DictionaryItems>>> GetCategory([FromQuery] int? reason)
         {
             List<DictionaryItems> tableData = new List<DictionaryItems>();
 
@@ -158,8 +158,12 @@ namespace customerAccountingAppServer.Controllers
             {
                 await con.OpenAsync();
 
-                await using (NpgsqlCommand command = new NpgsqlCommand("SELECT id, name FROM categories", con))
+                await using (NpgsqlCommand command = new NpgsqlCommand("SELECT ct.id, ct.name FROM categories ct" +
+                                                                                " LEFT JOIN reasons r ON ct.reason_id = r.id" +
+                                                                                " WHERE r.id = @reason", con))
                 {
+                    if (reason != null)
+                        command.Parameters.AddWithValue("@reason", reason);
                     await using (NpgsqlDataReader reader = await command.ExecuteReaderAsync())
                     {
                         while (await reader.ReadAsync())
