@@ -90,7 +90,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="Auto" MaxWidth="700"/>
+            <ColumnDefinition Width="Auto" MaxWidth="900"/>
         </Grid.ColumnDefinitions>
 
         <GridSplitter x:Name="Splitter" Grid.Column="1" Grid.Row="1" Width="5" Visibility="Collapsed"

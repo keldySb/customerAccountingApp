@@ -10,10 +10,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="650" d:DesignWidth="1200">
 
-    <UserControl.DataContext>
-        <vms:DiagramsClass/>
-    </UserControl.DataContext>
-    
     <UserControl.Resources>
         <Style TargetType="Button">
             <Style.Setters>
@@ -124,7 +120,7 @@
                     <ComboBox x:Name="CategoryComboBox" IsEnabled="false"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Right">
-                    <Button x:Name="PrintButton" Margin="0,0,15,0">
+                    <Button x:Name="PrintButton" Margin="0,0,15,0" Click="PrintButton_Click">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/Resources/printer.png" Width="20" Height="20"  Margin="0,0,15,0"/>
 
@@ -152,30 +148,36 @@
             </Grid>
         </Border>
 
-        <Border Grid.Row="1" Margin="0,10,0,10" CornerRadius="5">
+        <Border Grid.Row="1" Margin="0,5,0,5" CornerRadius="5">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0" Orientation="Vertical" Margin="0,0,10,0" Background="White">
+                <StackPanel Grid.Column="0" Orientation="Vertical" Margin="0,0,5,0" Background="White">
                     <Label x:Name="AllRequests" Content="Все обращения: "/>
                     <TextBlock x:Name="CountAllRequests" Text="0"  FontSize="25" FontWeight="Bold" Margin="20,0,0,0"/>
                 </StackPanel>
 
-                <StackPanel  Grid.Column="1" Orientation="Vertical" Margin="10,0,10,0" Background="White">
+                <StackPanel  Grid.Column="1" Orientation="Vertical" Margin="5,0,10,0" Background="White">
+                    <Label x:Name="NewRequests" Content="Новые обращения: "/>
+                    <TextBlock x:Name="CountNewRequests" Text="0" FontSize="25" FontWeight="Bold" Margin="20,0,0,0"/>
+                </StackPanel>
+
+                <StackPanel  Grid.Column="2" Orientation="Vertical" Margin="5,0,10,0" Background="White">
                     <Label x:Name="FinishRequests" Content="Завершенные обращения: "/>
                     <TextBlock x:Name="CountFinishRequests" Text="0" FontSize="25" FontWeight="Bold" Margin="20,0,0,0"/>
                 </StackPanel>
 
-                <StackPanel Grid.Column="2" Orientation="Vertical" Margin="10,0,10,0" Background="White">
+                <StackPanel Grid.Column="3" Orientation="Vertical" Margin="5,0,10,0" Background="White">
                     <Label x:Name="WorkRequests" Content="Обращений в работе: "/>
                     <TextBlock x:Name="CountWorkRequests" Text="0" FontSize="25" FontWeight="Bold" Margin="20,0,0,0"/>
                 </StackPanel>
 
-                <StackPanel Grid.Column="3" Orientation="Vertical" Margin="10,0,0,0" Background="White">
+                <StackPanel Grid.Column="4" Orientation="Vertical" Margin="5,0,0,0" Background="White">
                     <Label x:Name="CancelRequests" Content="Отмененные обращения: "/>
                     <TextBlock x:Name="CountCancelRequests" Text="0" FontSize="25" FontWeight="Bold" Margin="20,0,0,0"/>
                 </StackPanel>
@@ -183,7 +185,7 @@
         </Border>
 
 
-        <Border Grid.ColumnSpan="2" Grid.Row="2" Background="White" Margin="0,10,0,0">
+        <Border Grid.ColumnSpan="2" Grid.Row="2" Margin="0,10,0,0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="80"/>
@@ -192,21 +194,28 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock x:Name="ZeroRequestsTextBlock" Grid.ColumnSpan="2" Grid.Row="1" Text="Заявок с таким запросом не найдено" 
-                           FontSize="25" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Collapsed"/>
-                <TextBlock Text="Распределение заявок" FontSize="30" FontWeight="Bold"
-                           Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="15,0,0,0"/>
-                <lvc:PieChart Grid.Row="1" Grid.Column="0" x:Name="pieChartRequests" Series="{Binding Series}" Margin="25,45,25,0" LegendPosition="Right">
+                <StackPanel Background="White" Grid.Column="0" Grid.Row="0" Margin="0,0,10,0">
+                    <TextBlock Text="Информация" FontSize="30" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Background="White" Grid.Column="0" Grid.Row="1" Margin="0,0,10,0">
+                    <TextBlock x:Name="informationTextBlock" Text="" FontSize="18" FontWeight="Bold" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+                </StackPanel>
+                <StackPanel  Background="White" Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="1">
+                    <TextBlock Text="Распределение заявок" FontSize="30" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Background="White"/>
+                </StackPanel>
+
+                <lvc:PieChart Grid.Row="1" Grid.Column="1" x:Name="pieChartRequests" Series="{Binding Series}" Margin="0" LegendPosition="Top">
                     <lvc:PieChart.Title>
                         <lvc:XamlDrawnLabelVisual
-                            Text="Количество заявок"
+                            Text="Статусы заявок"
                             Paint="#000"
                             TextSize="25"/>
                     </lvc:PieChart.Title>
                 </lvc:PieChart>
 
-                <lvc:PieChart Grid.Row="1" Grid.Column="1" x:Name="pieChartPriorities" Series="{Binding SeriesPriorities}" Margin="25,45,25,0" LegendPosition="Right">
+                <lvc:PieChart Grid.Row="1" Grid.Column="2" x:Name="pieChartPriorities" Series="{Binding SeriesPriorities}" Margin="0" LegendPosition="Top">
                     <lvc:PieChart.Title>
                         <lvc:XamlDrawnLabelVisual
                             Text="Приоритеты заявок"
@@ -215,6 +224,11 @@
                     </lvc:PieChart.Title>
                 </lvc:PieChart>
             </Grid>
+        </Border>
+
+        <Border x:Name="ZeroRequestsBorder" Grid.ColumnSpan="2" Grid.Row="2" Margin="0,10,0,0" Background="White" Visibility="Collapsed">
+            <TextBlock  Text="Заявок с таким запросом не найдено" FontSize="25" 
+                       FontWeight="Bold"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Border>
     </Grid>
 </UserControl>

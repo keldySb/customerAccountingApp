@@ -4,8 +4,6 @@ using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
-using System.Collections;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -28,6 +26,24 @@ namespace finalExam_diplom_.controls
             PeriodComboBox.SelectedIndex = 0;
         }
 
+        private async void LoadReason()
+        {
+            DictionaryClass dictionary = new DictionaryClass();
+
+            ReasonComboBox.ItemsSource = await dictionary.GetReason();
+            ReasonComboBox.SelectedValuePath = "Id";
+            ReasonComboBox.DisplayMemberPath = "Name";
+        }
+
+        private async void LoadCategory()
+        {
+            DictionaryClass dictionary = new DictionaryClass();
+
+            CategoryComboBox.ItemsSource = await dictionary.GetCategory(Convert.ToInt32(ReasonComboBox.SelectedValue));
+            CategoryComboBox.SelectedValuePath = "Id";
+            CategoryComboBox.DisplayMemberPath = "Name";
+        }
+
         private async void LoadDiagramData()
         {
             DiagramsClass count = new DiagramsClass();
@@ -38,18 +54,16 @@ namespace finalExam_diplom_.controls
 
             if (table.Count == 0)
             {
-                pieChartRequests.Visibility = Visibility.Hidden;
-                pieChartPriorities.Visibility = Visibility.Hidden;
-                ZeroRequestsTextBlock.Visibility = Visibility.Visible;
-            }
+                ZeroRequestsBorder.Visibility = Visibility.Visible;
+                PrintButton.IsEnabled = false;
+            }                
             else
             {
-                pieChartRequests.Visibility = Visibility.Visible;
-                pieChartPriorities.Visibility = Visibility.Visible;
-                ZeroRequestsTextBlock.Visibility = Visibility.Collapsed;
+                ZeroRequestsBorder.Visibility = Visibility.Collapsed;
+                PrintButton.IsEnabled = true;
             }
 
-                PieData[] data = new PieData[table.Count];
+            PieData[] data = new PieData[table.Count];
 
             for (int i = 0; i < table.Count; i++)
             {
@@ -89,56 +103,77 @@ namespace finalExam_diplom_.controls
                 }).ToArray();
         }
 
-
-        private async void LoadReason()
-        {
-            DictionaryClass dictionary = new DictionaryClass();
-
-            ReasonComboBox.ItemsSource = await dictionary.GetReason();
-            ReasonComboBox.SelectedValuePath = "Id";
-            ReasonComboBox.DisplayMemberPath = "Name";
-        }
-
-        private async void LoadCategory()
-        {
-            DictionaryClass dictionary = new DictionaryClass();
-
-            CategoryComboBox.ItemsSource = await dictionary.GetCategory(Convert.ToInt32(ReasonComboBox.SelectedValue));
-            CategoryComboBox.SelectedValuePath = "Id";
-            CategoryComboBox.DisplayMemberPath = "Name";
-        }
+        private StatisticsClass statistic = new StatisticsClass();
 
         private async void LoadInformationData()
         {
+            StatisticsClass currentStatistic = new StatisticsClass();
+
             DiagramsClass countRequest = new DiagramsClass();
 
             List<DiagramTable> table = await countRequest.GetCountAsync(time, ReasonComboBox.Text, CategoryComboBox.Text);
 
-            if (table.Count > 0)
+            List<DiagramTable> tablePriorities = await countRequest.GetCountPrioritiesAsync(ReasonComboBox.Text, CategoryComboBox.Text);
+            
+
+            for (int i = 0; i < table.Count; i++)
             {
-                for (int i = 0; i < table.Count; i++)
-                {
-                    if (table[i].Name == "Новая")
-                        CountAllRequests.Text = table[i].Count.ToString();
+                currentStatistic.Total += table[i].Count;
+                if (table[i].Name == "Новая")
+                    currentStatistic.New = table[i].Count;
 
-                    if (table[i].Name == "В работе")
-                        CountWorkRequests.Text = table[i].Count.ToString();
+                if (table[i].Name == "В работе")
+                    currentStatistic.Work = table[i].Count;
 
-                    if (table[i].Name == "Завершено")
-                        CountFinishRequests.Text = table[i].Count.ToString();
+                if (table[i].Name == "Завершено")
+                    currentStatistic.Finished = table[i].Count;
 
-                    if (table[i].Name == "Отменено")
-                        CountCancelRequests.Text = table[i].Count.ToString();
-                }
-            }
-            else
-            {
-                CountAllRequests.Text = table.Count.ToString();
-                CountWorkRequests.Text = table.Count.ToString();
-                CountFinishRequests.Text = table.Count.ToString();
-                CountCancelRequests.Text = table.Count.ToString();
+                if (table[i].Name == "Отменено")
+                    currentStatistic.Cancelled = table[i].Count;
             }
 
+            CountAllRequests.Text = currentStatistic.Total.ToString();
+            CountNewRequests.Text = currentStatistic.New.ToString();
+            CountWorkRequests.Text = currentStatistic.Work.ToString();
+            CountFinishRequests.Text = currentStatistic.Finished.ToString();
+            CountCancelRequests.Text = currentStatistic.Cancelled.ToString();   
+
+            for (int i = 0; i < tablePriorities.Count; i++)
+            {
+                if (tablePriorities[i].Name == "Низкий")
+                    currentStatistic.LowPriority = tablePriorities[i].Count;
+
+                if (tablePriorities[i].Name == "Средний")
+                    currentStatistic.MiddlePriority = tablePriorities[i].Count;
+
+                if (tablePriorities[i].Name == "Высокий")
+                    currentStatistic.HighPriority = tablePriorities[i].Count;
+            }
+
+            if (statistic.Total > 0)
+            {
+                currentStatistic.HighPriorityPercent = currentStatistic.HighPriority * 100.0 / currentStatistic.Total;
+                currentStatistic.NewPercent = currentStatistic.New * 100.0 / currentStatistic.Total;
+                currentStatistic.WorkPercent = currentStatistic.Work * 100.0 / currentStatistic.Total;
+                currentStatistic.FinishedPercent = currentStatistic.Finished * 100.0 / currentStatistic.Total;
+            }
+
+            informationTextBlock.Text = $"{PeriodComboBox.Text} в системе было зарегистрировано {currentStatistic.Total} заявок: \n\n" +
+                $"1. Распределение заявок по статусам:\n" +
+                $"     Новые: {currentStatistic.New} \n" +
+                $"     В работе: {currentStatistic.Work} \n" +
+                $"     Завершеные: {currentStatistic.Finished} \n" +
+                $"     Отмененые: {currentStatistic.Cancelled} \n\n" +
+                $"2. Распределение заявок по приоритетам:\n" +
+                $"     Высокий — {currentStatistic.HighPriority}\n" +
+                $"     Средний — {currentStatistic.MiddlePriority}\n" +
+                $"     Низкий — {currentStatistic.LowPriority}\n\n" +
+                $"3. Дополнительные показатели:\n" +
+                $"     Доля новых заявок, — {Math.Round(currentStatistic.NewPercent)}%.\n" +
+                $"     Доля завершённых заявок — {Math.Round(currentStatistic.FinishedPercent)}%.\n" +
+                $"     Доля заявок, находящихся в работе, — {Math.Round(currentStatistic.WorkPercent)}%.\n" +
+                $"     Доля заявок с высоким приоритетом — {Math.Round(currentStatistic.HighPriorityPercent)}%.";
+            statistic = currentStatistic;
         }
 
         public class PieData
@@ -167,11 +202,12 @@ namespace finalExam_diplom_.controls
 
         private void BackDefaultSettingsButton_Click(object sender, RoutedEventArgs e)
         {
+            PeriodComboBox.SelectedIndex = 0;
+            ReasonComboBox.SelectedIndex = -1;
+            CategoryComboBox.SelectedIndex = -1;
             CategoryComboBox.IsEnabled = false;
             LoadDiagramData();
             LoadInformationData();
-            LoadReason();
-            LoadCategory();
         }
 
         private void PeriodComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -179,6 +215,48 @@ namespace finalExam_diplom_.controls
             time = PeriodComboBox.SelectedIndex;
             LoadDiagramData();
             LoadInformationData();
+        }
+
+        private void PrintButton_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentUser user = new CurrentUser();
+            DateTime currentDate = DateTime.Now;
+
+            string templatePath = @"C:\gitProjects\customerAccountingApp\requestsPattern.docx";
+
+            string outputPath = @"C:\Reports\Отчёт.docx";
+
+            Dictionary<string, string> items = new Dictionary<string, string>
+            {
+                { "<COUNTNEW>", CountNewRequests.Text },
+                { "<COUNTWORK>", CountWorkRequests.Text },
+                { "<COUNTFINISH>", CountFinishRequests.Text },
+                { "<COUNTCANCEL>", CountCancelRequests.Text },
+
+                { "<FINISHPERCENT>", Math.Round(statistic.FinishedPercent).ToString() },
+                { "<WORKPERCENT>", Math.Round(statistic.WorkPercent).ToString() },
+                { "<NEWPERCENT>", Math.Round(statistic.NewPercent).ToString() },
+                { "<CANCELPERCENT>", Math.Round(statistic.CancelledPercent).ToString() },
+
+                { "<COUNTLOW>", statistic.LowPriority.ToString() },
+                { "<COUNTMIDDLE>", statistic.MiddlePriority.ToString() },
+                { "<COUNTHIGH>", statistic.HighPriority.ToString() },
+
+                { "<CURRENTDATE>", currentDate.ToString() }
+            };
+
+            MakeWordFile wordFile = new MakeWordFile(templatePath);
+
+            bool result = wordFile.Process(statistic, items, outputPath);
+
+            if (result)
+            {
+                MessageBox.Show("Отчёт сохранён");
+            }
+            else
+            {
+                MessageBox.Show("Не удалось сохранить отчёт");
+            }
         }
     }
 }

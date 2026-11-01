@@ -45,6 +45,9 @@ namespace finalExam_diplom_
             mc.Fio.Visibility = Visibility.Collapsed;
             mc.Status.Visibility = Visibility.Collapsed;
             mc.Created_time.Visibility = Visibility.Collapsed;
+            mc.Status.Visibility = Visibility.Collapsed;
+            mc.Duration.Visibility = Visibility.Collapsed;
+            mc.Priority.Visibility = Visibility.Collapsed;
         }
 
         internal void HideObjects()

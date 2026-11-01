@@ -11,10 +11,9 @@ namespace customerAccountingAppServer.Controllers
     public class EmployeesController : ControllerBase
     {
         private readonly string sql = "SELECT " +
-                                  "e.id, e.employee_number, CONCAT(e.first_name, ' ', e.last_name, ' ', e.middle_name) as fio, " +
-                                  "e.age, e.position_id, p.name as position, e.experience, e.phone_number, e.status_id, s.name as status " +
+                                  "CONCAT(e.first_name, ' ', e.last_name, ' ', e.middle_name) as fio, " +
+                                  "e.age, e.position_id, p.name as position, e.phone_number" +
                                 "FROM employees e" +
-                                " LEFT JOIN employees_status s ON e.status_id = s.id" +
                                 " LEFT JOIN positions p ON e.position_id = p.id";
         [HttpGet]
         public async Task<ActionResult<List<EmployeesTable>>> GetEmployeesAsync()
@@ -36,15 +35,11 @@ namespace customerAccountingAppServer.Controllers
                         tableData.Add(new EmployeesTable
                         {
                             Id = reader.GetInt32(0),
-                            Employee_number = reader[1].ToString(),
-                            Fio = reader[2].ToString(),
-                            Age = reader.GetInt32(3),
-                            Position_Id = reader.GetInt32(4),
-                            Position = reader[5].ToString(),
-                            Experience = reader.GetInt32(6),
-                            Phone_number = reader[7].ToString(),
-                            Status_Id = reader.GetInt32(8),
-                            Status = reader[9].ToString()
+                            Fio = reader[1].ToString(),
+                            Age = reader.GetInt32(2),
+                            Position_Id = reader.GetInt32(3),
+                            Position = reader[4].ToString(),
+                            Phone_number = reader[5].ToString(),
                         });
                     }
                 }
@@ -63,7 +58,7 @@ namespace customerAccountingAppServer.Controllers
             {
                 con.Open();
 
-                string request = sql + " WHERE CONCAT(e.employee_number, e.first_name, e.last_name, e.middle_name, p.name, s.name) ILIKE @search";
+                string request = sql + " WHERE CONCAT(e.first_name, e.last_name, e.middle_name, p.name) ILIKE @search";
 
                 await using (NpgsqlCommand command = new NpgsqlCommand(request, con))
                 {
@@ -76,22 +71,18 @@ namespace customerAccountingAppServer.Controllers
                         tableData.Add(new EmployeesTable
                         {
                             Id = reader.GetInt32(0),
-                            Employee_number = reader[1].ToString(),
-                            Fio = reader[2].ToString(),
-                            Age = reader.GetInt32(3),
-                            Position_Id = reader.GetInt32(4),
-                            Position = reader[5].ToString(),
-                            Experience = reader.GetInt32(6),
-                            Phone_number = reader[7].ToString(),
-                            Status_Id = reader.GetInt32(8),
-                            Status = reader[9].ToString()
+                            Fio = reader[1].ToString(),
+                            Age = reader.GetInt32(2),
+                            Position_Id = reader.GetInt32(3),
+                            Position = reader[4].ToString(),
+                            Phone_number = reader[5].ToString(),
                         });
                     }
                 }
                 return tableData;
             }
         }
-
+        //что с этим денлать
         [HttpPost]
         public async Task<ActionResult> UpdateEmployeeRequestAsync([FromBody] EmployeesTable EmpData)
         {

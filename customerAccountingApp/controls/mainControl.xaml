@@ -128,10 +128,10 @@
                     <DataGridTextColumn x:Name="Id" Header="#" Binding="{Binding Id}" Width="Auto"/>
                     <DataGridTextColumn x:Name="Fio" Header="ФИО" Binding="{Binding Fio}" Width="Auto"/>
                     <DataGridTextColumn x:Name="Address" Header="Адрес" Binding="{Binding Address}" Width="Auto"/>
-                    <DataGridTextColumn x:Name="Reason" Header="Причина" Binding="{Binding Reason}" Width="*"/>
-                    <DataGridTextColumn x:Name="Category" Header="Категория" Binding="{Binding Category}" Width="*"/>
+                    <DataGridTextColumn x:Name="Reason" Header="Причина" Binding="{Binding Reason}" Width="Auto"/>
+                    <DataGridTextColumn x:Name="Category" Header="Категория" Binding="{Binding Category}" Width="Auto"/>
                     <DataGridTextColumn x:Name="Duration" Header="Длительность" Binding="{Binding Duration}" Width="Auto"/>
-                    <DataGridTextColumn x:Name="Description" Header="Описание" Binding="{Binding Description}" Width="Auto"/>
+                    <DataGridTextColumn x:Name="Description" Header="Описание" Binding="{Binding Description}" Width="Auto" Visibility="Collapsed"/>
                     <DataGridTextColumn x:Name="Status_id" Header="Идентификатор статуса" Binding="{Binding Status_id}" Width="Auto" Visibility="Collapsed"/>
                     <DataGridTextColumn x:Name="Status" Header="Статус" Binding="{Binding Status}" Width="Auto" IsReadOnly="True"/>
                     <DataGridTextColumn x:Name="Priority_id" Header="Идентификатор приоритета" Binding="{Binding Priority_id}" Width="Auto" Visibility="Collapsed"/>
@@ -140,7 +140,7 @@
                     <DataGridTextColumn x:Name="Manager" Header="Ответственный менеджер" Binding="{Binding Manager}" Width="Auto" Visibility="Collapsed"/>
                     <DataGridTextColumn x:Name="Master_id" Header="Идентификатор мастерa" Binding="{Binding Master_id}" Width="Auto" Visibility="Collapsed"/>
                     <DataGridTextColumn x:Name="Master" Header="Ответственный мастер" Binding="{Binding Master}" Width="Auto" Visibility="Collapsed"/>
-                    <DataGridTextColumn x:Name="Created_time" Header="Дата создания" Binding="{Binding Created_time}" Width="Auto" />
+                    <DataGridTextColumn x:Name="Created_time" Header="Дата создания" Binding="{Binding Created_time}" Width="*" />
                     <DataGridTextColumn x:Name="Visit_time" Header="Дата визита" Binding="{Binding Visit_time}" Width="Auto" Visibility="Collapsed"/>
                     <DataGridTextColumn x:Name="Closed_time" Header="Дата закрытия заявки" Binding="{Binding Closed_time}" Width="Auto" Visibility="Collapsed"/>
                     <DataGridTextColumn x:Name="Master_comment" Header="Комментарий" Binding="{Binding Master_comment}" Width="Auto" Visibility="Collapsed"/>
