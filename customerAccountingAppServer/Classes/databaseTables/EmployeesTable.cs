@@ -6,8 +6,6 @@
 
         public string? Fio { get; set; }
 
-        public int? Age { get; set; }
-
         public int? Position_Id { get; set; }
 
         public string? Position { get; set; }

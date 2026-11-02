@@ -54,7 +54,7 @@ namespace finalExam_diplom_.controls
         {
             DictionaryClass status = new DictionaryClass();
 
-            mainComboBox.ItemsSource = await status.GetStatusAsync();
+            mainComboBox.ItemsSource = await status.GetStatusAsync(false);
             mainComboBox.SelectedValuePath = "Id";
             mainComboBox.DisplayMemberPath = "Name";
 

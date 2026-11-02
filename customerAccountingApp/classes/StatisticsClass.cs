@@ -12,8 +12,10 @@ namespace finalExam_diplom_.classes
 
         // Статусы
         public int New { get; set; }
-        public int Work { get; set; }
+        public int SentUK { get; set; }
+        public int GetAnswerFromUK { get; set; }
         public int Finished { get; set; }
+
         public int Cancelled { get; set; }
 
         // Приоритеты

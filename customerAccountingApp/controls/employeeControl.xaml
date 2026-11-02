@@ -117,29 +117,20 @@
             <DataGrid x:Name="employeeDataGrid" VerticalGridLinesBrush="Transparent">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="#" Binding="{Binding Id}" Width="Auto"/>
-                    <DataGridTextColumn Header="Табельный номер" Binding="{Binding Employee_number}" Width="Auto"/>
                     <DataGridTextColumn Header="ФИО" Binding="{Binding Fio}" Width="*"/>
-                    <DataGridTextColumn Header="Возраст" Binding="{Binding Age}" Width="Auto"/>
                     <DataGridTextColumn Header="Идентификатор должности" Binding="{Binding Position_Id}" Width="Auto" Visibility="Collapsed"/>
-                    <DataGridTextColumn Header="Должность" Binding="{Binding Position}" Width="Auto"/>
-                    <DataGridTextColumn Header="Опыт работы" Binding="{Binding Experience}" Width="Auto"/>
-                    <DataGridTextColumn Header="Номер телефона" Binding="{Binding Phone_number}" Width="Auto"/>
-                    <DataGridTextColumn Header="Идентификатор статуса" Binding="{Binding Status_Id}" Width="Auto" Visibility="Collapsed"/>
-                    <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="Auto" />
-                    <DataGridTextColumn Header="Трудоустроен?" Binding="{Binding Is_actual}" Width="Auto" Visibility="Collapsed"/>
+                    <DataGridTextColumn Header="Должность" Binding="{Binding Position}" Width="*"/>
+                    <DataGridTextColumn Header="Номер телефона" Binding="{Binding Phone_number}" Width="*"/>
 
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" x:Name="DataGridButtons">
-                                    <Button x:Name="openApplication" ToolTip="Открыть заявку" Click="OpenApplication_Click">
-                                        <TextBlock Text="Открыть" Foreground="Black"/>
-                                    </Button>
                                     <Button x:Name="SetTaskButton" ToolTip="Назначить задачу для этого сотрудника" Click="SetTaskButton_Click">
                                         <TextBlock Text="Назначить задачу" Foreground="Black"/>
                                         <Button.Style>
                                             <Style TargetType="Button">
-                                                <Setter Property="Width" Value="130"/>
+                                                <Setter Property="Width" Value="auto"/>
                                                 <Setter Property="Background" Value="#FFFFFF"/>
                                                 <Setter Property="Foreground" Value="Black"/>
                                                 <Setter Property="Template">
@@ -147,7 +138,7 @@
                                                         <ControlTemplate TargetType="Button">
                                                             <Border x:Name="buttonBorder"
                                                                         Background="{TemplateBinding Background}">
-                                                                                                    <ContentPresenter
+                                                                <ContentPresenter
                                                                         HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                                         VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                                         Margin="{TemplateBinding Padding}"

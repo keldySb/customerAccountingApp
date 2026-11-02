@@ -21,11 +21,6 @@ namespace finalExam_diplom_.forms
             {
                 actionControl.CloseUC += CloseUC;
             }
-
-            if (control is employeeOpenDataControl actionEmpControl)
-            {
-                actionEmpControl.CloseUC += CloseUC;
-            }
         }
 
         void CloseUC()

@@ -12,5 +12,6 @@ namespace finalExam_diplom_.classes
     internal class CurrentUser
     {
         public static int Id { get; set; }
+        public static int Employee_id { get; set; }
     }
 }

@@ -27,12 +27,13 @@ namespace finalExam_diplom_.controls
 
         private void SetVisibility()
         {
-            if (_clientData.Status_id == 1)
+            if (_clientData.Status_id == 1 || _clientData.Status_id == 3)
             {
                 addTaskButton.Visibility = Visibility.Visible;
-                masterComboBox.IsEnabled = true;
+                dispatcherDescriptionTextBox.IsEnabled = true;
                 priorityComboBox.IsEnabled = true;
-                visitTimeDatePicker.IsEnabled = true;
+                statusComboBox.IsEnabled = true;
+                plannedTimeDatePicker.IsEnabled = true;
             }
         }
 
@@ -44,37 +45,30 @@ namespace finalExam_diplom_.controls
             priorityComboBox.SelectedValuePath = "Id";
             priorityComboBox.DisplayMemberPath = "Name";
 
-            statusComboBox.ItemsSource = await dictionary.GetStatusAsync();
+            statusComboBox.ItemsSource = await dictionary.GetStatusAsync(true);
             statusComboBox.SelectedValuePath = "Id";
             statusComboBox.DisplayMemberPath = "Name";
 
+            dispatcherComboBox.ItemsSource = await dictionary.GetManagerAsync();
+            dispatcherComboBox.SelectedValuePath = "Id";
+            dispatcherComboBox.DisplayMemberPath = "Name";
 
-            masterComboBox.ItemsSource = await dictionary.GetMasterAsync();
-            masterComboBox.SelectedValuePath = "Id";
-            masterComboBox.DisplayMemberPath = "Name";
-
-            managerComboBox.ItemsSource = await dictionary.GetManagerAsync();
-            managerComboBox.SelectedValuePath = "Id";
-            managerComboBox.DisplayMemberPath = "Name";
-
-
+            organizationTextBox.Text = _clientData.Organization;
 
             reasonTextBox.Text = _clientData.Reason;
             categoryTextBox.Text = _clientData.Category;
             durationTextBox.Text = _clientData.Duration;
             clientTextBox.Text = _clientData.Fio;
             addressTextBox.Text = _clientData.Address;
-            descriptionTextBox.Text = _clientData.Description;
-            masterCommentTextBox.Text = _clientData.Master_comment;
+            clientDescriptionTextBox.Text = _clientData.Client_description;
+            dispatcherDescriptionTextBox.Text = _clientData.Dispatcher_description;
 
             createdTimeDatePicker.SelectedDate = _clientData.Created_time;
-            visitTimeDatePicker.SelectedDate = _clientData.Visit_time;
+            plannedTimeDatePicker.SelectedDate = _clientData.Planned_time;
             closedTimeDatePicker.SelectedDate = _clientData.Closed_time;
 
             statusComboBox.SelectedValue = _clientData.Status_id;
             priorityComboBox.SelectedValue = _clientData.Priority_id;
-            masterComboBox.SelectedValue = _clientData.Master_id;
-            managerComboBox.SelectedValue = CurrentUser.Id;
         }
 
         public Action CloseUC;
@@ -91,25 +85,30 @@ namespace finalExam_diplom_.controls
 
         private async void AddTaskButton_Click(object sender, RoutedEventArgs e)
         {
-            if (visitTimeDatePicker.SelectedDate != null && masterComboBox.SelectedValue != null)
+            if (plannedTimeDatePicker.SelectedDate != null && priorityComboBox.SelectedValue != null && statusComboBox.SelectedValue != null)
             {
-                if (visitTimeDatePicker.SelectedDate > DateTime.Now)
+                if (plannedTimeDatePicker.SelectedDate > DateTime.Now)
                 {
                     ClientsRequestTable NewData = new ClientsRequestTable();
-                    NewData.Id = _clientData.Id;
-                    NewData.Priority_id = (int)priorityComboBox.SelectedValue;
-                    NewData.Manager_id = CurrentUser.Id;
-                    NewData.Master_id = (int?)masterComboBox.SelectedValue;
-                    NewData.Visit_time = visitTimeDatePicker.SelectedDate;
 
-                    EmployeesTable NewEmployeeData = new EmployeesTable();
-                    NewEmployeeData.Id = Convert.ToInt32(masterComboBox.SelectedValue);
+                    NewData.Id = _clientData.Id;
+                    NewData.Status_id = (int)statusComboBox.SelectedValue;
+                    NewData.Priority_id = (int)priorityComboBox.SelectedValue;
+                    NewData.Dispatcher_id = CurrentUser.Id;
+                    NewData.Organization_id = _clientData.Organization_id;
+                    NewData.Planned_time = plannedTimeDatePicker.SelectedDate;
+                    NewData.Dispatcher_description = dispatcherDescriptionTextBox.Text;
 
                     var statusRequest = await _httpClient.PostAsJsonAsync("api/requests", NewData);
-                    
-                    var statusEmployee = await _httpClient.PostAsJsonAsync("api/employees", NewEmployeeData);
 
-                    Raise();
+                    if (statusRequest.IsSuccessStatusCode)
+                    {
+                        Raise();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Не удалось сохранить изменения");
+                    }
                 }
                 else { MessageBox.Show("Дата визита не может быть меньше текущей даты"); }
 

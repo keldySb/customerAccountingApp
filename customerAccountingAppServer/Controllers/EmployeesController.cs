@@ -11,10 +11,14 @@ namespace customerAccountingAppServer.Controllers
     public class EmployeesController : ControllerBase
     {
         private readonly string sql = "SELECT " +
-                                  "CONCAT(e.first_name, ' ', e.last_name, ' ', e.middle_name) as fio, " +
-                                  "e.age, e.position_id, p.name as position, e.phone_number" +
-                                "FROM employees e" +
-                                " LEFT JOIN positions p ON e.position_id = p.id";
+            "e.id, " +
+            "CONCAT(e.first_name, ' ', e.last_name, ' ', e.middle_name) as fio, " +
+            "e.position_id, " +
+            "p.name as position, " +
+            "e.phone_number " +
+            "FROM employees e " +
+            "LEFT JOIN positions p ON e.position_id = p.id";
+
         [HttpGet]
         public async Task<ActionResult<List<EmployeesTable>>> GetEmployeesAsync()
         {
@@ -36,10 +40,9 @@ namespace customerAccountingAppServer.Controllers
                         {
                             Id = reader.GetInt32(0),
                             Fio = reader[1].ToString(),
-                            Age = reader.GetInt32(2),
-                            Position_Id = reader.GetInt32(3),
-                            Position = reader[4].ToString(),
-                            Phone_number = reader[5].ToString(),
+                            Position_Id = reader.IsDBNull(2) ? null : reader.GetInt32(2),
+                            Position = reader.IsDBNull(3) ? null : reader.GetString(3),
+                            Phone_number = reader.IsDBNull(4) ? null : reader.GetString(4)
                         });
                     }
                 }
@@ -72,36 +75,13 @@ namespace customerAccountingAppServer.Controllers
                         {
                             Id = reader.GetInt32(0),
                             Fio = reader[1].ToString(),
-                            Age = reader.GetInt32(2),
-                            Position_Id = reader.GetInt32(3),
-                            Position = reader[4].ToString(),
-                            Phone_number = reader[5].ToString(),
+                            Position_Id = reader.IsDBNull(2) ? null : reader.GetInt32(2),
+                            Position = reader.IsDBNull(3) ? null : reader.GetString(3),
+                            Phone_number = reader.IsDBNull(4) ? null : reader.GetString(4)
                         });
                     }
                 }
                 return tableData;
-            }
-        }
-        //что с этим денлать
-        [HttpPost]
-        public async Task<ActionResult> UpdateEmployeeRequestAsync([FromBody] EmployeesTable EmpData)
-        {
-            DataBaseConnection connection = new DataBaseConnection();
-
-            await using (NpgsqlConnection con = connection.getConnection())
-            {
-                con.Open();
-
-                string sql = $"UPDATE employees SET status_id = 2 WHERE id = @id";
-
-                await using(NpgsqlCommand command = new NpgsqlCommand(sql, con))
-                {
-                    command.Parameters.AddWithValue("@id", EmpData.Id);
-
-                    await command.ExecuteNonQueryAsync();
-                }
-
-                return StatusCode(200);
             }
         }
     }

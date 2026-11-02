@@ -77,9 +77,10 @@ namespace finalExam_diplom_.controls
                     Values = item.Values,
                     Fill = new SolidColorPaint(
                         item.Name == "Новая" ? SKColors.Orange :
-                        item.Name == "В работе" ? SKColors.Blue :
-                        item.Name == "Завершено" ? SKColors.Purple :
-                        item.Name == "Отменено" ? SKColors.YellowGreen :
+                        item.Name == "Направлено в УК" ? SKColors.Blue :
+                        item.Name == "Получен ответ от УК" ? SKColors.Purple :
+                        item.Name == "Выполнено" ? SKColors.YellowGreen :
+                        item.Name == "Заявка отменена клиентом" ? SKColors.BlueViolet :
                         SKColors.Gray),
                 }).ToArray();
 
@@ -122,19 +123,22 @@ namespace finalExam_diplom_.controls
                 if (table[i].Name == "Новая")
                     currentStatistic.New = table[i].Count;
 
-                if (table[i].Name == "В работе")
-                    currentStatistic.Work = table[i].Count;
+                if (table[i].Name == "Направлено в УК")
+                    currentStatistic.SentUK = table[i].Count;
 
-                if (table[i].Name == "Завершено")
+                if (table[i].Name == "Получен ответ от УК")
+                    currentStatistic.GetAnswerFromUK = table[i].Count;
+
+                if (table[i].Name == "Выполнено")
                     currentStatistic.Finished = table[i].Count;
 
-                if (table[i].Name == "Отменено")
+                if (table[i].Name == "Заявка отменена клиентом")
                     currentStatistic.Cancelled = table[i].Count;
             }
 
             CountAllRequests.Text = currentStatistic.Total.ToString();
             CountNewRequests.Text = currentStatistic.New.ToString();
-            CountWorkRequests.Text = currentStatistic.Work.ToString();
+            CountWorkRequests.Text = (currentStatistic.SentUK + currentStatistic.GetAnswerFromUK).ToString();
             CountFinishRequests.Text = currentStatistic.Finished.ToString();
             CountCancelRequests.Text = currentStatistic.Cancelled.ToString();   
 
@@ -154,16 +158,17 @@ namespace finalExam_diplom_.controls
             {
                 currentStatistic.HighPriorityPercent = currentStatistic.HighPriority * 100.0 / currentStatistic.Total;
                 currentStatistic.NewPercent = currentStatistic.New * 100.0 / currentStatistic.Total;
-                currentStatistic.WorkPercent = currentStatistic.Work * 100.0 / currentStatistic.Total;
+                currentStatistic.WorkPercent = (currentStatistic.SentUK + currentStatistic.GetAnswerFromUK) * 100.0 / currentStatistic.Total;
                 currentStatistic.FinishedPercent = currentStatistic.Finished * 100.0 / currentStatistic.Total;
             }
 
             informationTextBlock.Text = $"{PeriodComboBox.Text} в системе было зарегистрировано {currentStatistic.Total} заявок: \n\n" +
                 $"1. Распределение заявок по статусам:\n" +
                 $"     Новые: {currentStatistic.New} \n" +
-                $"     В работе: {currentStatistic.Work} \n" +
-                $"     Завершеные: {currentStatistic.Finished} \n" +
-                $"     Отмененые: {currentStatistic.Cancelled} \n\n" +
+                $"     Направлено в УК: {currentStatistic.SentUK} \n" +
+                $"     Получен ответ от УК: {currentStatistic.GetAnswerFromUK} \n" +
+                $"     Выполнено: {currentStatistic.Finished} \n" +
+                $"     Заявка отменена клиентом: {currentStatistic.Cancelled} \n\n" +
                 $"2. Распределение заявок по приоритетам:\n" +
                 $"     Высокий — {currentStatistic.HighPriority}\n" +
                 $"     Средний — {currentStatistic.MiddlePriority}\n" +

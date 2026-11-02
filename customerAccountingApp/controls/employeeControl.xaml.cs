@@ -45,15 +45,6 @@ namespace finalExam_diplom_.controls
             ShowDataGridInformation();
         }
 
-        private void OpenApplication_Click(object sender, RoutedEventArgs e)
-        {
-            var empData = employeeDataGrid.SelectedItem as EmployeesTable;
-
-            employeeOpenDataControl control = new employeeOpenDataControl(empData);
-            addAndChangeForm form = new addAndChangeForm(control);
-            form.ShowDialog();
-        }
-
         private void Timer_Tick(object? sender, EventArgs e)
         {
             ShowDataGridInformation();

@@ -157,6 +157,16 @@
         "tags": [
           "Dictionaries"
         ],
+        "parameters": [
+          {
+            "name": "changeStatus",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -390,6 +400,54 @@
         }
       }
     },
+    "/api/dictionaries/organization": {
+      "get": {
+        "tags": [
+          "Dictionaries"
+        ],
+        "parameters": [
+          {
+            "name": "address_id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DictionaryItems"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DictionaryItems"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DictionaryItems"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/employees": {
       "get": {
         "tags": [
@@ -424,35 +482,6 @@
                 }
               }
             }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Employees"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EmployeesTable"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EmployeesTable"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/EmployeesTable"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
           }
         }
       }
@@ -650,6 +679,11 @@
             "type": "string",
             "nullable": true
           },
+          "address_id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
           "address": {
             "type": "string",
             "nullable": true
@@ -666,7 +700,7 @@
             "type": "string",
             "nullable": true
           },
-          "description": {
+          "client_description": {
             "type": "string",
             "nullable": true
           },
@@ -681,27 +715,49 @@
           },
           "priority_id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "priority": {
             "type": "string",
             "nullable": true
           },
-          "manager_id": {
+          "dispatcher_id": {
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
-          "manager": {
+          "dispatcher": {
             "type": "string",
             "nullable": true
           },
-          "master_id": {
+          "dispatcher_description": {
+            "type": "string",
+            "nullable": true
+          },
+          "organization_id": {
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
-          "master": {
+          "organization": {
+            "type": "string",
+            "nullable": true
+          },
+          "employee_id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "employee": {
+            "type": "string",
+            "nullable": true
+          },
+          "employee_comment": {
+            "type": "string",
+            "nullable": true
+          },
+          "organization_Comment": {
             "type": "string",
             "nullable": true
           },
@@ -710,7 +766,12 @@
             "format": "date-time",
             "nullable": true
           },
-          "visit_time": {
+          "start_time": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "planned_time": {
             "type": "string",
             "format": "date-time",
             "nullable": true
@@ -718,10 +779,6 @@
           "closed_time": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
-          },
-          "master_comment": {
-            "type": "string",
             "nullable": true
           }
         },
@@ -762,17 +819,8 @@
             "type": "integer",
             "format": "int32"
           },
-          "employee_number": {
-            "type": "string",
-            "nullable": true
-          },
           "fio": {
             "type": "string",
-            "nullable": true
-          },
-          "age": {
-            "type": "integer",
-            "format": "int32",
             "nullable": true
           },
           "position_Id": {
@@ -784,21 +832,7 @@
             "type": "string",
             "nullable": true
           },
-          "experience": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
           "phone_number": {
-            "type": "string",
-            "nullable": true
-          },
-          "status_Id": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "status": {
             "type": "string",
             "nullable": true
           }

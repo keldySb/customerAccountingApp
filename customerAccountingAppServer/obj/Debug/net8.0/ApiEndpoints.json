@@ -150,6 +150,32 @@
   },
   {
     "ContainingType": "customerAccountingAppServer.Controllers.DictionariesController",
+    "Method": "GetOrganization",
+    "RelativePath": "api/dictionaries/organization",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "address_id",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[customerAccountingAppServer.Classes.databaseTables.DictionaryItems, customerAccountingAppServer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "customerAccountingAppServer.Controllers.DictionariesController",
     "Method": "GetPriority",
     "RelativePath": "api/dictionaries/priorities",
     "HttpMethod": "GET",
@@ -195,7 +221,13 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "changeStatus",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.List\u00601[[customerAccountingAppServer.Classes.databaseTables.DictionaryItems, customerAccountingAppServer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
@@ -227,22 +259,6 @@
         "StatusCode": 200
       }
     ]
-  },
-  {
-    "ContainingType": "customerAccountingAppServer.Controllers.EmployeesController",
-    "Method": "UpdateEmployeeRequestAsync",
-    "RelativePath": "api/employees",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "EmpData",
-        "Type": "customerAccountingAppServer.Classes.databaseTables.EmployeesTable",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
   },
   {
     "ContainingType": "customerAccountingAppServer.Controllers.EmployeesController",
