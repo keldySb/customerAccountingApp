@@ -12,5 +12,9 @@
 
         public string? Phone_number { get; set; }
 
+        public int Employee_status_id { get; set; }
+
+        public string? Employee_status { get; set; }
+
     }
 }

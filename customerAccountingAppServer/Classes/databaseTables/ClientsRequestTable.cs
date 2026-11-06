@@ -51,5 +51,8 @@
         public DateTime? Planned_time { get; set; }
 
         public DateTime? Closed_time { get; set; }
+
+        public int? Uk_decision { get; set; }
+
     }
 }

@@ -100,25 +100,25 @@ namespace customerAccountingAppServer.Controllers
 
                 if (string.IsNullOrEmpty(reason) && string.IsNullOrEmpty(category))
                 {                                         
-                    request = "SELECT count(*), p.name  FROM clients_requests c" +
+                    request = "SELECT count(*), COALESCE(p.name, 'Не указан') AS name  FROM clients_requests c" +
                                     " LEFT JOIN priorities p ON c.priority_id = p.id"
-                                        + " GROUP BY p.name";
+                                        + " GROUP BY COALESCE(p.name, 'Не указан')";
                 }
                 else if (reason != null && string.IsNullOrEmpty(category))
                 {
-                    request = "SELECT count(*), p.name  FROM clients_requests c" +
+                    request = "SELECT count(*), COALESCE(p.name, 'Не указан') AS name  FROM clients_requests c" +
                                         " LEFT JOIN priorities p ON c.priority_id = p.id" +
                                         " LEFT JOIN categories ct ON c.category_id = ct.id" +
                                         " LEFT JOIN reasons r ON ct.reason_id = r.id" +
                                         " WHERE r.name = @reason" +
-                                        " GROUP BY p.name";
+                                        " GROUP BY COALESCE(p.name, 'Не указан')";
                 } else if (reason != null && category != null)
                 {
-                    request = "SELECT count(*), p.name  FROM clients_requests c" +
+                    request = "SELECT count(*), COALESCE(p.name, 'Не указан') AS name  FROM clients_requests c" +
                                     " LEFT JOIN priorities p ON c.priority_id = p.id" +
                                     " LEFT JOIN categories ct ON c.category_id = ct.id" +
                                     " WHERE ct.name = @category" +
-                                    " GROUP BY p.name";
+                                    " GROUP BY COALESCE(p.name, 'Не указан')";
                 }
 
                 await con.OpenAsync();

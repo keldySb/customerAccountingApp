@@ -1,9 +1,6 @@
-﻿using finalExam_diplom_.classes;
-using finalExam_diplom_.controls;
-using finalExam_diplom_.forms;
+﻿using finalExam_diplom_.controls;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 
 namespace finalExam_diplom_
 {
@@ -29,13 +26,17 @@ namespace finalExam_diplom_
         {
             authControl.Visibility = Visibility.Collapsed;
             MainMenu.Visibility = Visibility.Visible;
+
+            MainButton_Click(mainButton, new RoutedEventArgs());
+
         }
 
         private void SetTask()
         {
             setBorder.Visibility = Visibility.Visible;
             Splitter.Visibility = Visibility.Visible;  
-            MainControl mc = new MainControl(HideObjects);
+            MainControl mc = new MainControl(null);
+            mc.ukWorks = true;
             mc.RequesInfo -= _employeeControl.RefreshData;
             setTaskOrEmpControl.Content = mc;
             mc.RequesInfo += _employeeControl.RefreshData;
@@ -43,11 +44,16 @@ namespace finalExam_diplom_
             mc.statusBorder.Visibility = Visibility.Collapsed;
             mc.Id.Visibility = Visibility.Collapsed;
             mc.Fio.Visibility = Visibility.Collapsed;
-            mc.Status.Visibility = Visibility.Collapsed;
             mc.Created_time.Visibility = Visibility.Collapsed;
-            mc.Status.Visibility = Visibility.Collapsed;
             mc.Duration.Visibility = Visibility.Collapsed;
             mc.Priority.Visibility = Visibility.Collapsed;
+            mc.Organization.Visibility = Visibility.Collapsed;
+
+            mc.Address.Width = new DataGridLength(200);
+            mc.Reason.Width = new DataGridLength(200);
+            mc.Category.Width = new DataGridLength(200);
+            mc.Status.Width = new DataGridLength(150);
+
         }
 
         internal void HideObjects()
@@ -90,7 +96,7 @@ namespace finalExam_diplom_
 
         private void MainButton_Click(object sender, RoutedEventArgs e)
         {
-            MainControl mc = new MainControl(HideObjects);
+            MainControl mc = new MainControl(null);
             useControl.Content = mc;
             headerTextBox.Text = "Заявки клиентов";
 

@@ -51,5 +51,9 @@
         public DateTime? Planned_time { get; set; }
 
         public DateTime? Closed_time { get; set; }
+
+        public int? Uk_decision { get; set; }
+
+        public string Uk_decision_text => Uk_decision == 1 ? "Проблема на стороне УК" : Uk_decision == 2 ? "Проблема на нашей стороне" : "";
     }
 } 

@@ -33,6 +33,7 @@ namespace finalExam_diplom_.controls
                 if (users != null)
                 {
                     CurrentUser.Id = users.Id;
+                    CurrentUser.Employee_id = users.Employee_id;
                     Succsessful();
                 }
                 else

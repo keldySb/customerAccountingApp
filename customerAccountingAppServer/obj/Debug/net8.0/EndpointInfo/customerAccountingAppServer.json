@@ -780,6 +780,11 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "uk_decision": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -833,6 +838,14 @@
             "nullable": true
           },
           "phone_number": {
+            "type": "string",
+            "nullable": true
+          },
+          "employee_status_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "employee_status": {
             "type": "string",
             "nullable": true
           }

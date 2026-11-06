@@ -30,10 +30,10 @@ C:\gitProjects\customerAccountingAppServer\obj\Debug\net8.0\staticwebassets.buil
 C:\gitProjects\customerAccountingAppServer\obj\Debug\net8.0\staticwebassets.build.json.cache
 C:\gitProjects\customerAccountingAppServer\obj\Debug\net8.0\staticwebassets.development.json
 C:\gitProjects\customerAccountingAppServer\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-C:\gitProjects\customerAccountingAppServer\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\gitProjects\customerAccountingAppServer\obj\Debug\net8.0\customer.FDAFCE45.Up2Date
 C:\gitProjects\customerAccountingAppServer\obj\Debug\net8.0\customerAccountingAppServer.dll
 C:\gitProjects\customerAccountingAppServer\obj\Debug\net8.0\refint\customerAccountingAppServer.dll
 C:\gitProjects\customerAccountingAppServer\obj\Debug\net8.0\customerAccountingAppServer.pdb
 C:\gitProjects\customerAccountingAppServer\obj\Debug\net8.0\customerAccountingAppServer.genruntimeconfig.cache
 C:\gitProjects\customerAccountingAppServer\obj\Debug\net8.0\ref\customerAccountingAppServer.dll
+C:\gitProjects\customerAccountingAppServer\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

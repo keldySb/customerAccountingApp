@@ -109,7 +109,7 @@ namespace customerAccountingAppServer.Controllers
             {
                 await con.OpenAsync();
 
-                await using(NpgsqlCommand command = new NpgsqlCommand("SELECT d.id," +
+                await using(NpgsqlCommand command = new NpgsqlCommand("SELECT d.employee_id ," +
                                     " CONCAT(e.first_name, ' ', e.last_name, ' ', e.middle_name) as name" +
                                     " FROM dispatchers d" +
                                     " LEFT JOIN employees e ON d.employee_id = e.id", con))

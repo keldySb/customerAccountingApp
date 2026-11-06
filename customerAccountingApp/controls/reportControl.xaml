@@ -178,8 +178,8 @@
                 </StackPanel>
 
                 <StackPanel Grid.Column="4" Orientation="Vertical" Margin="5,0,0,0" Background="White">
-                    <Label x:Name="CancelRequests" Content="Отмененные обращения: "/>
-                    <TextBlock x:Name="CountCancelRequests" Text="0" FontSize="25" FontWeight="Bold" Margin="20,0,0,0"/>
+                    <Label x:Name="UkRequests" Content="Переданные обращения: "/>
+                    <TextBlock x:Name="CountUkRequests" Text="0" FontSize="25" FontWeight="Bold" Margin="20,0,0,0"/>
                 </StackPanel>
             </Grid>
         </Border>

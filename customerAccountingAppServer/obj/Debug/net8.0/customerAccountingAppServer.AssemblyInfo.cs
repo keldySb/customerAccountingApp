@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("customerAccountingAppServer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ca754aec0917f458927455bc9e19695e0d62c726")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3c56d0154f9df137854a1bb379624bde5c5d46ac")]
 [assembly: System.Reflection.AssemblyProductAttribute("customerAccountingAppServer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("customerAccountingAppServer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

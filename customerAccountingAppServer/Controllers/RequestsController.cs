@@ -24,7 +24,7 @@ namespace customerAccountingAppServer.Controllers
                              "CONCAT(m.first_name, ' ', m.last_name, ' ', m.middle_name) as master, " +
                              "cr.created_time, cr.start_time, " +
                              "cr.planned_completion_time, cr.closed_time, " +
-                             "cr.organization_comment, cr.employee_comment " +
+                             "cr.organization_comment, cr.employee_comment, cr.uk_decision " +
              "FROM clients_requests cr " +
              "LEFT JOIN clients c ON cr.client_id = c.id " +
              "LEFT JOIN apartments ap ON cr.apartment_id = ap.id " +
@@ -37,7 +37,7 @@ namespace customerAccountingAppServer.Controllers
              "LEFT JOIN categories ct ON cr.category_id = ct.id " +
              "LEFT JOIN reasons r ON ct.reason_id = r.id " +
              "LEFT JOIN duration dr ON cr.duration_id = dr.id " +
-             "WHERE cr.status_id = @status_id";
+             "WHERE (@status_id = 0 OR cr.status_id = @status_id)";
 
         [HttpGet()]
         public async Task<ActionResult<List<ClientsRequestTable>>> GetClientsRequests([FromQuery] int? statusId)
@@ -72,7 +72,7 @@ namespace customerAccountingAppServer.Controllers
                                 Status_id = reader.IsDBNull(9) ? null : reader.GetInt32(9),
                                 Status = reader[10].ToString(),
                                 Priority_id = reader.IsDBNull(11) ? null : reader.GetInt32(11),
-                                Priority = reader[12].ToString(),
+                                Priority = reader.IsDBNull(12) ? "Не указан" : reader[12].ToString(),
                                 Dispatcher_id = reader.IsDBNull(13) ? null : reader.GetInt32(13),
                                 Dispatcher = reader[14].ToString(),
                                 Organization_id = reader.IsDBNull(15) ? null : reader.GetInt32(15),
@@ -84,7 +84,8 @@ namespace customerAccountingAppServer.Controllers
                                 Planned_time = reader.IsDBNull(21) ? null : reader.GetDateTime(21),
                                 Closed_time = reader.IsDBNull(22) ? null : reader.GetDateTime(22),
                                 Organization_Comment = reader[23].ToString(),
-                                Employee_comment = reader[24].ToString()
+                                Employee_comment = reader[24].ToString(),
+                                Uk_decision = reader.IsDBNull(25) ? null : reader.GetInt32(25)
                             });
                         }
                     }
@@ -131,7 +132,7 @@ namespace customerAccountingAppServer.Controllers
                                 Status_id = reader.IsDBNull(9) ? null : reader.GetInt32(9),
                                 Status = reader[10].ToString(),
                                 Priority_id = reader.IsDBNull(11) ? null : reader.GetInt32(11),
-                                Priority = reader[12].ToString(),
+                                Priority = reader.IsDBNull(12) ? "Не указан" : reader[12].ToString(),
                                 Dispatcher_id = reader.IsDBNull(13) ? null : reader.GetInt32(13),
                                 Dispatcher = reader[14].ToString(),
                                 Organization_id = reader.IsDBNull(15) ? null : reader.GetInt32(15),
@@ -143,7 +144,8 @@ namespace customerAccountingAppServer.Controllers
                                 Planned_time = reader.IsDBNull(21) ? null : reader.GetDateTime(21),
                                 Closed_time = reader.IsDBNull(22) ? null : reader.GetDateTime(22),
                                 Organization_Comment = reader[23].ToString(),
-                                Employee_comment = reader[24].ToString()
+                                Employee_comment = reader[24].ToString(),
+                                Uk_decision = reader.IsDBNull(25) ? null : reader.GetInt32(25)
                             });
                         }
                     }
@@ -169,7 +171,9 @@ namespace customerAccountingAppServer.Controllers
                                  "organization_id = @organization_id, " +
                                  "start_time = CURRENT_TIMESTAMP, " +
                                  "planned_completion_time = @planned_completion_time, " +
-                                 "dispatcher_description = @dispatcher_description " +
+                                 "dispatcher_description = @dispatcher_description, " +
+                                 "employee_id = @employee_id, " +
+                                 "uk_decision = @uk_decision " +
                                  "WHERE id = @id";
 
                 await using (NpgsqlCommand command = new NpgsqlCommand(request, con))
@@ -179,16 +183,10 @@ namespace customerAccountingAppServer.Controllers
                     command.Parameters.AddWithValue("@priority_id", ClientData.Priority_id.Value);
                     command.Parameters.AddWithValue("@dispatcher_id", (object ?)ClientData.Dispatcher_id ?? DBNull.Value);
                     command.Parameters.AddWithValue("@organization_id", ClientData.Organization_id);
-
-                    command.Parameters.AddWithValue(
-                        "@planned_completion_time",
-                        (object?)ClientData.Planned_time ?? DBNull.Value
-                    );
-
-                    command.Parameters.AddWithValue(
-                        "@dispatcher_description",
-                        (object?)ClientData.Dispatcher_description ?? DBNull.Value
-                    );
+                    command.Parameters.AddWithValue("@employee_id", (object?)ClientData.Employee_id ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@planned_completion_time", (object?)ClientData.Planned_time ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@dispatcher_description", (object?)ClientData.Dispatcher_description ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@uk_decision", (object?)ClientData.Uk_decision ?? DBNull.Value);
 
                     await command.ExecuteNonQueryAsync();
 

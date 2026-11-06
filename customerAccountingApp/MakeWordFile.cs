@@ -137,14 +137,24 @@ namespace finalExam_diplom_
             int newCount = int.Parse(items["<COUNTNEW>"]);
             int workCount = int.Parse(items["<COUNTWORK>"]);
             int finishCount = int.Parse(items["<COUNTFINISH>"]);
-            int cancelCount = int.Parse(items["<COUNTCANCEL>"]);
+            int ukCount = int.Parse(items["<COUNTUK>"]);
+
+            int workOnlyCount = Math.Max(0, workCount - ukCount);
 
             int[] counts =
             {
                     newCount,
-                    workCount,
+                    workOnlyCount,
                     finishCount,
-                    cancelCount
+                    ukCount
+                    };
+
+            string[] labels =
+            {
+                    $"Новая - {newCount}",
+                    $"В работе - {workOnlyCount}",
+                    $"Завершено - {finishCount}",
+                    $"Передано - {ukCount}"
                     };
 
             EmbeddedPackagePart excelFile = chartPart.EmbeddedPackagePart;
@@ -183,6 +193,12 @@ namespace finalExam_diplom_
                             counts[i].ToString(CultureInfo.InvariantCulture));
                     }
 
+                    UpdateCategoryCells(
+                        sheetData,
+                        new[] { "A2", "A3", "A4", "A5" },
+                        labels
+                    );
+
                     ExcelSheet.Worksheet.Save();
                     ExcelBook.Workbook.Save();
                 }
@@ -209,6 +225,8 @@ namespace finalExam_diplom_
                 index++;
             }
 
+            UpdateCategoryCache(chartPart, labels);
+
             chartPart.ChartSpace.Save();
         }
 
@@ -226,6 +244,13 @@ namespace finalExam_diplom_
                 lowCount,
                 middleCount,
                 highCount
+            };
+
+            string[] labels =
+            {
+                $"Низкий - {lowCount}",
+                $"Средний - {middleCount}",
+                $"Высокий - {highCount}"
             };
 
             if (chartPart == null)
@@ -267,6 +292,12 @@ namespace finalExam_diplom_
                             counts[i].ToString(CultureInfo.InvariantCulture));
                     }
 
+                    UpdateCategoryCells(
+                        sheetData,
+                        new[] { "A2", "A3", "A4" },
+                        labels
+                    );
+
                     ExcelSheet.Worksheet.Save();
                     ExcelBook.Workbook.Save();
                 }
@@ -293,7 +324,54 @@ namespace finalExam_diplom_
                 index++;
             }
 
+            UpdateCategoryCache(chartPart, labels);
+
             chartPart.ChartSpace.Save();
+        }
+
+        private static void UpdateCategoryCells(
+            SheetData sheetData,
+            string[] cellNames,
+            string[] labels)
+        {
+            for (int i = 0; i < cellNames.Length; i++)
+            {
+                Cell cell = sheetData.Descendants<Cell>()
+                    .FirstOrDefault(c => c.CellReference == cellNames[i]);
+
+                if (cell == null)
+                    throw new Exception("Не найдена ячейка " + cellNames[i]);
+
+                cell.DataType = CellValues.InlineString;
+                cell.CellValue = null;
+                cell.InlineString = new InlineString(
+                    new DocumentFormat.OpenXml.Spreadsheet.Text(labels[i]));
+            }
+        }
+
+        private static void UpdateCategoryCache(
+            ChartPart chartPart,
+            string[] labels)
+        {
+            StringCache categoryCache = chartPart.ChartSpace
+                .Descendants<StringCache>()
+                .FirstOrDefault(cache => cache.Elements<StringPoint>().Count() > 1);
+
+            if (categoryCache == null)
+                return;
+
+            int index = 0;
+
+            foreach (StringPoint point in categoryCache.Elements<StringPoint>())
+            {
+                if (index >= labels.Length)
+                    break;
+
+                if (point.NumericValue != null)
+                    point.NumericValue.Text = labels[index];
+
+                index++;
+            }
         }
     }
 }

@@ -76,11 +76,11 @@ namespace finalExam_diplom_.controls
                     Name = item.Name,
                     Values = item.Values,
                     Fill = new SolidColorPaint(
-                        item.Name == "Новая" ? SKColors.Orange :
+                        item.Name == "Новая" ? SKColors.DarkGreen :
                         item.Name == "Направлено в УК" ? SKColors.Blue :
                         item.Name == "Получен ответ от УК" ? SKColors.Purple :
+                        item.Name == "В работе" ? SKColors.BlueViolet :
                         item.Name == "Выполнено" ? SKColors.YellowGreen :
-                        item.Name == "Заявка отменена клиентом" ? SKColors.BlueViolet :
                         SKColors.Gray),
                 }).ToArray();
 
@@ -99,7 +99,8 @@ namespace finalExam_diplom_.controls
                     Fill = new SolidColorPaint(
                         item.Name == "Высокий" ? SKColors.Yellow :
                         item.Name == "Средний" ? SKColors.Red :
-                        item.Name == "Низкий" ? SKColors.Green : 
+                        item.Name == "Низкий" ? SKColors.Green :
+                        item.Name == "Не указан" ? SKColors.Gray :
                         SKColors.Blue),
                 }).ToArray();
         }
@@ -129,18 +130,18 @@ namespace finalExam_diplom_.controls
                 if (table[i].Name == "Получен ответ от УК")
                     currentStatistic.GetAnswerFromUK = table[i].Count;
 
+                if (table[i].Name == "В работе")
+                    currentStatistic.InWork = table[i].Count;
+
                 if (table[i].Name == "Выполнено")
                     currentStatistic.Finished = table[i].Count;
-
-                if (table[i].Name == "Заявка отменена клиентом")
-                    currentStatistic.Cancelled = table[i].Count;
             }
 
             CountAllRequests.Text = currentStatistic.Total.ToString();
             CountNewRequests.Text = currentStatistic.New.ToString();
-            CountWorkRequests.Text = (currentStatistic.SentUK + currentStatistic.GetAnswerFromUK).ToString();
+            CountWorkRequests.Text = (currentStatistic.InWork + currentStatistic.SentUK + currentStatistic.GetAnswerFromUK).ToString();
             CountFinishRequests.Text = currentStatistic.Finished.ToString();
-            CountCancelRequests.Text = currentStatistic.Cancelled.ToString();   
+            CountUkRequests.Text = currentStatistic.SentUK.ToString(); 
 
             for (int i = 0; i < tablePriorities.Count; i++)
             {
@@ -152,13 +153,17 @@ namespace finalExam_diplom_.controls
 
                 if (tablePriorities[i].Name == "Высокий")
                     currentStatistic.HighPriority = tablePriorities[i].Count;
+
+                if (tablePriorities[i].Name == "Не указан")
+                    currentStatistic.NonePriority = tablePriorities[i].Count;
             }
 
-            if (statistic.Total > 0)
+            if (currentStatistic.Total > 0)
             {
                 currentStatistic.HighPriorityPercent = currentStatistic.HighPriority * 100.0 / currentStatistic.Total;
+                currentStatistic.UKPercent = currentStatistic.SentUK * 100.0 / currentStatistic.Total; ;
                 currentStatistic.NewPercent = currentStatistic.New * 100.0 / currentStatistic.Total;
-                currentStatistic.WorkPercent = (currentStatistic.SentUK + currentStatistic.GetAnswerFromUK) * 100.0 / currentStatistic.Total;
+                currentStatistic.WorkPercent = (currentStatistic.InWork + currentStatistic.SentUK + currentStatistic.GetAnswerFromUK) * 100.0 / currentStatistic.Total;
                 currentStatistic.FinishedPercent = currentStatistic.Finished * 100.0 / currentStatistic.Total;
             }
 
@@ -167,12 +172,13 @@ namespace finalExam_diplom_.controls
                 $"     Новые: {currentStatistic.New} \n" +
                 $"     Направлено в УК: {currentStatistic.SentUK} \n" +
                 $"     Получен ответ от УК: {currentStatistic.GetAnswerFromUK} \n" +
-                $"     Выполнено: {currentStatistic.Finished} \n" +
-                $"     Заявка отменена клиентом: {currentStatistic.Cancelled} \n\n" +
+                $"     В работе: {currentStatistic.InWork} \n" +
+                $"     Выполнено: {currentStatistic.Finished} \n\n" +
                 $"2. Распределение заявок по приоритетам:\n" +
                 $"     Высокий — {currentStatistic.HighPriority}\n" +
                 $"     Средний — {currentStatistic.MiddlePriority}\n" +
-                $"     Низкий — {currentStatistic.LowPriority}\n\n" +
+                $"     Низкий — {currentStatistic.LowPriority}\n" +
+                $"     Не указан — {currentStatistic.NonePriority}\n\n" +
                 $"3. Дополнительные показатели:\n" +
                 $"     Доля новых заявок, — {Math.Round(currentStatistic.NewPercent)}%.\n" +
                 $"     Доля завершённых заявок — {Math.Round(currentStatistic.FinishedPercent)}%.\n" +
@@ -235,18 +241,20 @@ namespace finalExam_diplom_.controls
             {
                 { "<COUNTNEW>", CountNewRequests.Text },
                 { "<COUNTWORK>", CountWorkRequests.Text },
+                { "<COUNTUK>", CountUkRequests.Text },
                 { "<COUNTFINISH>", CountFinishRequests.Text },
-                { "<COUNTCANCEL>", CountCancelRequests.Text },
 
                 { "<FINISHPERCENT>", Math.Round(statistic.FinishedPercent).ToString() },
                 { "<WORKPERCENT>", Math.Round(statistic.WorkPercent).ToString() },
                 { "<NEWPERCENT>", Math.Round(statistic.NewPercent).ToString() },
-                { "<CANCELPERCENT>", Math.Round(statistic.CancelledPercent).ToString() },
+                { "<UKPERCENT>", Math.Round(statistic.UKPercent).ToString() },
 
                 { "<COUNTLOW>", statistic.LowPriority.ToString() },
                 { "<COUNTMIDDLE>", statistic.MiddlePriority.ToString() },
                 { "<COUNTHIGH>", statistic.HighPriority.ToString() },
 
+                { "<TIME>", PeriodComboBox.Text },
+                { "<MIDDLEPERCENT>", statistic.Total > 0 ? Math.Round(statistic.MiddlePriority * 100.0 / statistic.Total).ToString() : "0" },
                 { "<CURRENTDATE>", currentDate.ToString() }
             };
 

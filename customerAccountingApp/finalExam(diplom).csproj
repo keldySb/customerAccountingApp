@@ -8,6 +8,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <PlatformTarget>AnyCPU</PlatformTarget>
+	<ApplicationIcon>Resources\tplus.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,6 +22,8 @@
     <None Remove="Resources\reload.png" />
     <None Remove="Resources\reset.png" />
     <None Remove="Resources\t-plus.png" />
+    <None Remove="Resources\tplus.ico" />
+    <None Remove="Resources\tplus_favicon.ico" />
     <None Remove="Resources\users.png" />
     <None Remove="Resources\visible.png" />
   </ItemGroup>
@@ -51,6 +54,8 @@
     <Resource Include="Resources\reload.png" />
     <Resource Include="Resources\reset.png" />
     <Resource Include="Resources\t-plus.png" />
+    <Resource Include="Resources\tplus.ico" />
+    <Resource Include="Resources\tplus_favicon.ico" />
     <Resource Include="Resources\users.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

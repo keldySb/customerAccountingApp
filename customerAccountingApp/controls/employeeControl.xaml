@@ -121,6 +121,9 @@
                     <DataGridTextColumn Header="Идентификатор должности" Binding="{Binding Position_Id}" Width="Auto" Visibility="Collapsed"/>
                     <DataGridTextColumn Header="Должность" Binding="{Binding Position}" Width="*"/>
                     <DataGridTextColumn Header="Номер телефона" Binding="{Binding Phone_number}" Width="*"/>
+                    <DataGridTextColumn Header="Идентификатор статуса работника" Binding="{Binding Employee_status_id}" Width="*" Visibility="Collapsed"/>
+                    <DataGridTextColumn Header="Статус работника" Binding="{Binding Employee_status}" Width="*"/>
+
 
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
@@ -162,7 +165,7 @@
                                                     </Setter.Value>
                                                 </Setter>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Status_Id}" Value="2">
+                                                    <DataTrigger Binding="{Binding Employee_status_id}" Value="2">
                                                         <Setter Property="IsEnabled" Value="False"/>
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding Position_Id}" Value="2">
