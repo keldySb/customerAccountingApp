@@ -18,8 +18,6 @@ namespace finalExam_diplom_.controls
 
         private async void Authorization()
         {
-            AuthClient authorization = new AuthClient();
-
             if (PasswordBox.Visibility == Visibility.Collapsed)
                 PasswordBox.Password = PasswordTextBox.Text;
 
@@ -33,7 +31,6 @@ namespace finalExam_diplom_.controls
                 if (users != null)
                 {
                     CurrentUser.Id = users.Id;
-                    CurrentUser.Employee_id = users.Employee_id;
                     Succsessful();
                 }
                 else
@@ -79,11 +76,6 @@ namespace finalExam_diplom_.controls
         private void DontSeeSymblosPassword_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             StatusPassword();
-        }
-
-        private void PasswordBox_TouchEnter(object sender, TouchEventArgs e)
-        {
-            Authorization();
         }
 
         private void PasswordBox_KeyDown(object sender, KeyEventArgs e)

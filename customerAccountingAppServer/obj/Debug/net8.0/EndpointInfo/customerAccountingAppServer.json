@@ -5,6 +5,37 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/addresses/ensure": {
+      "post": {
+        "tags": [
+          "Addresses"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnsureAddressDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnsureAddressDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnsureAddressDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/authorization/login": {
       "post": {
         "tags": [
@@ -238,44 +269,6 @@
         }
       }
     },
-    "/api/dictionaries/masters": {
-      "get": {
-        "tags": [
-          "Dictionaries"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DictionaryItems"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DictionaryItems"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DictionaryItems"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/dictionaries/managers": {
       "get": {
         "tags": [
@@ -392,139 +385,6 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/DictionaryItems"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/dictionaries/organization": {
-      "get": {
-        "tags": [
-          "Dictionaries"
-        ],
-        "parameters": [
-          {
-            "name": "address_id",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DictionaryItems"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DictionaryItems"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DictionaryItems"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/employees": {
-      "get": {
-        "tags": [
-          "Employees"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/EmployeesTable"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/EmployeesTable"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/EmployeesTable"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/employees/search": {
-      "get": {
-        "tags": [
-          "Employees"
-        ],
-        "parameters": [
-          {
-            "name": "search",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/EmployeesTable"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/EmployeesTable"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/EmployeesTable"
                   }
                 }
               }
@@ -664,6 +524,91 @@
           }
         }
       }
+    },
+    "/api/requests/uk-response": {
+      "post": {
+        "tags": [
+          "Requests"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UkResponseDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UkResponseDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UkResponseDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/requests/sendInfo/{addressId}": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "parameters": [
+          {
+            "name": "addressId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/requests/create": {
+      "post": {
+        "tags": [
+          "Requests"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateClientRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateClientRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateClientRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -696,7 +641,7 @@
             "type": "string",
             "nullable": true
           },
-          "duration": {
+          "regularity": {
             "type": "string",
             "nullable": true
           },
@@ -744,19 +689,6 @@
             "type": "string",
             "nullable": true
           },
-          "employee_id": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "employee": {
-            "type": "string",
-            "nullable": true
-          },
-          "employee_comment": {
-            "type": "string",
-            "nullable": true
-          },
           "organization_Comment": {
             "type": "string",
             "nullable": true
@@ -784,6 +716,65 @@
           "uk_decision": {
             "type": "integer",
             "format": "int32",
+            "nullable": true
+          },
+          "work_comment": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateClientRequestDto": {
+        "type": "object",
+        "properties": {
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "middleName": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "addressId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "apartment": {
+            "type": "string",
+            "nullable": true
+          },
+          "reason": {
+            "type": "string",
+            "nullable": true
+          },
+          "category": {
+            "type": "string",
+            "nullable": true
+          },
+          "regularity": {
+            "type": "string",
+            "nullable": true
+          },
+          "comment": {
+            "type": "string",
+            "nullable": true
+          },
+          "notificationType": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -817,35 +808,22 @@
         },
         "additionalProperties": false
       },
-      "EmployeesTable": {
+      "EnsureAddressDto": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "fio": {
+          "city": {
             "type": "string",
             "nullable": true
           },
-          "position_Id": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "position": {
+          "street": {
             "type": "string",
             "nullable": true
           },
-          "phone_number": {
+          "houseNumber": {
             "type": "string",
             "nullable": true
           },
-          "employee_status_id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "employee_status": {
+          "organizationName": {
             "type": "string",
             "nullable": true
           }
@@ -860,6 +838,24 @@
             "nullable": true
           },
           "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UkResponseDto": {
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ukDecision": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "comment": {
             "type": "string",
             "nullable": true
           }

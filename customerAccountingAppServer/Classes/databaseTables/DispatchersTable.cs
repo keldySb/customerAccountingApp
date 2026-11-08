@@ -4,6 +4,6 @@
     {
         public int Id { get; set; }
 
-        public int Employee_id { get; set; }
+        public string? FIO { get; set; }
     }
 }

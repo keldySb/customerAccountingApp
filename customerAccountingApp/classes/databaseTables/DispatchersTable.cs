@@ -11,6 +11,6 @@ namespace finalExam_diplom_.classes.databaseTables
     {
         public int Id { get; set; }
 
-        public int Employee_id { get; set; }
+        public string? FIO { get; set; }
     }
 }

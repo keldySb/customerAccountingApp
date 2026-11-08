@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:finalExam_diplom_"
         xmlns:controls="clr-namespace:finalExam_diplom_.controls"
         mc:Ignorable="d" Height="900" Width="1200" WindowStartupLocation="CenterScreen" WindowState="Maximized" Loaded="Window_Loaded" 
-        Background="#F7F4EF">
+        Background="#E3E8ED">
     <Window.Resources>
         <Style TargetType="Button">
             <Style.Setters>
@@ -82,57 +82,38 @@
         </Style>
     </Window.Resources>
 
-    <Grid x:Name="mainGrid" Grid.Row="1" Grid.Column="0">
+    <Grid x:Name="mainGrid" Grid.Row="1">
         <Grid.RowDefinitions>
             <RowDefinition Height="90"/>
+            <RowDefinition Height="70"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="Auto" MaxWidth="900"/>
-        </Grid.ColumnDefinitions>
-
-        <GridSplitter x:Name="Splitter" Grid.Column="1" Grid.Row="1" Width="5" Visibility="Collapsed"
-                      VerticalAlignment="Stretch" ResizeDirection ="Columns" ResizeBehavior="PreviousAndNext"/>
-
-        <Border Grid.Row="0" Grid.ColumnSpan="3" Background="#FFFFFF" BorderBrush="#E6E8EC" BorderThickness="1">
+        <Border Grid.Row="0" Background="#F6A623" BorderBrush="#E6E8EC" BorderThickness="1">
             <StackPanel Orientation="Horizontal">
-                <Image Source="/Resources/t-plus.png" Width="200" Height="80" Margin="0,0,10,0"/>
+                <Image Source="/Resources/t-plus-white.png" Width="200" Height="80" Margin="0,0,10,0"/>
 
                 <TextBlock x:Name="headerTextBox" Text="Заявки клиентов" 
-                       Foreground="#25272B" Margin="25,0,0,0"/>
+                       Foreground="#FFFFFF" Margin="25,0,0,0"/>
             </StackPanel>
         </Border>
 
-        <Border Grid.Row="1" Grid.ColumnSpan="3">
+        <Border Grid.Row="1" Grid.RowSpan="2" >
             <ContentControl x:Name="authControl" Visibility="Collapsed"/>
         </Border>
 
-        <Border Grid.Row="1" x:Name="MainMenu" Margin="5" CornerRadius="8 ">
+        <Border Grid.Row="1" x:Name="MainMenu" Margin="0,10,7,0" CornerRadius="10">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="250"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                <StackPanel Background="#FFFFFF" Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Stretch">
+                <StackPanel Background="#F9FAFB" Orientation="Horizontal">
                     <Button x:Name="mainButton" Click="MainButton_Click">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/Resources/file-text.png" Width="20" Height="20" Margin="0,0,10,0"/>
 
                             <TextBlock Text="Заявки клиентов" Foreground="#25272B" FontSize="16" Margin="0"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="employeeButton" Click="EmployeeButton_Click" FontWeight="Normal">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="/Resources/users.png" Width="20" Height="20" Margin="0,0,10,0"/>
-
-                            <TextBlock Text="Сотрудники" Foreground="#25272B" FontSize="16" Margin="0"/>
                         </StackPanel>
                     </Button>
                     <Button x:Name="reportButton" Click="ReportButton_Click">
@@ -142,41 +123,25 @@
                             <TextBlock Text="Отчеты" Foreground="#25272B" FontSize="16" Margin="0"/>
                         </StackPanel>
                     </Button>
-                </StackPanel>
-                <Button x:Name="SignOutButton"
-                        Grid.Row="1" Grid.Column="0" Background="#FFFFFF" 
-                        Margin="5" VerticalAlignment="Bottom" Click="SignOutButton_Click">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/Resources/log-out.png"  Width="20" Height="20" Margin="0,0,10,0"/>
 
-                        <TextBlock Text="Выйти из аккаунта" Foreground="#25272B" FontSize="16" Margin="0"/>
-                    </StackPanel>
-                </Button>
-                <Border Grid.Column="1" Grid.RowSpan="2" Background="#FFFFFF" 
-                        Margin="10,5,5,5" CornerRadius="8" BorderBrush="#E6E8EC" BorderThickness="1">
-                    <ContentControl x:Name="useControl" HorizontalContentAlignment="Stretch"
-                        VerticalContentAlignment="Stretch"/>
-                </Border>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Background="#F9FAFB" Orientation="Horizontal">
+                    <Button x:Name="SignOutButton" Click="SignOutButton_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Resources/log-out.png"  Width="20" Height="20" Margin="0,0,10,0"/>
+
+                            <TextBlock Text="Выйти из аккаунта" Foreground="#25272B" FontSize="16" Margin="0"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
             </Grid>
         </Border>
 
-        <Border x:Name="setBorder" Visibility="Collapsed" Grid.Row="1" Grid.Column="2" Margin="5" BorderBrush="#E6E8EC"
-                        MinWidth="750" VerticalAlignment="Top" MaxHeight="{Binding ActualHeight, ElementName=MainMenu}">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <Label x:Name="setTaskOrEmpLabel" Grid.Row="0" Content="Назначение задачи" Margin="0,0,0,5"/>
-
-                <ContentControl x:Name="setTaskOrEmpControl" Grid.Row="1" HorizontalContentAlignment="Stretch"
-                                VerticalContentAlignment="Stretch"/>
-
-                <Button x:Name="closeUCButton" Grid.Row="2" Content="Закрыть окно" VerticalContentAlignment="Center"
-                            HorizontalContentAlignment="Center" Click="CloseUCButton_Click"/>
-            </Grid>
+        <Border Grid.Row="2" x:Name="mainControl"  CornerRadius="8" Margin="0,0,0,0">
+            <Border Background="#FFFFFF" CornerRadius="8" BorderBrush="#E6E8EC" BorderThickness="1">
+                <ContentControl x:Name="useControl" HorizontalContentAlignment="Stretch"
+                        VerticalContentAlignment="Stretch"/>
+            </Border>
         </Border>
     </Grid>
 </Window>

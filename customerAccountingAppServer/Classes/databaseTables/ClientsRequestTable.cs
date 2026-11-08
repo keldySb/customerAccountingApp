@@ -14,7 +14,7 @@
 
         public string? Category { get; set; }
 
-        public string? Duration { get; set; }
+        public string? Regularity { get; set; }
 
         public string? Client_description { get; set; }
 
@@ -36,12 +36,6 @@
 
         public string? Organization { get; set; }
 
-        public int? Employee_id { get; set; }
-
-        public string? Employee { get; set; }
-
-        public string? Employee_comment { get; set; }
-
         public string? Organization_Comment { get; set; }
 
         public DateTime? Created_time { get; set; }
@@ -53,6 +47,8 @@
         public DateTime? Closed_time { get; set; }
 
         public int? Uk_decision { get; set; }
+
+        public string? Work_comment { get; set; }
 
     }
 }

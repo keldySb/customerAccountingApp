@@ -25,23 +25,4 @@ namespace finalExam_diplom_.classes
             return status ?? new List<ClientsRequestTable>();
         }
     }
-
-    public class GetEmployeeTable()
-    {
-
-        private readonly HttpClient _httpClient = new HttpClient
-        {
-            BaseAddress = new Uri("https://localhost:7070/")
-        };
-        public async Task<List<EmployeesTable>> GetEmployeesAsync()
-        {
-            var status = await _httpClient.GetFromJsonAsync<List<EmployeesTable>>("api/employees");
-            return status ?? new List<EmployeesTable>();
-        }
-        public async Task<List<EmployeesTable>> GetEmployeesSearchAsync(string? search)
-        {
-            var status = await _httpClient.GetFromJsonAsync<List<EmployeesTable>>($"api/employees/search?search={Uri.EscapeDataString(search)}");
-            return status ?? new List<EmployeesTable>();
-        }
-    };
 }

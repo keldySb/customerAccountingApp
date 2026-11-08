@@ -9,14 +9,19 @@ namespace customerAccountingAppServer.Controllers
     [Route("api/dictionaries")]
     public class DictionariesController : ControllerBase
     {
+        private readonly DataBaseConnection _connection;
+
+        public DictionariesController(DataBaseConnection connection)
+        {
+            _connection = connection;
+        }
+
         [HttpGet("statuses")]
         public async Task<ActionResult<List<DictionaryItems>>> GetStatus([FromQuery] bool changeStatus = false)
         {
             List<DictionaryItems> tableData = new List<DictionaryItems>();
 
-            DataBaseConnection connection = new DataBaseConnection();
-
-            await using (NpgsqlConnection con = connection.getConnection())
+            await using (NpgsqlConnection con = _connection.getConnection())
             {
                 await con.OpenAsync();
 
@@ -49,40 +54,11 @@ namespace customerAccountingAppServer.Controllers
         {
             List<DictionaryItems> tableData = new List<DictionaryItems>();
 
-            DataBaseConnection connection = new DataBaseConnection();
-
-            await using(NpgsqlConnection con = connection.getConnection())
+            await using(NpgsqlConnection con = _connection.getConnection())
             {
                 await con.OpenAsync();
 
                 await using(NpgsqlCommand command = new NpgsqlCommand("SELECT id, name FROM priorities", con))
-                {
-                    await using (NpgsqlDataReader reader = await command.ExecuteReaderAsync())
-                    {
-                        while (await reader.ReadAsync())
-                        {
-                            tableData.Add(new DictionaryItems(
-                                reader.GetInt32(0),
-                                reader[1].ToString()));
-                        }
-                    }
-                    return Ok(tableData);
-                }
-            }
-        }
-        [HttpGet("masters")]
-        public async Task<ActionResult<List<DictionaryItems>>> GetMaster()
-        {
-            List<DictionaryItems> tableData = new List<DictionaryItems>();
-
-            DataBaseConnection connection = new DataBaseConnection();
-
-            await using(NpgsqlConnection con = connection.getConnection())
-            {
-                await con.OpenAsync();
-
-                await using(NpgsqlCommand command = new NpgsqlCommand("SELECT id, CONCAT(first_name, ' ', last_name, ' ', middle_name) as name FROM employees" +
-                " WHERE NOT position_id = 2", con))
                 {
                     await using (NpgsqlDataReader reader = await command.ExecuteReaderAsync())
                     {
@@ -103,16 +79,13 @@ namespace customerAccountingAppServer.Controllers
         {
             List<DictionaryItems> tableData = new List<DictionaryItems>();
 
-            DataBaseConnection connection = new DataBaseConnection();
-
-            await using(NpgsqlConnection con = connection.getConnection())
+            await using(NpgsqlConnection con = _connection.getConnection())
             {
                 await con.OpenAsync();
 
-                await using(NpgsqlCommand command = new NpgsqlCommand("SELECT d.employee_id ," +
-                                    " CONCAT(e.first_name, ' ', e.last_name, ' ', e.middle_name) as name" +
-                                    " FROM dispatchers d" +
-                                    " LEFT JOIN employees e ON d.employee_id = e.id", con))
+                await using(NpgsqlCommand command = new NpgsqlCommand("SELECT d.id ," +
+                                    " CONCAT_WS(' ', d.last_name, d.first_name, d.middle_name) AS name" +
+                                    " FROM dispatchers d", con))
                 {
                     await using (NpgsqlDataReader reader = await command.ExecuteReaderAsync())
                     {
@@ -133,9 +106,7 @@ namespace customerAccountingAppServer.Controllers
         {
             List<DictionaryItems> tableData = new List<DictionaryItems>();
 
-            DataBaseConnection connection = new DataBaseConnection();
-
-            await using (NpgsqlConnection con = connection.getConnection())
+            await using (NpgsqlConnection con = _connection.getConnection())
             {
                 await con.OpenAsync();
 
@@ -160,9 +131,7 @@ namespace customerAccountingAppServer.Controllers
         {
             List<DictionaryItems> tableData = new List<DictionaryItems>();
 
-            DataBaseConnection connection = new DataBaseConnection();
-
-            await using (NpgsqlConnection con = connection.getConnection())
+            await using (NpgsqlConnection con = _connection.getConnection())
             {
                 await con.OpenAsync();
 
@@ -171,39 +140,7 @@ namespace customerAccountingAppServer.Controllers
                                                                                 " WHERE r.id = @reason", con))
                 {
                     if (reason != null)
-                        command.Parameters.AddWithValue("@reason", reason);
-                    await using (NpgsqlDataReader reader = await command.ExecuteReaderAsync())
-                    {
-                        while (await reader.ReadAsync())
-                        {
-                            tableData.Add(new DictionaryItems(
-                                reader.GetInt32(0),
-                                reader[1].ToString()));
-                        }
-                    }
-                    return Ok(tableData);
-                }
-            }
-        }
-
-
-        [HttpGet("organization")]
-        public async Task<ActionResult<List<DictionaryItems>>> GetOrganization([FromQuery] int? address_id)
-        {
-            List<DictionaryItems> tableData = new List<DictionaryItems>();
-
-            DataBaseConnection connection = new DataBaseConnection();
-
-            await using (NpgsqlConnection con = connection.getConnection())
-            {
-                await con.OpenAsync();
-
-                await using (NpgsqlCommand command = new NpgsqlCommand("SELECT o.id, o.name FROM organizations o" +
-                                                                                " LEFT JOIN addresses a ON o.id = a.organization_id" +
-                                                                                " WHERE a.id = @address_id", con))
-                {
-                    if (address_id != null)
-                        command.Parameters.AddWithValue("@address_id", address_id);
+                        command.Parameters.AddWithValue("@reason", (object?)reason ?? DBNull.Value);
                     await using (NpgsqlDataReader reader = await command.ExecuteReaderAsync())
                     {
                         while (await reader.ReadAsync())

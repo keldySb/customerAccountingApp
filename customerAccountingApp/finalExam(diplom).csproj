@@ -21,7 +21,7 @@
     <None Remove="Resources\printer.png" />
     <None Remove="Resources\reload.png" />
     <None Remove="Resources\reset.png" />
-    <None Remove="Resources\t-plus.png" />
+    <None Remove="Resources\t-plus-white.png" />
     <None Remove="Resources\tplus.ico" />
     <None Remove="Resources\tplus_favicon.ico" />
     <None Remove="Resources\users.png" />
@@ -53,7 +53,7 @@
     <Resource Include="Resources\printer.png" />
     <Resource Include="Resources\reload.png" />
     <Resource Include="Resources\reset.png" />
-    <Resource Include="Resources\t-plus.png" />
+    <Resource Include="Resources\t-plus-white.png" />
     <Resource Include="Resources\tplus.ico" />
     <Resource Include="Resources\tplus_favicon.ico" />
     <Resource Include="Resources\users.png">

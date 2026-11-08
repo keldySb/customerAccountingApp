@@ -1,11 +1,8 @@
 ﻿using finalExam_diplom_.classes;
 using finalExam_diplom_.classes.databaseTables;
 using finalExam_diplom_.forms;
-using Npgsql;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace finalExam_diplom_.controls
@@ -35,42 +32,18 @@ namespace finalExam_diplom_.controls
 
         private async void ShowDataGridnformations()
         {
-            if (ukWorks)
+            GetClientsRequestsTable client = new GetClientsRequestsTable();
+
+            if (string.IsNullOrWhiteSpace(mainTextBox.Text))
             {
-                GetClientsRequestsTable client = new GetClientsRequestsTable();
-                List<ClientsRequestTable> dataStatus;
-                List<ClientsRequestTable> ukWorks;
-
-                if (string.IsNullOrWhiteSpace(mainTextBox.Text) == true)
-                {
-
-                    dataStatus = await client.GetClientsRequestsAsync(1);
-                    ukWorks = await client.GetClientsRequestsAsync(3);
-                }
-                else
-                {
-                    dataStatus = await client.GetClientsRequestsSearchAsync(1, mainTextBox.Text);
-                    ukWorks = await client.GetClientsRequestsSearchAsync(3, mainTextBox.Text);
-                }
-                mainDataGrid.ItemsSource = dataStatus.Concat(ukWorks.Where(r => r.Uk_decision == 2)).ToList();
-
+                List<ClientsRequestTable> dataStatus = await client.GetClientsRequestsAsync(Convert.ToInt32(mainComboBox.SelectedValue));
+                mainDataGrid.ItemsSource = dataStatus;
             }
             else
             {
-                GetClientsRequestsTable client = new GetClientsRequestsTable();
-
-                if (string.IsNullOrWhiteSpace(mainTextBox.Text))
-                {
-                    List<ClientsRequestTable> dataStatus = await client.GetClientsRequestsAsync(Convert.ToInt32(mainComboBox.SelectedValue));
-                    mainDataGrid.ItemsSource = dataStatus;
-                }
-                else
-                {
-                    List<ClientsRequestTable> dataStatus = await client.GetClientsRequestsSearchAsync(Convert.ToInt32(mainComboBox.SelectedValue), mainTextBox.Text);
-                    mainDataGrid.ItemsSource = dataStatus;
-                }
+                List<ClientsRequestTable> dataStatus = await client.GetClientsRequestsSearchAsync(Convert.ToInt32(mainComboBox.SelectedValue), mainTextBox.Text);
+                mainDataGrid.ItemsSource = dataStatus;
             }
-
         }
 
         private void UpdateVisible()
@@ -82,9 +55,8 @@ namespace finalExam_diplom_.controls
             Organization_Comment.Visibility = status_id == 3 ? Visibility.Visible : Visibility.Collapsed;
             Uk_decision_text.Visibility = status_id == 3 ? Visibility.Visible : Visibility.Collapsed;
 
-            Employee.Visibility = status_id == 4 ? Visibility.Visible : Visibility.Collapsed;
-
             Closed_time.Visibility = status_id == 5 ? Visibility.Visible : Visibility.Collapsed;
+            Work_comment.Visibility = status_id == 5 || status_id == 4 || status_id == 3 ? Visibility.Visible : Visibility.Collapsed;
         }
 
 
@@ -117,6 +89,9 @@ namespace finalExam_diplom_.controls
         private void openApplication_Click(object sender, RoutedEventArgs e)
         {
             var clientData = mainDataGrid.SelectedItem as ClientsRequestTable;
+
+            if (clientData == null)
+                return;
 
             clientsChangeDataControl control = new clientsChangeDataControl(clientData);
             addAndChangeForm form = new addAndChangeForm(control);

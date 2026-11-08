@@ -31,12 +31,6 @@ namespace finalExam_diplom_.classes
             return status ?? new List<DictionaryItems>();
         }
 
-        public async Task<List<DictionaryItems>> GetMasterAsync()
-        {
-            var status = await _httpClient.GetFromJsonAsync<List<DictionaryItems>>("api/dictionaries/masters");
-            return status ?? new List<DictionaryItems>();
-        }
-
         public async Task<List<DictionaryItems>> GetManagerAsync()
         {
             var status = await _httpClient.GetFromJsonAsync<List<DictionaryItems>>("api/dictionaries/managers");
@@ -52,12 +46,6 @@ namespace finalExam_diplom_.classes
         public async Task<List<DictionaryItems>> GetCategory(int? reason)
         {
             var status = await _httpClient.GetFromJsonAsync<List<DictionaryItems>>($"api/dictionaries/categories?reason={reason}");
-            return status ?? new List<DictionaryItems>();
-        }
-
-        public async Task<List<DictionaryItems>> GetOrganization(int? address_id)
-        {
-            var status = await _httpClient.GetFromJsonAsync<List<DictionaryItems>>($"api/dictionaries/organization?address_id={address_id}");
             return status ?? new List<DictionaryItems>();
         }
     }

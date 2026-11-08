@@ -93,7 +93,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Column="0" x:Name="searchBorder" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Border Grid.Column="0" x:Name="searchBorder" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,0,10,0">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -106,7 +106,7 @@
             </Grid>
         </Border>
 
-        <Border Grid.Column="1" x:Name="statusBorder">
+        <Border Grid.Column="1" x:Name="statusBorder" Margin="00,0,20,0">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -149,7 +149,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn x:Name="Duration" Header="Длительность" Binding="{Binding Duration}" Width="auto"/>
+                    <DataGridTextColumn x:Name="Regularity" Header="Длительность" Binding="{Binding Regularity}" Width="auto"/>
                     <DataGridTextColumn x:Name="Client_description" Header="Описание клиента" Binding="{Binding Client_description}" Width="Auto" Visibility="Collapsed"/>
                     <DataGridTextColumn x:Name="Dispatcher_description" Header="Комментарий диспетчера" Binding="{Binding Dispatcher_description}" Width="Auto" Visibility="Collapsed"/>
                     <DataGridTextColumn x:Name="Status_id" Header="Идентификатор статуса" Binding="{Binding Status_id}" Width="Auto" Visibility="Collapsed"/>
@@ -168,37 +168,17 @@
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
                     <DataGridTextColumn x:Name="Uk_decision_text" Header="На чьей стороне проблема" Binding="{Binding Uk_decision_text}" Width="auto" Visibility="Collapsed"/>
-                    <DataGridTextColumn x:Name="Employee_id" Header="Идентификатор сотрудника" Binding="{Binding Employee_id}" Width="Auto" Visibility="Collapsed"/>
-                    <DataGridTextColumn x:Name="Employee" Header="Сотрудник" Binding="{Binding Employee}" Width="140" Visibility="Collapsed">
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="TextWrapping" Value="Wrap" />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn x:Name="Employee_comment" Header="Комментарий сотрудника" Binding="{Binding Employee_comment}" Width="Auto" Visibility="Collapsed"/>
                     <DataGridTextColumn x:Name="Created_time" Header="Дата создания" Binding="{Binding Created_time, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}" Width="auto"/>
                     <DataGridTextColumn x:Name="Start_time" Header="Дата начала работы" Binding="{Binding Start_time, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}" Width="140" Visibility="Collapsed"/>
                     <DataGridTextColumn x:Name="Planned_time" Header="Срок выполнения" Binding="{Binding Planned_time, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}" Width="140" Visibility="Collapsed"/>
                     <DataGridTextColumn x:Name="Closed_time" Header="Дата закрытия заявки" Binding="{Binding Closed_time, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}" Width="140" Visibility="Collapsed"/>
+                    <DataGridTextColumn x:Name="Work_comment" Header="Комментарий по работам" Binding="{Binding Work_comment}" Width="140" Visibility="Collapsed"/>
                     <DataGridTemplateColumn Width="100">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button x:Name="openApplication" Width="120" HorizontalAlignment="Right" ToolTip="Открыть заявку" Click="openApplication_Click">
                                     <TextBlock Text="Открыть" Foreground="Black"/>
                                 </Button>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-
-                    <DataGridTemplateColumn x:Name="setTaskFoeEmpColumn"  Width="*" Visibility="Collapsed">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Button x:Name="setTaskForEmpButton" Width="150" ToolTip="Назначить задачу">
-                                        <TextBlock Text="Назначить" Foreground="Black"/>
-                                    </Button>
-                                </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

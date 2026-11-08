@@ -8,14 +8,19 @@ namespace customerAccountingAppServer.Controllers
     [Route("api/count")]
     public class DiagramController : ControllerBase
     {
+        private readonly DataBaseConnection _connection;
+
+        public DiagramController(DataBaseConnection connection)
+        {
+            _connection = connection;
+        }
+
         [HttpGet("statuses")]
         public async Task<ActionResult<List<DiagramClass>>> GetCountRequests([FromQuery] int? time, [FromQuery] string? reason, [FromQuery] string? category)
         {
             List<DiagramClass> diagram = new List<DiagramClass>();
-            
-            DataBaseConnection connection = new DataBaseConnection();
 
-            await using (NpgsqlConnection con = connection.getConnection())
+            await using (NpgsqlConnection con = _connection.getConnection())
             {
                 string request = "";
                 string timeRequest = "";
@@ -92,9 +97,7 @@ namespace customerAccountingAppServer.Controllers
         {
             List<DiagramClass> diagram = new List<DiagramClass>();
 
-            DataBaseConnection connection = new DataBaseConnection();
-
-            await using (NpgsqlConnection con = connection.getConnection())
+            await using (NpgsqlConnection con = _connection.getConnection())
             {
                 string request = "";
 

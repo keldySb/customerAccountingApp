@@ -1,23 +1,29 @@
-﻿using BCrypt.Net;
-using customerAccountingAppServer.Classes.databaseTables;
-using Microsoft.AspNetCore.Mvc;
+﻿using customerAccountingAppServer.Classes.databaseTables;
 using Npgsql;
 
 namespace customerAccountingAppServer.Classes
 {
-    public class AuthorizationClass()
+    public class AuthorizationClass
     {
-        public async Task<DispatchersTable> CheckUsers(string login, string? password)
+        private readonly DataBaseConnection _connection;
+
+        public AuthorizationClass(DataBaseConnection connection)
+        {
+            _connection = connection;
+        }
+
+        public async Task<DispatchersTable?> CheckUsers(string login, string? password)
         {
             DispatchersTable? tableData = null;
 
-            DataBaseConnection connection = new DataBaseConnection();
-
-            await using (NpgsqlConnection con = connection.getConnection())
+            await using (NpgsqlConnection con = _connection.getConnection())
             {
-                con.Open();
+                await con.OpenAsync();
 
-                string sql = "SELECT * FROM dispatchers WHERE login = @login";
+                string sql = "SELECT id, CONCAT_WS(' ', last_name, first_name, middle_name) AS fio, " +
+                    "login, password " +
+                    "FROM dispatchers " +
+                    "WHERE login = @login";
 
                 await using(NpgsqlCommand command = new NpgsqlCommand(sql, con))
                 {
@@ -31,7 +37,7 @@ namespace customerAccountingAppServer.Classes
                             {
                                 tableData = new DispatchersTable();
                                 tableData.Id = reader.GetInt32(0);
-                                tableData.Employee_id = reader.GetInt32(1);
+                                tableData.FIO = reader[1].ToString();
                             }
                         }
                     }

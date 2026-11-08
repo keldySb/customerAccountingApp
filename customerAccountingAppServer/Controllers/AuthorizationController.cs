@@ -8,6 +8,13 @@ namespace customerAccountingAppServer.Controllers
     [Route("api/authorization")]
     public class AuthorizationController : ControllerBase
     {
+        private readonly DataBaseConnection _connection;
+
+        public AuthorizationController(DataBaseConnection connection)
+        {
+            _connection = connection;
+        }
+
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
@@ -20,8 +27,7 @@ namespace customerAccountingAppServer.Controllers
                     message = "Введите логин и пароль."
                 });
             }
-
-            AuthorizationClass authorization = new AuthorizationClass();
+            AuthorizationClass authorization = new AuthorizationClass(_connection);
 
             DispatchersTable? user = await authorization.CheckUsers(
                 request.Login,
